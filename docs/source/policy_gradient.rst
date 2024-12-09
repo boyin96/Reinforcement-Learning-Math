@@ -61,14 +61,14 @@ By putting it into the objective function, we can obtain,
 
 .. math::
     \begin{aligned}
-    	\nabla _{\theta}J(\theta )&=\nabla _{\theta}V^{\pi}\left( s_0 \right)=\sum_s{\sum_{k=0}^{\infty}{\gamma ^k\rho ^{\pi}}}\left( s_0\rightarrow s,k \right) \phi (s)\\
+    	\nabla _{\theta}J(\theta )&=\nabla _{\theta}\sum_{s_0}\rho_0\left( s_0 \right)V^{\pi}\left( s_0 \right)=\sum_{s_0}\sum_s{\sum_{k=0}^{\infty}{\gamma ^k\rho_0\left( s_0 \right)\rho ^{\pi}}}\left( s_0\rightarrow s,k \right) \phi (s)\\
     	&=\sum_s{\eta}(s)\phi (s)\\
     	&=\left( \sum_s{\eta}(s) \right) \sum_s{\frac{\eta (s)}{\sum_s{\eta}(s)}}\phi (s)\\
     	&\propto \sum_s{\frac{\eta (s)}{\sum_s{\eta}(s)}}\phi (s)\\
     	&=\sum_s{d^{\pi}}(s)\sum_a{\nabla _{\theta}}\pi _{\theta}(a\mid s)Q^{\pi}(s,a),\\
     \end{aligned}
 
-where :math:`\eta(s)=\sum_{k=0}^{\infty} \gamma ^k\rho^\pi\left(s_0 \rightarrow s, k\right)`.
+where :math:`\eta(s)=\sum_{s_0}\sum_{k=0}^{\infty} \gamma ^k\rho_0\left( s_0 \right)\rho^\pi\left(s_0 \rightarrow s, k\right)`.
 
 Finally,
 
