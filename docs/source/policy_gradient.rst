@@ -81,4 +81,10 @@ Finally,
         & =\mathbb{E}_{\pi_\theta}\left[Q^{\pi_\theta}(s, a) \nabla_\theta \log \pi_\theta(a \mid s)\right] \quad \textbf{Q.E.D.}
         \end{aligned}
 
+References
+--------------------------------------
+
+- https://lilianweng.github.io/posts/2018-04-08-policy-gradient/
+- https://web.stanford.edu/class/cme241/lecture_slides/PolicyGradient.pdf
+
 The policy gradient method is a powerful approach for reinforcement learning, as it directly optimizes the policy by following the gradient of expected return. The derived proof provides the foundation for many policy-based methods in the field of reinforcement learning.
