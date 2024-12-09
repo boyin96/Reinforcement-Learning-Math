@@ -6,14 +6,9 @@ The policy gradient method is a key technique in reinforcement learning, aiming 
 Let the objective be the maximization of the expected return:
 
 .. math::
-    J(\theta) = \mathbb{E}_{\pi_\theta}[R(\tau)] = \mathbb{E}_{\pi_\theta}\left[\sum_{t=0}^T R_t\right]
+    J(\theta)=\sum_{s \in \mathcal{S}} d^\pi(s) V^\pi(s)=\sum_{s \in \mathcal{S}} d^\pi(s) \sum_{a \in \mathcal{A}} \pi_\theta(a \mid s) Q^\pi(s, a)
 
-where:
-- \( J(\theta) \) is the objective function (expected return),
-- \( \pi_\theta \) is the policy parameterized by \( \theta \),
-- \( R_t \) is the reward at time step \( t \),
-- \( \tau \) represents a trajectory of states and actions,
-- \( \mathbb{E}_{\pi_\theta} \) denotes the expectation under the policy \( \pi_\theta \).
+where ..math:`d^\pi(s)` is the stationary distribution of Markov chain.
 
 ### Step 1: The Policy Gradient Theorem
 
