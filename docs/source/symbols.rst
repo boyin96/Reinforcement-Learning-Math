@@ -21,8 +21,8 @@ This section provides the notations and definitions commonly used in reinforceme
      - Discount factor (:math:`0 < \gamma \leq 1`).
    * - :math:`G_t`
      - Return (:math:`G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}`).
-   * - :math:`P(s', r|s, a)`
-     - Transition probability of getting to the next state :math:`s'` from the current state :math:`s` with action :math:`a` and reward :math:`r`.
+   * - :math:`P(s'|s, a)`
+     - Transition probability of getting to the next state :math:`s'` from the current state :math:`s` with action :math:`a`.
    * - :math:`\pi(a|s)`
      - Stochastic policy (agent behavior strategy), :math:`\pi_\theta(.)` is a policy parameterized by :math:`\theta`.
    * - :math:`\mu(s)`
@@ -42,6 +42,6 @@ This section provides the notations and definitions commonly used in reinforceme
 
    In this document, we adopt the following conventions:
    
-   - **Uppercase letters** represent **random variables** or **functions**, such as :math:` S, A, R`, etc.
+   - **Uppercase letters** represent **random variables** or **functions**, such as :math:`S, A, R`, etc.
    - **Calligraphic uppercase letters** represent **sets**, such as :math:`\mathcal{S}, \mathcal{A}, \mathcal{R}`, etc.
    - **Lowercase letters** represent **deterministic values**, such as :math:`s, a , r`, etc.
