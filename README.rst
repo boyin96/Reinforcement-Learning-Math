@@ -1,9 +1,3 @@
 Template for the Read the Docs tutorial
 =======================================
-
-This GitHub template includes fictional Python library
-with some basic Sphinx docs.
-
-Read the tutorial here:
-
-https://docs.readthedocs.io/en/stable/tutorial/
+This repository focuses on the theoretical foundations and mathematical derivations of reinforcement learning (RL) algorithms. It provides a unified notation system and step-by-step insights into key RL concepts and algorithms.
