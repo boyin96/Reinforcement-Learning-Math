@@ -14,7 +14,7 @@ Policy Gradient Theorem
 --------------------------------------
 
 .. important:: 
-    \nabla_\theta J(\theta)=\mathbb{E}_{\pi_\theta}\left[\nabla_\theta \log \pi_\theta(s, a) Q^{\pi_\theta}(s, a)\right]
+    :math:`\nabla_\theta J(\theta)=\mathbb{E}_{\pi_\theta}\left[\nabla_\theta \log \pi_\theta(s, a) Q^{\pi_\theta}(s, a)\right]`
 
 
 Proof of Policy Gradient Theorem
