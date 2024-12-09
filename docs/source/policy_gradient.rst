@@ -1,106 +1,63 @@
-===============================
-Policy Gradient Theorem in DRL
-===============================
+Proof of Policy Gradient Descent
+=================================
 
-In this document, we will provide a detailed derivation of the **Policy Gradient Theorem** used in **Deep Reinforcement Learning (DRL)**. We begin by reviewing the reinforcement learning setup and the goal of policy optimization.
+The policy gradient method is a key technique in reinforcement learning, aiming to optimize the policy parameters by following the gradient of expected reward. Here, we present the derivation and proof of the policy gradient descent.
 
-1. **Reinforcement Learning Setup**
-   ================================
+Let the objective be the maximization of the expected return:
 
-   In reinforcement learning, an agent interacts with an environment in discrete time steps. The environment is modeled as a **Markov Decision Process (MDP)** defined by the tuple:
+.. math::
+    J(\theta) = \mathbb{E}_{\pi_\theta}[R(\tau)] = \mathbb{E}_{\pi_\theta}\left[\sum_{t=0}^T R_t\right]
 
-   .. math::
+where:
+- \( J(\theta) \) is the objective function (expected return),
+- \( \pi_\theta \) is the policy parameterized by \( \theta \),
+- \( R_t \) is the reward at time step \( t \),
+- \( \tau \) represents a trajectory of states and actions,
+- \( \mathbb{E}_{\pi_\theta} \) denotes the expectation under the policy \( \pi_\theta \).
 
-      \mathcal{M} = \langle \mathcal{S}, \mathcal{A}, P, \mathcal{R}, \gamma \rangle
+### Step 1: The Policy Gradient Theorem
 
-   where:
-   - \( \mathcal{S} \) is the set of states,
-   - \( \mathcal{A} \) is the set of actions,
-   - \( P(s'|s, a) \) is the state transition probability,
-   - \( \mathcal{R}(s, a) \) is the reward function,
-   - \( \gamma \in [0, 1] \) is the discount factor.
+We want to find the gradient of \( J(\theta) \) with respect to the policy parameters \( \theta \). Applying the score function gradient:
 
-   An agent follows a policy \( \pi(a|s) \), which is a distribution over actions given states. The goal is to optimize this policy in order to maximize the expected return, which is the sum of discounted rewards.
+.. math::
+    \nabla_\theta J(\theta) = \nabla_\theta \mathbb{E}_{\pi_\theta}[R(\tau)]
 
-2. **Expected Return (Objective Function)**
-   =========================================
+Using the definition of expectation, we have:
 
-   The objective is to maximize the expected return. The return from time step \( t \) is defined as:
+.. math::
+    \nabla_\theta J(\theta) = \mathbb{E}_{\pi_\theta} \left[\nabla_\theta \log \pi_\theta(a_t | s_t) R_t\right]
 
-   .. math::
+This is a direct application of the score function method. Here, \( \nabla_\theta \log \pi_\theta(a_t | s_t) \) is the gradient of the log-probability of taking action \( a_t \) in state \( s_t \), and \( R_t \) is the total reward at time step \( t \).
 
-      G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}
+### Step 2: The Gradient of the Log-Policy
 
-   where \( R_{t+k+1} \) represents the reward at time step \( t+k+1 \), and \( \gamma \) is the discount factor.
+The next step is to expand the gradient of the log-policy \( \log \pi_\theta(a_t | s_t) \). The policy \( \pi_\theta(a_t | s_t) \) represents the probability of choosing action \( a_t \) at state \( s_t \), which is parameterized by \( \theta \).
 
-   The **state-value function** \( V^\pi(s) \) and **action-value function** \( Q^\pi(s, a) \) represent the expected returns from state \( s \) under policy \( \pi \), and from state \( s \) and action \( a \), respectively. 
+The gradient of the log-policy can be expressed as:
 
-   The goal is to find a policy that maximizes the expected return:
+.. math::
+    \nabla_\theta \log \pi_\theta(a_t | s_t) = \frac{\nabla_\theta \pi_\theta(a_t | s_t)}{\pi_\theta(a_t | s_t)}
 
-   .. math::
+This gradient shows how the log-probability of taking action \( a_t \) at state \( s_t \) changes with respect to the parameters \( \theta \).
 
-      J(\pi) = \mathbb{E}_\pi \left[ G_t \right]
+### Step 3: Expectation and Sampling
 
-   where \( J(\pi) \) is the expected return under policy \( \pi \).
+Since the expectation is taken over the trajectory distribution, we can approximate it using Monte Carlo sampling. We can sample trajectories \( \tau \) from the policy \( \pi_\theta \) and compute the gradient for each trajectory:
 
-3. **The Policy Gradient Theorem**
-   ===============================
+.. math::
+    \nabla_\theta J(\theta) \approx \frac{1}{N} \sum_{i=1}^{N} \nabla_\theta \log \pi_\theta(a_t | s_t) R_t
 
-   To optimize the policy, we seek the gradient of \( J(\pi) \) with respect to the policy parameters. The key idea is to compute the gradient of the expected return by differentiating under the expectation.
+where \( N \) is the number of sampled trajectories. This approximation is widely used in policy gradient methods such as REINFORCE.
 
-   The objective function \( J(\pi) \) is:
+### Step 4: The Policy Gradient Descent Update
 
-   .. math::
+Once we have the gradient \( \nabla_\theta J(\theta) \), we can update the policy parameters using gradient descent:
 
-      J(\pi) = \mathbb{E}_\pi \left[ \sum_{t=0}^{T} \gamma^t R_{t+1} \right]
+.. math::
+    \theta_{t+1} = \theta_t + \alpha \nabla_\theta J(\theta_t)
 
-   Now, the gradient of \( J(\pi) \) with respect to the policy \( \pi \) is:
+where \( \alpha \) is the learning rate. This update rule guides the policy towards higher expected rewards by adjusting the parameters in the direction of the gradient.
 
-   .. math::
+### Conclusion
 
-      \nabla_\theta J(\pi_\theta) = \nabla_\theta \mathbb{E}_\pi \left[ \sum_{t=0}^{T} \gamma^t R_{t+1} \right]
-
-   Using the **log-derivative trick**, we can express the gradient as:
-
-   .. math::
-
-      \nabla_\theta J(\pi_\theta) = \mathbb{E}_\pi \left[ \sum_{t=0}^{T} \gamma^t R_{t+1} \nabla_\theta \log \pi_\theta(a_t | s_t) \right]
-
-   This is the **policy gradient** formula, where:
-
-   - \( \log \pi_\theta(a_t | s_t) \) is the log of the probability of taking action \( a_t \) in state \( s_t \) under policy \( \pi_\theta \),
-   - \( \nabla_\theta \log \pi_\theta(a_t | s_t) \) is the gradient of the log-probability with respect to the policy parameters \( \theta \).
-
-4. **Estimating the Gradient: Monte Carlo and Temporal Difference**
-   ===============================================================
-
-   To estimate the gradient in practice, we can use two main methods:
-   
-   - **Monte Carlo estimation**: This method uses the complete return \( G_t \) from each trajectory to estimate the gradient.
-   - **Temporal Difference (TD) estimation**: Instead of using the full return, TD methods estimate the return based on a bootstrapped estimate of the value function.
-
-   The **Monte Carlo estimate** of the gradient is:
-
-   .. math::
-
-      \hat{\nabla}_\theta J(\pi_\theta) = \frac{1}{N} \sum_{i=1}^{N} \sum_{t=0}^{T} \gamma^t R_{t+1} \nabla_\theta \log \pi_\theta(a_t | s_t)
-
-   The **TD estimate** of the gradient, where we use a value function approximation \( V^\pi(s_t) \), is:
-
-   .. math::
-
-      \hat{\nabla}_\theta J(\pi_\theta) = \frac{1}{N} \sum_{i=1}^{N} \sum_{t=0}^{T} \delta_t \nabla_\theta \log \pi_\theta(a_t | s_t)
-
-   where \( \delta_t \) is the **TD error**, defined as:
-
-   .. math::
-
-      \delta_t = R_{t+1} + \gamma V^\pi(s_{t+1}) - V^\pi(s_t)
-
-5. **Conclusion**
-   ==============
-
-   The policy gradient theorem provides a way to compute the gradient of the expected return with respect to the parameters of a policy. This allows us to optimize the policy using gradient ascent methods. Both Monte Carlo and Temporal Difference methods can be used to estimate the gradient in practice, with Temporal Difference often being more efficient in real-world applications.
-
-   The key takeaway is that policy gradient methods allow us to directly optimize the policy by using the gradient of the objective function, making them a powerful tool in deep reinforcement learning.
-
+The policy gradient method is a powerful approach for reinforcement learning, as it directly optimizes the policy by following the gradient of expected return. The derived proof provides the foundation for many policy-based methods in the field of reinforcement learning.
