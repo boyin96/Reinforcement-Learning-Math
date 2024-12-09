@@ -14,7 +14,7 @@ Policy Gradient Theorem
 --------------------------------------
 
 .. important:: 
-    :math:`\nabla_\theta J(\theta)=\sum_{s \in \mathcal{S}} d^\pi(s) \sum_{a \in \mathcal{A}} Q^\pi(s, a) \nabla_\theta \pi_\theta(a \mid s)=\mathbb{E}_{\pi_\theta}\left[\nabla_\theta \log \pi_\theta(s, a) Q^{\pi_\theta}(s, a)\right]`
+    :math:`\nabla_\theta J(\theta)=\sum_{s \in \mathcal{S}} d^\pi(s) \sum_{a \in \mathcal{A}} Q^\pi(s, a) \nabla_\theta \pi_\theta(a \mid s)=\mathbb{E}_{\pi_\theta}\left[\nabla_\theta \log \pi_\theta(s, a) Q^{\pi_\theta}(s, a)\right]`.
 
 
 Proof of Policy Gradient Theorem
@@ -28,15 +28,21 @@ Start with state-value function,
     =&\nabla _{\theta}\left( \sum_{a\in \mathcal{A}}{\pi _{\theta}}(a\mid s)Q^{\pi}(s,a) \right)\\
     =&\sum_{a\in \mathcal{A}}{\left( \nabla _{\theta}\pi _{\theta}(a\mid s)Q^{\pi}(s,a)+\pi _{\theta}(a\mid s)\nabla _{\theta}Q^{\pi}(s,a) \right)}\\
     =&\sum_{a\in \mathcal{A}}{\left( \nabla _{\theta}\pi _{\theta}(a\mid s)Q^{\pi}(s,a)+\pi _{\theta}(a\mid s)\nabla _{\theta}\left( \mathcal{R} _{s}^{a}+\gamma\sum_{s^{\prime}}{P}\left( s^{\prime}\mid s,a \right) V^{\pi}\left( s^{\prime} \right) \right) \right)}\\
-    =&\sum_{a\in \mathcal{A}}{\left( \nabla _{\theta}\pi _{\theta}(a\mid s)Q^{\pi}(s,a)+\gamma\pi _{\theta}(a\mid s)\sum_{s^{\prime}}{P}\left( s^{\prime}\mid s,a \right) \nabla _{\theta}V^{\pi}\left( s^{\prime} \right) \right)}\\
+    =&\sum_{a\in \mathcal{A}}{\left( \nabla _{\theta}\pi _{\theta}(a\mid s)Q^{\pi}(s,a)+\gamma\pi _{\theta}(a\mid s)\sum_{s^{\prime}}{P}\left( s^{\prime}\mid s,a \right) \nabla _{\theta}V^{\pi}\left( s^{\prime} \right) \right)}.\\
     \end{aligned}
 
-We can get:
+Then, we can get,
 
 .. important::
     
     .. math::
-        \nabla_\theta V^\pi(s)=\sum_{a \in \mathcal{A}}\left(\nabla_\theta \pi_\theta(a \mid s) Q^\pi(s, a)+\pi_\theta(a \mid s) \sum_{s^{\prime}} P\left(s^{\prime} \mid s, a\right) \nabla_\theta V^\pi\left(s^{\prime}\right)\right)
+        \nabla_\theta V^\pi(s)=\sum_{a \in \mathcal{A}}\left(\nabla_\theta \pi_\theta(a \mid s) Q^\pi(s, a)+\gamma\pi_\theta(a \mid s) \sum_{s^{\prime}} P\left(s^{\prime} \mid s, a\right) \nabla_\theta V^\pi\left(s^{\prime}\right)\right).
+
+Define that
+
+.. math::
+    \rho^\pi\left(s \rightarrow s^{\prime}, k=1\right)=\sum_a \pi_\theta(a \mid s) P\left(s^{\prime} \mid s, a\right).
+
 
 
 
