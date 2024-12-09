@@ -43,11 +43,11 @@ Define that
 .. math::
     \rho^\pi\left(s \rightarrow s^{\prime}, k=1\right)=\sum_a \pi_\theta(a \mid s) P\left(s^{\prime} \mid s, a\right).
 
-Let :math:`\phi(s)=\sum_{a \in \mathcal{A}} \nabla_\theta \pi_\theta(a \mid s) Q^\pi(s, a)`,
+Let :math:`\phi(s)=\sum_{a \in \mathcal{A}} \nabla_\theta \pi_\theta(a \mid s) Q^\pi(s, a)`, we have,
 
 .. math::
     \begin{aligned}
-    	&\nabla _{\theta}V^{\pi}(s)\\
+    	\nabla _{\theta}V^{\pi}(s)\\
     	=&\phi (s)+\gamma \sum_a{\pi _{\theta}}(a\mid s)\sum_{s^{\prime}}{P}\left( s^{\prime}\mid s,a \right) \nabla _{\theta}V^{\pi}\left( s^{\prime} \right)\\
     	=&\phi (s)+\gamma \sum_{s^{\prime}}{\sum_a{\pi _{\theta}}}(a\mid s)P\left( s^{\prime}\mid s,a \right) \nabla _{\theta}V^{\pi}\left( s^{\prime} \right)\\
     	=&\phi (s)+\gamma \sum_{s^{\prime}}{\rho ^{\pi}}\left( s\rightarrow s^{\prime},1 \right) \nabla _{\theta}V^{\pi}\left( s^{\prime} \right)\\
@@ -57,10 +57,12 @@ Let :math:`\phi(s)=\sum_{a \in \mathcal{A}} \nabla_\theta \pi_\theta(a \mid s) Q
     	=&\sum_{x\in \mathcal{S}}{\sum_{k=0}^{\infty}{\gamma ^k\rho ^{\pi}}}(s\rightarrow x,k)\phi (x).\\
     \end{aligned}
 
+By putting it into the objective function, we can obtain,
+
 .. math::
     \begin{aligned}
     	\nabla _{\theta}J(\theta )&=\nabla _{\theta}V^{\pi}\left( s_0 \right)\\
-    	&=\sum_s{\sum_{k=0}^{\infty}{\gamma ^k\rho ^{\pi}}}\left( s_0\rightarrow s,k \right) \phi (s)\\
+    	=\sum_s{\sum_{k=0}^{\infty}{\gamma ^k\rho ^{\pi}}}\left( s_0\rightarrow s,k \right) \phi (s)\\
     	&=\sum_s{\eta}(s)\phi (s)\\
     	&=\left( \sum_s{\eta}(s) \right) \sum_s{\frac{\eta (s)}{\sum_s{\eta}(s)}}\phi (s)\\
     	&\propto \sum_s{\frac{\eta (s)}{\sum_s{\eta}(s)}}\phi (s)\\
@@ -68,5 +70,14 @@ Let :math:`\phi(s)=\sum_{a \in \mathcal{A}} \nabla_\theta \pi_\theta(a \mid s) Q
     \end{aligned}
 
 where :math:`\eta(s)=\sum_{k=0}^{\infty} \gamma ^k\rho^\pi\left(s_0 \rightarrow s, k\right)`.
+
+Finally,
+
+.. math::
+    \begin{aligned}
+    \nabla_\theta J(\theta) & \propto \sum_{s \in \mathcal{S}} d^\pi(s) \sum_{a \in \mathcal{A}} Q^\pi(s, a) \nabla_\theta \pi_\theta(a \mid s) \\
+    & =\sum_{s \in \mathcal{S}} d^\pi(s) \sum_{a \in \mathcal{A}} \pi_\theta(a \mid s) Q^\pi(s, a) \frac{\nabla_\theta \pi_\theta(a \mid s)}{\pi_\theta(a \mid s)} \\
+    & =\mathbb{E}_\pi\left[Q^\pi(s, a) \nabla_\theta \ln \pi_\theta(a \mid s)\right] \quad \textbf{Q.E.D.}
+    \end{aligned}
 
 The policy gradient method is a powerful approach for reinforcement learning, as it directly optimizes the policy by following the gradient of expected return. The derived proof provides the foundation for many policy-based methods in the field of reinforcement learning.
