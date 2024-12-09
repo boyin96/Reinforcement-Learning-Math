@@ -58,4 +58,5 @@ Let :math:`\phi(s)=\sum_{a \in \mathcal{A}} \nabla_\theta \pi_\theta(a \mid s) Q
     \end{aligned}
 
 
+
 The policy gradient method is a powerful approach for reinforcement learning, as it directly optimizes the policy by following the gradient of expected return. The derived proof provides the foundation for many policy-based methods in the field of reinforcement learning.
