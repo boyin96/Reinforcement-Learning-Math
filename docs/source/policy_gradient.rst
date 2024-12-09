@@ -21,6 +21,7 @@ Proof of Policy Gradient Theorem
 --------------------------------------
 
 Start with state-value function,
+
 .. math::
     \begin{aligned}
     \nabla _{\theta}V^{\pi}(s)\\
