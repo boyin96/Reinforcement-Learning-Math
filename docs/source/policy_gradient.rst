@@ -14,7 +14,7 @@ Policy Gradient Theorem
 --------------------------------------
 
 .. important:: 
-    :math:`\nabla_\theta J(\theta)=\mathbb{E}_{\pi_\theta}\left[\nabla_\theta \log \pi_\theta(s, a) Q^{\pi_\theta}(s, a)\right]`
+    :math:`\nabla_\theta J(\theta)=\sum_{s \in \mathcal{S}} d^\pi(s) \sum_{a \in \mathcal{A}} Q^\pi(s, a) \nabla_\theta \pi_\theta(a \mid s)=\mathbb{E}_{\pi_\theta}\left[\nabla_\theta \log \pi_\theta(s, a) Q^{\pi_\theta}(s, a)\right]`
 
 
 Proof of Policy Gradient Theorem
@@ -22,7 +22,7 @@ Proof of Policy Gradient Theorem
 
 .. math::
     \begin{aligned}
-    & \nabla_\theta V^\pi(s) \\
+    \nabla_\theta V^\pi(s) \\
     = & \nabla_\theta\left(\sum_{a \in \mathcal{A}} \pi_\theta(a \mid s) Q^\pi(s, a)\right) \\
     = & \sum_{a \in \mathcal{A}}\left(\nabla_\theta \pi_\theta(a \mid s) Q^\pi(s, a)+\pi_\theta(a \mid s) \nabla_\theta Q^\pi(s, a)\right) \\
     = & \sum_{a \in \mathcal{A}}\left(\nabla_\theta \pi_\theta(a \mid s) Q^\pi(s, a)+\pi_\theta(a \mid s) \nabla_\theta \sum_{s^{\prime}, r} P\left(s^{\prime}, r \mid s, a\right)\left(r+V^\pi\left(s^{\prime}\right)\right)\right) \\
