@@ -6,7 +6,7 @@ The policy gradient method is a key technique in reinforcement learning, aiming 
 Let the objective be the maximization of the expected return:
 
 .. math::
-    J(\theta)=\sum_{s \in \mathcal{S}} d^\pi(s) V^\pi(s)=\sum_{s \in \mathcal{S}} d^\pi(s) \sum_{a \in \mathcal{A}} \pi_\theta(a \mid s) Q^\pi(s, a)
+    J(\theta)=\sum_{s \in \mathcal{S}} d^\pi(s) V^\pi(s)=\sum_{s \in \mathcal{S}} d^\pi(s) \sum_{a \in \mathcal{A}} \pi_\theta(a \mid s) Q^\pi(s, a),
 
 where :math:`d^\pi(s)` is the stationary distribution of Markov chain. For simplicity, all subsequent funcitons related to :math:`\pi` eliminate the subscript of :math:`\theta`.
 
@@ -53,10 +53,20 @@ Let :math:`\phi(s)=\sum_{a \in \mathcal{A}} \nabla_\theta \pi_\theta(a \mid s) Q
     	=&\phi (s)+\gamma \sum_{s^{\prime}}{\rho ^{\pi}}\left( s\rightarrow s^{\prime},1 \right) \nabla _{\theta}V^{\pi}\left( s^{\prime} \right)\\
     	=&\phi (s)+\gamma \sum_{s^{\prime}}{\rho ^{\pi}}\left( s\rightarrow s^{\prime},1 \right) \left[ \phi \left( s^{\prime} \right) +\gamma \sum_{s^{\prime\prime}}{\rho ^{\pi}}\left( s^{\prime}\rightarrow s^{\prime\prime},1 \right) \nabla _{\theta}V^{\pi}\left( s^{\prime\prime} \right) \right]\\
     	=&\phi (s)+\gamma \sum_{s^{\prime}}{\rho ^{\pi}}\left( s\rightarrow s^{\prime},1 \right) \phi \left( s^{\prime} \right) +\gamma ^2\sum_{s^{\prime\prime}}{\rho ^{\pi}}\left( s\rightarrow s^{\prime\prime},2 \right) \nabla _{\theta}V^{\pi}\left( s^{\prime\prime} \right)\\
-    	=&\phi (s)+\gamma \sum_{s^{\prime}}{\rho ^{\pi}}\left( s\rightarrow s^{\prime},1 \right) \phi \left( s^{\prime} \right) +\gamma ^2\sum_{s^{\prime\prime}}{\rho ^{\pi}}\left( s\rightarrow s^{\prime\prime},2 \right) \phi \left( s^{\prime\prime} \right) +\gamma ^3\sum_{s^{\prime\prime\prime}}{\rho ^{\pi}}\left( s\rightarrow s^{\prime\prime\prime},3 \right) \nabla _{\theta}V^{\pi}\left( s^{\prime\prime\prime} \right)\\
+    	=&\dots\\
     	=&\sum_{x\in \mathcal{S}}{\sum_{k=0}^{\infty}{\gamma ^k\rho ^{\pi}}}(s\rightarrow x,k)\phi (x).\\
     \end{aligned}
 
+.. math::
+    \begin{aligned}
+    	\nabla _{\theta}J(\theta )&=\nabla _{\theta}V^{\pi}\left( s_0 \right)\\
+    	&=\sum_s{\sum_{k=0}^{\infty}{\gamma ^k\rho ^{\pi}}}\left( s_0\rightarrow s,k \right) \phi (s)\\
+    	&=\sum_s{\eta}(s)\phi (s)\\
+    	&=\left( \sum_s{\eta}(s) \right) \sum_s{\frac{\eta (s)}{\sum_s{\eta}(s)}}\phi (s)\\
+    	&\propto \sum_s{\frac{\eta (s)}{\sum_s{\eta}(s)}}\phi (s)\\
+    	&=\sum_s{d^{\pi}}(s)\sum_a{\nabla _{\theta}}\pi _{\theta}(a\mid s)Q^{\pi}(s,a),\\
+    \end{aligned}
 
+where :math:`\eta(s)=\sum_{k=0}^{\infty} \gamma ^k\rho^\pi\left(s_0 \rightarrow s, k\right)`.
 
 The policy gradient method is a powerful approach for reinforcement learning, as it directly optimizes the policy by following the gradient of expected return. The derived proof provides the foundation for many policy-based methods in the field of reinforcement learning.
