@@ -41,6 +41,7 @@ This section provides the notations and definitions commonly used in reinforceme
 .. note::
 
    In this document, we adopt the following conventions:
+   
    - **Uppercase letters** represent **random variables** or **functions**, such as :math:`S, A, R`, etc.
    - **Calligraphic uppercase letters** represent **sets**, such as :math:`\mathcal{S}, \mathcal{A}, \mathcal{R}`, etc.
    - **Lowercase letters** represent **deterministic values**, such as :math:`s, a , r`, etc.
