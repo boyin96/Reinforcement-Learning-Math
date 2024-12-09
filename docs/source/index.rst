@@ -1,7 +1,7 @@
-Reinforcement Learning: Mathematical Derivations
-===================================
+Reinforcement Learning Math
+================================================
 
-Welcome to the documentation for **Reinforcement Learning: Mathematical Derivations**. This project focuses on providing detailed mathematical foundations and derivations in the field of reinforcement learning (RL), with an emphasis on deep reinforcement learning (DRL) methods. The aim is to build a comprehensive and intuitive guide to understanding the theoretical underpinnings of RL algorithms.
+Welcome to the documentation for **Reinforcement Learning Math**. This project focuses on providing detailed mathematical foundations and derivations in the field of reinforcement learning (RL), with an emphasis on deep reinforcement learning (DRL) methods. The aim is to build a comprehensive and intuitive guide to understanding the theoretical underpinnings of RL algorithms.
 
 Overview
 -----------
