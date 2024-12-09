@@ -26,13 +26,15 @@ Start with state-value function,
     \nabla_\theta V^\pi(s) \\
     = & \nabla_\theta\left(\sum_{a \in \mathcal{A}} \pi_\theta(a \mid s) Q^\pi(s, a)\right) \\
     = & \sum_{a \in \mathcal{A}}\left(\nabla_\theta \pi_\theta(a \mid s) Q^\pi(s, a)+\pi_\theta(a \mid s) \nabla_\theta Q^\pi(s, a)\right) \\
-    = & \sum_{a \in \mathcal{A}}\left(\nabla_\theta \pi_\theta(a \mid s) Q^\pi(s, a)+\pi_\theta(a \mid s) \nabla_\theta \mathcal{R}_s^a+\gamma \sum_{s^{\prime} \in \mathcal{S}}  P\left(s^{\prime} \mid s, a\right)V^\pi\left(s^{\prime}\right)\right) \\
+    = & \sum_{a \in \mathcal{A}}\left(\nabla_\theta \pi_\theta(a \mid s) Q^\pi(s, a)+\pi_\theta(a \mid s) \nabla_\theta \mathcal{R}_s^a+\gamma \sum_{s^{\prime} \in \mathcal{S}}P\left(s^{\prime} \mid s,a\right)V^\pi\left(s^{\prime}\right)\right) \\
     = & \sum_{a \in \mathcal{A}}\left(\nabla_\theta \pi_\theta(a \mid s) Q^\pi(s, a)+\pi_\theta(a \mid s) \sum_{s^{\prime}, r} P\left(s^{\prime}, r \mid s, a\right) \nabla_\theta V^\pi\left(s^{\prime}\right)\right) \\
     = & \sum_{a \in \mathcal{A}}\left(\nabla_\theta \pi_\theta(a \mid s) Q^\pi(s, a)+\pi_\theta(a \mid s) \sum_{s^{\prime}} P\left(s^{\prime} \mid s, a\right) \nabla_\theta V^\pi\left(s^{\prime}\right)\right)
     \end{aligned}
 
-.. math::
-    \nabla_\theta V^\pi(s)=\sum_{a \in \mathcal{A}}\left(\nabla_\theta \pi_\theta(a \mid s) Q^\pi(s, a)+\pi_\theta(a \mid s) \sum_{s^{\prime}} P\left(s^{\prime} \mid s, a\right) \nabla_\theta V^\pi\left(s^{\prime}\right)\right)
+We can get:
+.. attention::
+    .. math::
+        \nabla_\theta V^\pi(s)=\sum_{a \in \mathcal{A}}\left(\nabla_\theta \pi_\theta(a \mid s) Q^\pi(s, a)+\pi_\theta(a \mid s) \sum_{s^{\prime}} P\left(s^{\prime} \mid s, a\right) \nabla_\theta V^\pi\left(s^{\prime}\right)\right)
 
 
 
