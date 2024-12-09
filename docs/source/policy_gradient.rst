@@ -14,7 +14,7 @@ Policy Gradient Theorem
 --------------------------------------
 
 .. important:: 
-    :math:`\nabla_\theta J(\theta)=\sum_{s } \rho^\pi(s) \sum_{a } Q^\pi(s, a) \nabla_\theta \pi_\theta(a \mid s)=\mathbb{E}_{\pi_\theta}\left[\nabla_\theta \log \pi_\theta(s, a) Q^{\pi_\theta}(s, a)\right]`.
+    :math:`\nabla_\theta J(\theta)=\sum_{s } \rho^\pi(s) \sum_{a } \nabla_\theta \pi_\theta(a \mid s) Q^\pi(s, a)=\mathbb{E}_{\pi_\theta}\left[\nabla_\theta \log \pi_\theta(s, a) Q^{\pi_\theta}(s, a)\right]`.
 
 
 Proof of Policy Gradient Theorem
@@ -61,9 +61,9 @@ By putting it into the objective function, we can obtain,
 
 .. math::
     \begin{aligned}
-    	\nabla _{\theta}J(\theta )&=\nabla _{\theta}\sum_{s_0}\rho_0\left( s_0 \right)V^{\pi}\left( s_0 \right)=\sum_{s_0}\sum_s{\sum_{k=0}^{\infty}{\gamma ^k\rho_0\left( s_0 \right)\rho ^{\pi}}}\left( s_0\rightarrow s,k \right) \phi (s)\\
+    	\nabla _{\theta}J(\theta )&=\sum_{s_0}\rho_0\left( s_0 \right)\nabla _{\theta}V^{\pi}\left( s_0 \right)=\sum_{s_0}\sum_s{\sum_{k=0}^{\infty}{\gamma ^k\rho_0\left( s_0 \right)\rho ^{\pi}}}\left( s_0\rightarrow s,k \right) \phi (s)\\
     	&=\sum_s\rho^\pi(s)\phi (s)\\
-    	&=\sum_s{d^{\pi}}(s)\sum_a{\nabla _{\theta}}\pi _{\theta}(a\mid s)Q^{\pi}(s,a),\\
+    	&=\sum_s{\rho^{\pi}}(s)\sum_a{\nabla _{\theta}}\pi _{\theta}(a\mid s)Q^{\pi}(s,a),\\
     \end{aligned}
 
 where :math:`\rho^\pi(s)=\sum_{s_0}\sum_{k=0}^{\infty} \gamma ^k\rho_0\left( s_0 \right)\rho^\pi\left(s_0 \rightarrow s, k\right)` and :math:`\rho_0\left( s_0 \right)` denotes initial state probability distribution.
