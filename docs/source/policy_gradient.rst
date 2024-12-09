@@ -8,9 +8,16 @@ Let the objective be the maximization of the expected return:
 .. math::
     J(\theta)=\sum_{s \in \mathcal{S}} d^\pi(s) V^\pi(s)=\sum_{s \in \mathcal{S}} d^\pi(s) \sum_{a \in \mathcal{A}} \pi_\theta(a \mid s) Q^\pi(s, a)
 
-where ..math:`d^\pi(s)` is the stationary distribution of Markov chain.
+where :math:`d^\pi(s)` is the stationary distribution of Markov chain. For simplicity, all subsequent expressions related to :math:`\pi` eliminate the subscript of :math:`\theta`.
 
-### Step 1: The Policy Gradient Theorem
+Policy Gradient Theorem
+--------------------------------------
+
+.. important:: 
+    \nabla_\theta J(\theta)=\mathbb{E}_{\pi_\theta}\left[\nabla_\theta \log \pi_\theta(s, a) Q^{\pi_\theta}(s, a)\right]
+
+Proof of Policy Gradient Theorem
+--------------------------------------
 
 We want to find the gradient of \( J(\theta) \) with respect to the policy parameters \( \theta \). Applying the score function gradient:
 
