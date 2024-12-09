@@ -33,6 +33,7 @@ Start with state-value function,
 
 We can get:
 .. attention::
+    
     .. math::
         \nabla_\theta V^\pi(s)=\sum_{a \in \mathcal{A}}\left(\nabla_\theta \pi_\theta(a \mid s) Q^\pi(s, a)+\pi_\theta(a \mid s) \sum_{s^{\prime}} P\left(s^{\prime} \mid s, a\right) \nabla_\theta V^\pi\left(s^{\prime}\right)\right)
 
