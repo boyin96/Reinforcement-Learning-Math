@@ -37,3 +37,11 @@ This section provides the notations and definitions commonly used in reinforceme
      - The value of (state, action) pair when we follow a policy :math:`\pi`, :math:`Q^\pi(s, a) = \mathbb{E}_{a \sim \pi}[G_t | S_t = s, A_t = a]`.
    * - :math:`A(s, a)`
      - Advantage function, :math:`A(s, a) = Q(s, a) - V(s)`.
+
+.. note::
+
+   In this document, we adopt the following conventions:
+   
+   - **Uppercase letters** represent **random variables**, such as \( X \), \( Y \), \( Z \), etc.
+   - **Calligraphic uppercase letters** represent **sets**, such as \( \mathcal{X} \), \( \mathcal{A} \), \( \mathcal{R} \), etc.
+   - **Lowercase letters** represent **deterministic values**, such as \( x \), \( a \), \( r \), etc
