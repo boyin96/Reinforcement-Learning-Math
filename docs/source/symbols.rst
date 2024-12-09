@@ -34,7 +34,7 @@ This section provides the notations and definitions commonly used in reinforceme
    * - :math:`Q(s, a)`
      - Action-value function assesses the expected return of a pair of state and action :math:`(s, a)`, :math:`Q_w(.)` is a value function parameterized by :math:`w`.
    * - :math:`Q^\pi(s, a)`
-     - The value of (state, action) pair when we follow a policy :math:`\pi`, :math:`Q^\pi(s, a) = \mathbb{E}_{a \sim \pi}[G_t | S_t = s, A_t = a]`.
+     - The value of (state, action) pair when we follow a policy :math:`\pi`, :math:`Q^\pi(s, a) = \mathbb{E}_{\pi}[G_t | S_t = s, A_t = a]`.
    * - :math:`A(s, a)`
      - Advantage function, :math:`A(s, a) = Q(s, a) - V(s)`.
 
@@ -42,6 +42,6 @@ This section provides the notations and definitions commonly used in reinforceme
 
    In this document, we adopt the following conventions:
    
-   - **Uppercase letters** represent **random variables**, such as :math:`\( X \), \( Y \), \( Z \)`, etc.
-   - **Calligraphic uppercase letters** represent **sets**, such as :math:`\( \mathcal{X} \), \( \mathcal{A} \), \( \mathcal{R} \)`, etc.
-   - **Lowercase letters** represent **deterministic values**, such as :math:`\( x \), \( a \), \( r \)`, etc.
+   - **Uppercase letters** represent **random variables** or **functions**, such as :math:` S, A, R`, etc.
+   - **Calligraphic uppercase letters** represent **sets**, such as :math:`\mathcal{S}, \mathcal{A}, \mathcal{R}`, etc.
+   - **Lowercase letters** represent **deterministic values**, such as :math:`s, a , r`, etc.
