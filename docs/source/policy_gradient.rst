@@ -78,7 +78,7 @@ Finally,
         \begin{aligned}
         \nabla_\theta J(\theta) & \propto \sum_{s \in \mathcal{S}} d^\pi(s) \sum_{a \in \mathcal{A}} Q^\pi(s, a) \nabla_\theta \pi_\theta(a \mid s) \\
         & =\sum_{s \in \mathcal{S}} d^\pi(s) \sum_{a \in \mathcal{A}} \pi_\theta(a \mid s) Q^\pi(s, a) \frac{\nabla_\theta \pi_\theta(a \mid s)}{\pi_\theta(a \mid s)} \\
-        & =\mathbb{E}_{\pi_\theta}\left[Q^{\pi_\theta}(s, a) \nabla_\theta \log \pi_\theta(a \mid s)\right] \quad \textbf{Q.E.D.}
+        & =\mathbb{E}_{\pi_\theta}\left[\nabla_\theta \log \pi_\theta(a \mid s)Q^{\pi_\theta}(s, a) \right] \quad \textbf{Q.E.D.}
         \end{aligned}
 
 References
