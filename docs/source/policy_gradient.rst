@@ -61,8 +61,7 @@ By putting it into the objective function, we can obtain,
 
 .. math::
     \begin{aligned}
-    	\nabla _{\theta}J(\theta )&=\nabla _{\theta}V^{\pi}\left( s_0 \right)\\
-    	=\sum_s{\sum_{k=0}^{\infty}{\gamma ^k\rho ^{\pi}}}\left( s_0\rightarrow s,k \right) \phi (s)\\
+    	\nabla _{\theta}J(\theta )&=\nabla _{\theta}V^{\pi}\left( s_0 \right)=\sum_s{\sum_{k=0}^{\infty}{\gamma ^k\rho ^{\pi}}}\left( s_0\rightarrow s,k \right) \phi (s)\\
     	&=\sum_s{\eta}(s)\phi (s)\\
     	&=\left( \sum_s{\eta}(s) \right) \sum_s{\frac{\eta (s)}{\sum_s{\eta}(s)}}\phi (s)\\
     	&\propto \sum_s{\frac{\eta (s)}{\sum_s{\eta}(s)}}\phi (s)\\
