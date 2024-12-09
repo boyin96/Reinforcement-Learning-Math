@@ -1,22 +1,22 @@
-Welcome to Lumache's documentation!
+Reinforcement Learning: Mathematical Derivations
 ===================================
 
-**Lumache** (/lu'make/) is a Python library for cooks and food lovers
-that creates recipes mixing random ingredients.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
+Welcome to the documentation for **Reinforcement Learning: Mathematical Derivations**. This project focuses on providing detailed mathematical foundations and derivations in the field of reinforcement learning (RL), with an emphasis on deep reinforcement learning (DRL) methods. The aim is to build a comprehensive and intuitive guide to understanding the theoretical underpinnings of RL algorithms.
 
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+Overview
+-----------
 
-.. note::
+Reinforcement learning is a powerful paradigm for decision-making and control tasks. It involves agents learning to make decisions by interacting with an environment to maximize cumulative rewards. To facilitate a deeper understanding, this documentation includes:
 
-   This project is under active development.
+- A formal definition of commonly used mathematical symbols in reinforcement learning.
+- Detailed derivations of key algorithms, starting with policy gradient methods in deep reinforcement learning.
 
 Contents
---------
+---------
 
 .. toctree::
+   :maxdepth: 2
+   :caption: Contents
 
-   usage
-   api
+   symbols
+   policy_gradient
