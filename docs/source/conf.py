@@ -2,8 +2,8 @@
 
 # -- Project information
 
-project = 'RL'
-copyright = '2024, Bo'
+project = 'RL-Math'
+copyright = '2024, Borg'
 author = 'Bo Yin'
 
 release = '0.1'
