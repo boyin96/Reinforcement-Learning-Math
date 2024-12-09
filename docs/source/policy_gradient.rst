@@ -43,7 +43,19 @@ Define that
 .. math::
     \rho^\pi\left(s \rightarrow s^{\prime}, k=1\right)=\sum_a \pi_\theta(a \mid s) P\left(s^{\prime} \mid s, a\right).
 
+Let :math:`\phi(s)=\sum_{a \in \mathcal{A}} \nabla_\theta \pi_\theta(a \mid s) Q^\pi(s, a)`,
 
+.. math::
+    \begin{aligned}
+    	&\nabla _{\theta}V^{\pi}(s)\\
+    	=&\phi (s)+\gamma \sum_a{\pi _{\theta}}(a\mid s)\sum_{s^{\prime}}{P}\left( s^{\prime}\mid s,a \right) \nabla _{\theta}V^{\pi}\left( s^{\prime} \right)\\
+    	=&\phi (s)+\gamma \sum_{s^{\prime}}{\sum_a{\pi _{\theta}}}(a\mid s)P\left( s^{\prime}\mid s,a \right) \nabla _{\theta}V^{\pi}\left( s^{\prime} \right)\\
+    	=&\phi (s)+\gamma \sum_{s^{\prime}}{\rho ^{\pi}}\left( s\rightarrow s^{\prime},1 \right) \nabla _{\theta}V^{\pi}\left( s^{\prime} \right)\\
+    	=&\phi (s)+\gamma \sum_{s^{\prime}}{\rho ^{\pi}}\left( s\rightarrow s^{\prime},1 \right) \left[ \phi \left( s^{\prime} \right) +\gamma \sum_{s^{\prime\prime}}{\rho ^{\pi}}\left( s^{\prime}\rightarrow s^{\prime\prime},1 \right) \nabla _{\theta}V^{\pi}\left( s^{\prime\prime} \right) \right]\\
+    	=&\phi (s)+\gamma \sum_{s^{\prime}}{\rho ^{\pi}}\left( s\rightarrow s^{\prime},1 \right) \phi \left( s^{\prime} \right) +\gamma ^2\sum_{s^{\prime\prime}}{\rho ^{\pi}}\left( s\rightarrow s^{\prime\prime},2 \right) \nabla _{\theta}V^{\pi}\left( s^{\prime\prime} \right)\\
+    	=&\phi (s)+\gamma \sum_{s^{\prime}}{\rho ^{\pi}}\left( s\rightarrow s^{\prime},1 \right) \phi \left( s^{\prime} \right) +\gamma ^2\sum_{s^{\prime\prime}}{\rho ^{\pi}}\left( s\rightarrow s^{\prime\prime},2 \right) \phi \left( s^{\prime\prime} \right) +\gamma ^3\sum_{s^{\prime\prime\prime}}{\rho ^{\pi}}\left( s\rightarrow s^{\prime\prime\prime},3 \right) \nabla _{\theta}V^{\pi}\left( s^{\prime\prime\prime} \right)\\
+    	=&\sum_{x\in \mathcal{S}}{\sum_{k=0}^{\infty}{\gamma ^k\rho ^{\pi}}}(s\rightarrow x,k)\phi (x).\\
+    \end{aligned}
 
 
 The policy gradient method is a powerful approach for reinforcement learning, as it directly optimizes the policy by following the gradient of expected return. The derived proof provides the foundation for many policy-based methods in the field of reinforcement learning.
