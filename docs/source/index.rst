@@ -16,7 +16,6 @@ Contents
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents
 
    symbols
    policy_gradient
