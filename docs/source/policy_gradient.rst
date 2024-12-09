@@ -31,6 +31,7 @@ Start with state-value function,
     \end{aligned}
 
 We can get:
+
 .. attention::
     
     .. math::
