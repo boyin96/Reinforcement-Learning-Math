@@ -100,14 +100,14 @@ Consider the following constrained optimization problem,
 .. important::
 	
 	.. math::
-		\max _{\pi_0, \ldots, \pi_T} \mathbb{E}\left[\sum_{t=0}^T \mathcal{R}\left(s_t, a_t\right)\right] \text { s.t. } \quad \mathcal{H}\left(\pi_t\right) \geq \mathcal{H}_0, \forall t,
+		\max _{\pi_0, \ldots, \pi_T} \mathbb{E}\left[\sum_{t=0}^T \mathcal{R}\left(s_t, a_t\right)\right] \text { s.t. } \; \mathcal{H}\left(\pi_t\right) \geq \mathcal{H}_0,\quad \forall t,
 
 where :math:`\mathcal{H}_0` is a predefined minimum policy entropy threshold.
 
 Since the policy at time :math:`t` can only affect the future objective value, i.e.,
 
 .. math::
-\max_{\pi_0}\left(\mathbb{E}\left[\mathcal{R}\left(s_0, a_0\right)\right]+\max_{\pi_1}\left(\mathbb{E}[\ldots]+\max_{\pi_T} \mathbb{E}\left[\mathcal{R}\left(s_T, a_T\right)\right]\right)\right).
+	\max_{\pi_0}\left(\mathbb{E}\left[\mathcal{R}\left(s_0, a_0\right)\right]+\max_{\pi_1}\left(\mathbb{E}[\ldots]+\max_{\pi_T} \mathbb{E}\left[\mathcal{R}\left(s_T, a_T\right)\right]\right)\right).
 
 Starting from the last time step, we want to maximize rewards and encourage exploration, but at the same time we want to get close to the target entropy,
 
