@@ -32,8 +32,7 @@ templates_path = ['_templates']
 html_theme = 'sphinx_rtd_theme'
 
 html_theme_options = {
-    'globaltoc_collapse': False,
-    'globaltoc_includehidden': True
+    'collapse_navigation': False,
 }
 
 # -- Options for EPUB output
