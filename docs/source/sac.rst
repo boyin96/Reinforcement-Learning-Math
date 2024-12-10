@@ -104,6 +104,25 @@ Consider the following constrained optimization problem,
 
 where :math:`\mathcal{H}_0` is a predefined minimum policy entropy threshold.
 
+Since the policy at time :math:`t` can only affect the future objective value, i.e.,
+
+.. math::
+\max _{\pi_0}\left(\mathbb{E}\left[\mathcal{R}\left(s_0, a_0\right)\right]+\max _{\pi_1}\left(\mathbb{E}[\ldots]+\max _{\pi_T} \mathbb{E}\left[\mathcal{R}\left(s_T, a_T\right)\right]\right)\right).
+
+Starting from the last time step, we want to maximize rewards and encourage exploration, but at the same time we want to get close to the target entropy,
+
+.. math::
+\max _{\pi_T} \mathbb{E}_{\pi}\left[\mathcal{R}\left(\mathbf{s}_T, \mathbf{a}_T\right)\right]=\min _{\alpha_T \geq 0} \max _{\pi_T} \mathbb{E}\left[\mathcal{R}\left(\mathbf{s}_T, \mathbf{a}_T\right)+\alpha_T \mathcal{H}\left(\log \pi\left(\mathbf{a}_T \mid \mathbf{s}_T\right)\right)\right]-\alpha_T \mathcal{H},
+
+By repeating this process, we can learn the optimal temperature parameter in every step by minimizing the same objective function,
+
+.. important::
+	
+	.. math::
+
+	J(\alpha)=\mathbb{E}_{\pi_t}\left[-\alpha \log \pi_t\left(a_t \mid s_t\right)-\alpha \mathcal{H}_0\right]
+
+
 Algorithmic flow
 ------------------
 
