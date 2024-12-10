@@ -112,12 +112,12 @@ Since the policy at time :math:`t` can only affect the future objective value, i
 Starting from the last time step, we want to maximize rewards and encourage exploration, but at the same time we want to get close to the target entropy,
 
 .. math::
-	\max_{\pi_T} \mathbb{E}_{\pi}\left[\mathcal{R}\left(\mathbf{s}_T, \mathbf{a}_T\right)\right]=\min _{\alpha_T \geq 0} \max _{\pi_T} \mathbb{E}\left[\mathcal{R}\left(\mathbf{s}_T, \mathbf{a}_T\right)+\alpha_T \mathcal{H}\left(\log \pi\left(\mathbf{a}_T \mid \mathbf{s}_T\right)\right)\right]-\alpha_T \mathcal{H}.
+	\max_{\pi_T} \mathbb{E}_{\pi}\left[\mathcal{R}\left(s_T, a_T\right)\right]=\min_{\alpha_T \geq 0} \max_{\pi_T} \mathbb{E}_{\pi}\left[\mathcal{R}\left(s_T, a_T\right)-\alpha_T \log \pi\left(a_T \mid s_T\right)\right]-\alpha_T \mathcal{H}.
 
 Based on the above equation, we can solve for the optimal dual variable :math:`\alpha_T^*` as 
 
 .. math::
-\arg \min_{\alpha_T} \mathbb{E}_{\mathbf{s}_t, \mathbf{a}_t \sim \pi_t^*}\left[-\alpha_T \log \pi_T^*\left(\mathbf{a}_T \mid \mathbf{s}_T ; \alpha_T\right)-\alpha_T \mathcal{H}\right].
+	\arg \min_{\alpha_T} \mathbb{E}_{\mathbf{s}_t, \mathbf{a}_t \sim \pi_t^*}\left[-\alpha_T \log \pi_T^*\left(\mathbf{a}_T \mid \mathbf{s}_T ; \alpha_T\right)-\alpha_T \mathcal{H}\right].
 
 By repeating this process, we can learn the optimal temperature parameter in every step by minimizing the same objective function,
 
