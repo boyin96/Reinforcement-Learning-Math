@@ -19,6 +19,8 @@ This section provides the notations and definitions commonly used in reinforceme
      - Reward funciton, :math:`\mathcal{R}_s^a=\mathbb{E}\left[R_{t+1} \mid S_t=s, A_t=a\right]`.
    * - :math:`\mathcal{H}(\cdot)`
      - Entropy of the source, :math:`\mathcal{H}(X):=-\sum_{x \in \mathcal{X}} p(x) \log p(x)`.
+   * - :math:`\mathcal{D}`
+     - Replay buffer.
    * - :math:`S_t, A_t, R_t`
      - State, action, and reward at time step :math:`t` of one trajectory.
    * - :math:`\gamma`
