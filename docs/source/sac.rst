@@ -91,15 +91,16 @@ with gradient,
 
 where :math:`Z^{\pi_{\text {old }}}` is the partition function to normalize the distribution and :math:`\Pi` denotes a set of policies that can be readily tractable.
 
- Automating Entropy Adjustment 
+
+Automating Entropy Adjustment 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
- Consider the following constrained optimization problem,
+Consider the following constrained optimization problem,
 
 .. important::
 	
 	.. math::
-		\max _{\pi_0, \ldots, \pi_T} \mathbb{E}\left[\sum_{t=0}^T r\left(s_t, a_t\right)\right] \text { s.t. } \forall t, \mathcal{H}\left(\pi_t\right) \geq \mathcal{H}_0,
+		\max _{\pi_0, \ldots, \pi_T} \mathbb{E}\left[\sum_{t=0}^T \mathcal{R}\left(s_t, a_t\right)\right] \text { s.t. } \quad \mathcal{H}\left(\pi_t\right) \geq \mathcal{H}_0, \forall t,
 
 where :math:`\mathcal{H}_0` is a predefined minimum policy entropy threshold.
 
