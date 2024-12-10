@@ -4,7 +4,7 @@ Notations
 This section provides the notations and definitions commonly used in reinforcement learning. The following table outlines the symbols and their meanings.
 
 .. list-table::
-   :widths: 25 75
+   :widths: 20 80
    :header-rows: 1
 
    * - Symbol
@@ -32,11 +32,11 @@ This section provides the notations and definitions commonly used in reinforceme
    * - :math:`\mu(s)`
      - Deterministic policy.
    * - :math:`V(s)`
-     - State-value function of a given state :math:`s`, :math:`V_w(.)` is a value function parameterized by :math:`w`.
+     - State-value function of a given state :math:`s`, :math:`V_w(.)` is parameterized by :math:`w`.
    * - :math:`V^\pi(s)`
      - The value of state :math:`s` when we follow a policy :math:`\pi`, :math:`V^\pi(s) = \mathbb{E}_{\pi}[G_t | S_t = s]`.
    * - :math:`Q(s, a)`
-     - Action-value function of a given a pair of state and action :math:`(s, a)`, :math:`Q_w(.)` is a value function parameterized by :math:`w`.
+     - Action-value function of a given a pair of state and action :math:`(s, a)`, :math:`Q_w(.)` is parameterized by :math:`w`.
    * - :math:`Q^\pi(s, a)`
      - The value of (state, action) pair when we follow a policy :math:`\pi`, :math:`Q^\pi(s, a) = \mathbb{E}_{\pi}[G_t | S_t = s, A_t = a]`.
    * - :math:`A(s, a)`
