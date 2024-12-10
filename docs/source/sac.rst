@@ -18,8 +18,12 @@ Key features of SAC include:
 
 Theoretical Derivation
 -----------------------
+For ease of proof, consider a finite-horizon undiscounted return MDP, ignoring :math:`\gamma`, the objective function of SAC is as follows,
 
-Objective Function
+.. math::
+   J(\theta)=\sum_{t=0}^T \mathbb{E}_{\left(\mathbf{s}_t, \mathbf{a}_t\right) \sim \rho_\pi}\left[\mathcal{R}\left(\mathbf{s}_t, \mathbf{a}_t\right)+\alpha \mathcal{H}\left(\pi_\theta\left(\cdot \mid \mathbf{s}_t\right)\right)\right],
+
+where :math:`\alpha` controls how important the entropy term is, known as temperature parameter.
 
 In SAC, the objective is to maximize the expected cumulative reward while incorporating an entropy term to encourage exploration:
 
