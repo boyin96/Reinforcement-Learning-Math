@@ -92,7 +92,7 @@ with gradient,
 where :math:`Z^{\pi_{\text {old }}}` is the partition function to normalize the distribution and :math:`\Pi` denotes a set of policies that can be readily tractable.
 
 Algorithmic flow
-^^^^^^^^^^^^^^^^^^^
+------------------
 
 .. math::
     :nowrap:
