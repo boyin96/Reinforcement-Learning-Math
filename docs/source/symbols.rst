@@ -20,7 +20,7 @@ This section provides the notations and definitions commonly used in reinforceme
    * - :math:`\mathcal{H}(\cdot)`
      - Entropy of the source, :math:`\mathcal{H}(X):=-\sum_{x \in \mathcal{X}} p(x) \log p(x)`.
    * - :math:`S_t, A_t, R_t`
-     - State, action, and reward at time step :math:`t` of one trajectory.
+     - State, action, and reward at time step :math:`t` of one trajectory. Note that these are random variables at a given :math:`t` slot.
    * - :math:`\gamma`
      - Discount factor (:math:`0 < \gamma \leq 1`).
    * - :math:`G_t`
