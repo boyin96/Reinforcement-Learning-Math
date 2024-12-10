@@ -110,10 +110,10 @@ latex_elements = {
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, 'spinningup', 'Spinning Up Documentation',
-     [author], 1)
-]
+# man_pages = [
+#     (master_doc, 'spinningup', 'Spinning Up Documentation',
+#      [author], 1)
+# ]
 
 # -- Options for EPUB output
 epub_show_urls = 'footnote'
