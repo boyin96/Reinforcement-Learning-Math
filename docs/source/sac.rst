@@ -60,8 +60,8 @@ The SAC algorithm uses the following soft Bellman equation to iteratively update
 
 The policy is updated to maximize the soft Q-function while minimizing the entropy regularization term.
 
-Algorithm Steps
----------------
+Algorithmic flow
+-----------------
 
 1. **Initialize** the replay buffer, policy network, and Q-function network.
 2. **Sample a batch** of transitions :math:`(s, a, r, s')` from the replay buffer.
@@ -78,8 +78,12 @@ Algorithm Steps
 5. **Adjust Temperature** (optional): Update :math:`\alpha` to ensure entropy matches a target value.
 6. **Repeat** steps 2-5 until convergence.
 
-References
-----------
 
-1. Haarnoja, T., Zhou, A., Abbeel, P., & Levine, S. (2018). **Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor**. *Proceedings of the 35th International Conference on Machine Learning (ICML)*. [arXiv:1801.01290](https://arxiv.org/abs/1801.01290)
-2. Haarnoja, T., Zhou, A., Abbeel, P., & Levine, S. (2018). **Soft Actor-Critic Algorithms and Applications**. [arXiv:1812.05905](https://arxiv.org/abs/1812.05905)
+References
+-----------
+
+- `Soft Actor-Critic: Off-Policy Maximum Entropy Deep Reinforcement Learning with a Stochastic Actor <https://arxiv.org/abs/1801.01290>`_
+- `Soft Actor-Critic Algorithms and Applications <https://arxiv.org/abs/1812.05905>`_
+- https://docs.cleanrl.dev/rl-algorithms/sac/
+- https://hrl.boyuai.com/chapter/2/sac%E7%AE%97%E6%B3%95
+- https://spinningup.openai.com/en/latest/algorithms/sac.html
