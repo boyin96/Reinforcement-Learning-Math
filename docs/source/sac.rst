@@ -28,7 +28,7 @@ where :math:`\alpha` controls how important the entropy term is, known as temper
 Soft Q-Function and Soft Value Function
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The **soft Q-function** and **soft value function** are defined as follows:
+The soft Q-function and soft value function are defined as follows:
 
 1. **Soft Q-Function**:
    
@@ -36,11 +36,17 @@ The **soft Q-function** and **soft value function** are defined as follows:
 
       Q\left(s_t, a_t\right)=\mathcal{R}\left(s_t, a_t\right)+\gamma \mathbb{E}_{\pi_\theta}\left[V\left(s_{t+1}\right)\right],
 
-   where the soft value function :math:`V^{\text{soft}}(s)` is given by:
+   where the soft value function is given by:
    
    .. math::
 
      V\left(s_t\right)=\mathbb{E}_{\pi_\theta}\left[Q\left(s_t, a_t\right)-\alpha \log \pi\left(a_t \mid s_t\right)\right].
+
+   Thus,
+
+   .. math::
+
+   Q\left(s_t, a_t\right)=\mathcal{R}\left(s_t, a_t\right)+\gamma \mathbb{E}_{\pi_\theta}\left[Q\left(s_{t+1}, a_{t+1}\right)-\alpha \log \pi\left(a_{t+1} \mid s_{t+1}\right)\right]
 
 2. **Policy Objective**:
    The policy is updated to minimize the KL-divergence between the policy distribution and the exponentiated soft Q-function:
