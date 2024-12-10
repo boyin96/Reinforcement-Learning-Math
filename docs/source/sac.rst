@@ -42,19 +42,21 @@ The soft Q-function and soft value function are defined as follows:
    
    .. math::
 
-     V\left(s_t\right)=\mathbb{E}_{\pi_\theta}\left[Q\left(s_t, a_t\right)-\alpha \log \pi\left(a_t \mid s_t\right)\right].
+     V\left(s_t\right)=\mathbb{E}_{\pi_\theta}\left[Q\left(s_t, a_t\right)-\alpha \log \pi_\theta\left(a_t \mid s_t\right)\right].
 
    Thus,
 
    .. math::
 
-      Q\left(s_t, a_t\right)=\mathcal{R}\left(s_t, a_t\right)+\gamma \mathbb{E}_{\pi_\theta}\left[Q\left(s_{t+1}, a_{t+1}\right)-\alpha \log \pi\left(a_{t+1} \mid s_{t+1}\right)\right]
+      Q\left(s_t, a_t\right)=\mathcal{R}\left(s_t, a_t\right)+\gamma \mathbb{E}_{\pi_\theta}\left[Q\left(s_{t+1}, a_{t+1}\right)-\alpha \log \pi_\theta\left(a_{t+1} \mid s_{t+1}\right)\right]
 
 2. **Soft Q-function Update**: The soft Q-function parameters can be trained to minimize the soft Bellman residual,
 
-   .. math::
+   .. important::
       
-      J_Q(w)=\mathbb{E}_{\left(s_t, a_t\right) \sim \mathcal{D}}\left[\frac{1}{2}\left(Q_w\left(s_t, a_t\right)-\left(r\left(s_t, a_t\right)+\gamma \mathbb{E}_{s_{t+1} \sim \rho_\pi(s)}\left[V_{\bar{\psi}}\left(s_{t+1}\right)\right]\right)\right)^2\right],
+      .. math::
+         
+         J_Q(w)=\mathbb{E}_{\mathcal{D}}\left[\frac{1}{2}\left(Q_w\left(s_t, a_t\right)-\left(\mathcal{R}\left(s_t, a_t\right)+\gamma \mathbb{E}_{\pi_\theta}\left[V_{\bar{\psi}}\left(s_{t+1}\right)\right]\right)\right)^2\right],
 
 3. **Policy Objective**: The policy is updated to minimize the KL-divergence between the policy distribution and the exponentiated soft Q-function:
 
