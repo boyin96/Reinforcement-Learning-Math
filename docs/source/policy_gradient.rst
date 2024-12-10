@@ -66,7 +66,7 @@ By putting it into the objective function, we can obtain,
     	&=\sum_s{\rho^{\pi}}(s)\sum_a{\nabla _{\theta}}\pi _{\theta}(a\mid s)Q^{\pi}(s,a),\\
     \end{aligned}
 
-where :math:`\rho^\pi(s)=\sum_{s_0}\sum_{k=0}^{\infty} \gamma ^k\rho_0\left( s_0 \right)\rho^\pi\left(s_0 \rightarrow s, k\right)` and :math:`\rho_0\left( s_0 \right)` denotes initial state probability distribution.
+where :math:`\rho^\pi(s)=\sum_{s_0}\sum_{k=0}^{\infty} \gamma ^k\rho_0\left( s_0 \right)\rho^\pi\left(s_0 \rightarrow s, k\right)` and :math:`\rho_0\left( s \right)` denotes initial state probability distribution.
 
 Finally,
 
