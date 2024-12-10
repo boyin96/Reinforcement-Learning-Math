@@ -130,7 +130,7 @@ then we can get,
 
 .. math::
 	\begin{aligned}
-	& \max_{\pi_{T-1}}\left(\mathbb{E}\left[\mathcal{R}\left(s_{T-1}, a_{T-1}\right)\right]+\max_{\pi_T} \mathbb{E}\left[\mathcal{R}\left(s_T, a_T\right]\right)\right. \\
+	& \max_{\pi_{T-1}}\left(\mathbb{E}\left[\mathcal{R}\left(s_{T-1}, a_{T-1}\right)\right]+\max_{\pi_T} \mathbb{E}\left[\mathcal{R}\left(s_T, a_T\right]\right)\right) \\
 	& =\max_{\pi_{T-1}}\left(Q_{T-1}^*\left(s_{T-1}, a_{T-1}\right)-\alpha_T^* \mathcal{H}\left(\pi_T^*\right)\right) \\
 	& =\min_{\alpha_{T-1} \geq 0} \max_{\pi_{T-1}}\left(Q_{T-1}^*\left(s_{T-1}, a_{T-1}\right)-\alpha_T^* \mathcal{H}\left(\pi_T^*\right)+\alpha_{T-1}\left(\mathcal{H}\left(\pi_{T-1}\right)-\mathcal{H}_0\right)\right) \\
 	& =\min_{\alpha_{T-1} \geq 0} \max_{\pi_{T-1}}\left(Q_{T-1}^*\left(s_{T-1}, a_{T-1}\right)+\alpha_{T-1} \mathcal{H}\left(\pi_{T-1}\right)-\alpha_{T-1} \mathcal{H}_0\right)-\alpha_T^* \mathcal{H}\left(\pi_T^*\right)
