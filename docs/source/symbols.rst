@@ -17,13 +17,13 @@ This section provides the notations and definitions commonly used in reinforceme
      - Reward space, being equal to the space of values of the reward function.
    * - :math:`\mathcal{R}^a_s`
      - Reward funciton, :math:`\mathcal{R}_s^a=\mathbb{E}\left[R_{t+1} \mid S_t=s, A_t=a\right]`.
-   * - :math:`S_t, A_t, R_t`
+   * - :math:`S_t`, :math:`A_t`, :math:`R_t`
      - State, action, and reward at time step :math:`t` of one trajectory.
    * - :math:`\gamma`
      - Discount factor (:math:`0 < \gamma \leq 1`).
    * - :math:`G_t`
      - Return (:math:`G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}`).
-   * - :math:`P\left(s^{\prime} \mid s, a\right)`
+   * - :math:`P(s^{\prime} | s, a)`
      - Transition probability of getting to the next state :math:`s'` from the current state :math:`s` with action :math:`a`.
    * - :math:`\pi(a|s)`
      - Stochastic policy (agent behavior strategy), :math:`\pi_\theta(.)` is a policy parameterized by :math:`\theta`.
