@@ -21,35 +21,26 @@ Theoretical Derivation
 For ease of proof, consider a finite-horizon undiscounted return MDP, ignoring :math:`\gamma`, the objective function of SAC is as follows,
 
 .. math::
-   J(\theta)=\sum_{t=0}^T \mathbb{E}_{\left(\mathbf{s}_t, \mathbf{a}_t\right) \sim \rho_\pi}\left[\mathcal{R}\left(\mathbf{s}_t, \mathbf{a}_t\right)+\alpha \mathcal{H}\left(\pi_\theta\left(\cdot \mid \mathbf{s}_t\right)\right)\right],
+   J(\theta)=\sum_{t=0}^T \mathbb{E}_{\pi_\theta}\left[\mathcal{R}\left(\mathbf{s}_t, \mathbf{a}_t\right)+\alpha \mathcal{H}\left(\pi_\theta\left(\cdot \mid \mathbf{s}_t\right)\right)\right],
 
-where :math:`\alpha` controls how important the entropy term is, known as temperature parameter.
+where :math:`\alpha` controls how important the entropy term is, known as temperature parameter. The inclusion of the entropy term allows SAC to balance exploitation and exploration effectively.
 
-In SAC, the objective is to maximize the expected cumulative reward while incorporating an entropy term to encourage exploration:
-
-.. math::
-
-   J(\pi) = \mathbb{E}_{\pi} \left[ \sum_{t=0}^\infty \gamma^t \big( r(s_t, a_t) + \alpha \mathcal{H}(\pi(\cdot|s_t)) \big) \right],
-
-where:
-- :math:`\mathcal{H}(\pi(\cdot|s_t)) = -\sum_{a} \pi(a|s_t) \log \pi(a|s_t)` is the entropy of the policy.
-- :math:`\alpha` is a temperature parameter controlling the trade-off between reward and entropy.
-
-The inclusion of the entropy term allows SAC to balance exploitation and exploration effectively.
-
-### Soft Q-Function and Soft Value Function
+Soft Q-Function and Soft Value Function
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The **soft Q-function** and **soft value function** are defined as follows:
 
 1. **Soft Q-Function**:
+   
    .. math::
 
-      Q^{\text{soft}}(s, a) = r(s, a) + \gamma \mathbb{E}_{s' \sim P} \big[ V^{\text{soft}}(s') \big],
+      Q\left(s_t, a_t\right)=\mathcal{R}\left(s_t, a_t\right)+\gamma \mathbb{E}_{\pi_\theta}\left[V\left(s_{t+1}\right)\right],
 
    where the soft value function :math:`V^{\text{soft}}(s)` is given by:
+   
    .. math::
 
-      V^{\text{soft}}(s) = \mathbb{E}_{a \sim \pi} \big[ Q^{\text{soft}}(s, a) - \alpha \log \pi(a|s) \big].
+     V\left(s_t\right)=\mathbb{E}_{\pi_\theta}\left[Q\left(s_t, a_t\right)-\alpha \log \pi\left(a_t \mid s_t\right)\right].
 
 2. **Policy Objective**:
    The policy is updated to minimize the KL-divergence between the policy distribution and the exponentiated soft Q-function:
