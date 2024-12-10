@@ -58,6 +58,14 @@ The soft Q-function and soft value function are defined as follows:
          
          J_Q(w)=\mathbb{E}_{\mathcal{D}}\left[\frac{1}{2}\left(Q_w\left(s_t, a_t\right)-\left(\mathcal{R}\left(s_t, a_t\right)+\gamma \mathbb{E}_{\pi_\theta}\left[V_{\bar{\psi}}\left(s_{t+1}\right)\right]\right)\right)^2\right],
 
+with gradient,
+
+.. math::
+
+   \nabla_w J_Q(w)=\nabla_w Q_w\left(s_t, a_t\right)\left(Q_w\left(s_t, a_t\right)-\left(\mathcal{R}\left(s_t, a_t\right)+\gamma \left( Q_{\bar{w}}\left(s_{t+1}, a_{t+1}\right)-\alpha \log \left(\pi_\theta\left(a_{t+1} \mid s_{t+1}\right)\right. \right)\right)\right)\right),
+
+where :math:`\bar{w}` is the target value function which is the exponential moving average.
+
 3. **Policy Objective**: The policy is updated to minimize the KL-divergence between the policy distribution and the exponentiated soft Q-function:
 
    .. important::
