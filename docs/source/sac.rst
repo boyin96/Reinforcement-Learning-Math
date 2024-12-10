@@ -4,19 +4,22 @@ Soft Actor-Critic (SAC) Algorithm
 Introduction
 ------------
 
-Soft Actor-Critic (SAC) is an advanced reinforcement learning algorithm that integrates the principle of maximum entropy into continuous control tasks. It is designed to balance the **exploitation of high-reward actions** with the **exploration of diverse strategies** by maximizing both the cumulative reward and the entropy of the policy. SAC has demonstrated state-of-the-art performance on various challenging continuous control problems.
-
-The core idea of SAC is to optimize a stochastic policy by introducing an entropy term into the objective function, encouraging the policy to maintain randomness while improving performance. This enables SAC to efficiently explore the environment and avoid suboptimal deterministic solutions.
+Soft Actor-Critic (SAC) is an advanced reinforcement learning algorithm that integrates the principle of maximum entropy into continuous control tasks. It is designed to balance the **exploitation of high-reward actions** with the **exploration of diverse strategies** by maximizing both the cumulative reward and the entropy of the policy.
 
 Key features of SAC include:
+
 - **Maximum entropy framework**: Encourages diverse action selection.
 - **Stochastic policies**: Enables better exploration compared to deterministic approaches.
 - **Off-policy learning**: Utilizes a replay buffer for data efficiency.
+- **Twin soft Q-network**: Uses two separate Q-networks to mitigate overestimation bias.
+- **Automatic temperature adjustment**: Adaptively tunes the temperature parameter
+- **Continuous action space via reparameterization**: Employs the reparameterization trick to optimize stochastic policies in continuous action spaces.
+
 
 Theoretical Derivation
 -----------------------
 
-### Objective Function
+Objective Function
 
 In SAC, the objective is to maximize the expected cumulative reward while incorporating an entropy term to encourage exploration:
 
@@ -50,7 +53,7 @@ The **soft Q-function** and **soft value function** are defined as follows:
 
       \pi^*(a|s) \propto \exp \left( \frac{1}{\alpha} Q^{\text{soft}}(s, a) \right).
 
-### Bellman Backup for SAC
+ellman Backup for SAC
 
 The SAC algorithm uses the following soft Bellman equation to iteratively update the Q-function:
 
