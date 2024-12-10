@@ -112,12 +112,17 @@ Since the policy at time :math:`t` can only affect the future objective value, i
 Starting from the last time step, we want to maximize rewards and encourage exploration, but at the same time we want to get close to the target entropy,
 
 .. math::
-	\max_{\pi_T} \mathbb{E}_{\pi}\left[\mathcal{R}\left(s_T, a_T\right)\right]=\min_{\alpha_T \geq 0} \max_{\pi_T} \mathbb{E}_{\pi}\left[\mathcal{R}\left(s_T, a_T\right)-\alpha_T \log \pi\left(a_T \mid s_T\right)\right]-\alpha_T \mathcal{H}.
+	\max_{\pi_T} \mathbb{E}_{\pi}\left[\mathcal{R}\left(s_T, a_T\right)\right]=\min_{\alpha_T \geq 0} \max_{\pi_T} \mathbb{E}_{\pi}\left[\mathcal{R}\left(s_T, a_T\right)-\alpha_T \log \pi\left(a_T \mid s_T\right)\right]-\alpha_T \mathcal{H}_0.
 
 Based on the above equation, we can solve for the optimal dual variable :math:`\alpha_T^*` as 
 
 .. math::
-	\arg \min_{\alpha_T} \mathbb{E}_{\pi_t^*}\left[-\alpha_T \log \pi_T^*\left(a_T \mid s_T\right)-\alpha_T \mathcal{H}\right].
+	\arg \min_{\alpha_T} \mathbb{E}_{\pi_t^*}\left[-\alpha_T \log \pi_T^*\left(a_T \mid s_T\right)-\alpha_T \mathcal{H}_0\right].
+
+Go back to the soft Q value function,
+
+.. math::
+	Q_{T-1}^*\left(s_{T-1}, a_{T-1}\right)=r\left(s_{T-1}, a_{T-1}\right)+\max_{\pi_T} \mathbb{E}\left[r\left(s_T, a_T\right)\right]+\alpha_T \mathcal{H}\left(\pi_T^*\right)
 
 By repeating this process, we can learn the optimal temperature parameter in every step by minimizing the same objective function,
 
@@ -125,7 +130,7 @@ By repeating this process, we can learn the optimal temperature parameter in eve
 	
 	.. math::
 
-		J(\alpha)=\mathbb{E}_{\pi_t}\left[-\alpha \log \pi_t\left(a_t \mid s_t\right)-\alpha \mathcal{H}_0\right]
+		J(\alpha)=\mathbb{E}_{\pi^*_t}\left[-\alpha_t \log \pi^*_t\left(a_t \mid s_t\right)-\alpha_t \mathcal{H}_0\right]
 
 
 Algorithmic flow
