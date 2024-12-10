@@ -20,8 +20,10 @@ Theoretical Derivation
 -----------------------
 For ease of proof, consider a finite-horizon undiscounted return MDP, ignoring :math:`\gamma`, the objective function of SAC is as follows,
 
-.. math::
-   J(\theta)=\sum_{t=0}^T \mathbb{E}_{\pi_\theta}\left[\mathcal{R}\left(\mathbf{s}_t, \mathbf{a}_t\right)+\alpha \mathcal{H}\left(\pi_\theta\left(\cdot \mid \mathbf{s}_t\right)\right)\right],
+.. important::
+
+   .. math::
+      J(\theta)=\sum_{t=0}^T \mathbb{E}_{\pi_\theta}\left[\mathcal{R}\left(\mathbf{s}_t, \mathbf{a}_t\right)+\alpha \mathcal{H}\left(\pi_\theta\left(\cdot \mid \mathbf{s}_t\right)\right)\right],
 
 where :math:`\alpha` controls how important the entropy term is, known as temperature parameter. The inclusion of the entropy term allows SAC to balance exploitation and exploration effectively.
 
@@ -46,23 +48,23 @@ The soft Q-function and soft value function are defined as follows:
 
    .. math::
 
-   Q\left(s_t, a_t\right)=\mathcal{R}\left(s_t, a_t\right)+\gamma \mathbb{E}_{\pi_\theta}\left[Q\left(s_{t+1}, a_{t+1}\right)-\alpha \log \pi\left(a_{t+1} \mid s_{t+1}\right)\right]
+      Q\left(s_t, a_t\right)=\mathcal{R}\left(s_t, a_t\right)+\gamma \mathbb{E}_{\pi_\theta}\left[Q\left(s_{t+1}, a_{t+1}\right)-\alpha \log \pi\left(a_{t+1} \mid s_{t+1}\right)\right]
 
-2. **Policy Objective**:
-   The policy is updated to minimize the KL-divergence between the policy distribution and the exponentiated soft Q-function:
+2. **Soft Q-function Update**: The soft Q-function parameters can be trained to minimize the soft Bellman residual,
+
    .. math::
+      
+      J_Q(w)=\mathbb{E}_{\left(s_t, a_t\right) \sim \mathcal{D}}\left[\frac{1}{2}\left(Q_w\left(s_t, a_t\right)-\left(r\left(s_t, a_t\right)+\gamma \mathbb{E}_{s_{t+1} \sim \rho_\pi(s)}\left[V_{\bar{\psi}}\left(s_{t+1}\right)\right]\right)\right)^2\right],
 
-      \pi^*(a|s) \propto \exp \left( \frac{1}{\alpha} Q^{\text{soft}}(s, a) \right).
+3. **Policy Objective**: The policy is updated to minimize the KL-divergence between the policy distribution and the exponentiated soft Q-function:
 
-ellman Backup for SAC
+   .. important::
+      
+      .. math::
 
-The SAC algorithm uses the following soft Bellman equation to iteratively update the Q-function:
+         
 
-.. math::
 
-   Q^{\text{soft}}(s, a) = r(s, a) + \gamma \mathbb{E}_{s' \sim P} \big[ \mathbb{E}_{a' \sim \pi} \big[ Q^{\text{soft}}(s', a') - \alpha \log \pi(a'|s') \big] \big].
-
-The policy is updated to maximize the soft Q-function while minimizing the entropy regularization term.
 
 Algorithmic flow
 -----------------
