@@ -85,8 +85,8 @@ with gradient,
 
 	\begin{aligned}
 	J_\pi(\theta) & =\nabla_\theta D_{\mathrm{KL}}\left(\pi_\theta\left(\cdot \mid s_t\right) \| \exp \left(Q_w\left(s_t, .\right)-\log Z_w\left(s_t\right)\right)\right) \\
-	& =\mathbb{E}_{a_t \sim \pi}\left[-\log \left(\frac{\exp \left(Q_w\left(s_t, a_t\right)-\log Z_w\left(s_t\right)\right)}{\pi_\theta\left(a_t \mid s_t\right)}\right)\right] \\
-	& =\mathbb{E}_{a_t \sim \pi}\left[\log \pi_\theta\left(a_t \mid s_t\right)-Q_w\left(s_t, a_t\right)+\log Z_w\left(s_t\right)\right],
+	& =\mathbb{E}_{\pi_\theta}\left[-\log \left(\frac{\exp \left(Q_w\left(s_t, a_t\right)-\log Z_w\left(s_t\right)\right)}{\pi_\theta\left(a_t \mid s_t\right)}\right)\right] \\
+	& =\mathbb{E}_{\pi_\theta}\left[\log \pi_\theta\left(a_t \mid s_t\right)-Q_w\left(s_t, a_t\right)+\log Z_w\left(s_t\right)\right],
 	\end{aligned}	
 
 where :math:`Z^{\pi_{\text {old }}}` is the partition function to normalize the distribution and :math:`\Pi` denotes a set of policies that can be readily tractable.
@@ -101,8 +101,8 @@ Algorithmic flow
         \caption{Soft Actor-Critic}
         \label{alg1}
     \begin{algorithmic}[1]
-        \STATE Input: initial policy parameters $\theta$, Q-function parameters $\phi_1$, $\phi_2$, empty replay buffer $\mathcal{D}$
-        \STATE Set target parameters equal to main parameters $\phi_{\text{targ},1} \leftarrow \phi_1$, $\phi_{\text{targ},2} \leftarrow \phi_2$
+        \STATE Input: initial policy parameters $\theta$, Q-function parameters $\w_1$, $\w_2$, empty replay buffer $\mathcal{D}$
+        \STATE Set target parameters equal to main parameters $\bar{w}_1 \leftarrow \w_1$, $\bar{w}_2 \leftarrow \w_2$
         \REPEAT
             \STATE Observe state $s$ and select action $a \sim \pi_{\theta}(\cdot|s)$
             \STATE Execute $a$ in the environment
@@ -114,20 +114,21 @@ Algorithmic flow
                     \STATE Randomly sample a batch of transitions, $B = \{ (s,a,r,s',d) \}$ from $\mathcal{D}$
                     \STATE Compute targets for the Q functions:
                     \begin{align*}
-                        y (r,s',d) &= r + \gamma (1-d) \left(\min_{i=1,2} Q_{\phi_{\text{targ}, i}} (s', \tilde{a}') - \alpha \log \pi_{\theta}(\tilde{a}'|s')\right), && \tilde{a}' \sim \pi_{\theta}(\cdot|s')
+                        y (r,s',d) &= r + \gamma (1-d) \left(\min_{i=1,2} Q_{\bar{w}_i} (s', \tilde{a}') - \alpha \log \pi_{\theta}(\tilde{a}'|s')\right), && \tilde{a}' \sim \pi_{\theta}(\cdot|s')
                     \end{align*}
                     \STATE Update Q-functions by one step of gradient descent using
                     \begin{align*}
-                        & \nabla_{\phi_i} \frac{1}{|B|}\sum_{(s,a,r,s',d) \in B} \left( Q_{\phi_i}(s,a) - y(r,s',d) \right)^2 && \text{for } i=1,2
+                        & \nabla_{\w_i} \frac{1}{|B|}\sum_{(s,a,r,s',d) \in B} \left( Q_{\w_i}(s,a) - y(r,s',d) \right)^2 && \text{for } i=1,2
                     \end{align*}
-                    \STATE Update policy by one step of gradient ascent using
+                    \STATE Update policy by one step of gradient descent using
                     \begin{equation*}
-                        \nabla_{\theta} \frac{1}{|B|}\sum_{s \in B} \Big(\min_{i=1,2} Q_{\phi_i}(s, \tilde{a}_{\theta}(s)) - \alpha \log \pi_{\theta} \left(\left. \tilde{a}_{\theta}(s) \right| s\right) \Big),
+                        \nabla_{\theta} \frac{1}{|B|}\sum_{s \in B} \Big(\alpha \log \pi_{\theta} \left(\left. \tilde{a}_{\theta}(s) \right| s\right)-\min_{i=1,2} Q_{\w_i}(s, \tilde{a}_{\theta}(s)) \Big),
                     \end{equation*}
                     where $\tilde{a}_{\theta}(s)$ is a sample from $\pi_{\theta}(\cdot|s)$ which is differentiable wrt $\theta$ via the reparametrization trick.
-                    \STATE Update target networks with
+                    \STATE Update the coefficients of the entropy regular term $\alpha$
+		    \STATE Soft update target networks with
                     \begin{align*}
-                        \phi_{\text{targ},i} &\leftarrow \rho \phi_{\text{targ}, i} + (1-\rho) \phi_i && \text{for } i=1,2
+                        \bar{w}_i &\leftarrow \rho \w_i + (1-\rho) \w_i && \text{for } i=1,2
                     \end{align*}
                 \ENDFOR
             \ENDIF
