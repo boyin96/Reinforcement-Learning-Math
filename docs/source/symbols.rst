@@ -26,7 +26,7 @@ This section provides the notations and definitions commonly used in reinforceme
    * - :math:`G_t`
      - Return (:math:`G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}`).
    * - :math:`P(s' | s, a)`
-     - Transition probability of getting to the next state :math:`s'` from the current state :math:`s` with action :math:`a`.
+     - Transition probability of getting to the next state :math:`s'` from the current state :math:`s` with action :math:`a` pair.
    * - :math:`\pi(a|s)`
      - Stochastic policy (agent behavior strategy), :math:`\pi_\theta(.)` is a policy parameterized by :math:`\theta`.
    * - :math:`\mu(s)`
