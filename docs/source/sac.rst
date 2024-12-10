@@ -81,12 +81,13 @@ where :math:`\bar{\psi}` and :math:`\bar{w}` are the target state-value function
          
 with gradient,	
 
-.. math::	
-\begin{aligned}
-J_\pi(\theta) & =\nabla_\theta D_{\mathrm{KL}}\left(\pi_\theta\left(\cdot \mid s_t\right) \| \exp \left(Q_w\left(s_t, .\right)-\log Z_w\left(s_t\right)\right)\right) \\
-& =\mathbb{E}_{a_t \sim \pi}\left[-\log \left(\frac{\exp \left(Q_w\left(s_t, a_t\right)-\log Z_w\left(s_t\right)\right)}{\pi_\theta\left(a_t \mid s_t\right)}\right)\right] \\
-& =\mathbb{E}_{a_t \sim \pi}\left[\log \pi_\theta\left(a_t \mid s_t\right)-Q_w\left(s_t, a_t\right)+\log Z_w\left(s_t\right)\right],
-\end{aligned}	
+.. math::
+
+	\begin{aligned}
+	J_\pi(\theta) & =\nabla_\theta D_{\mathrm{KL}}\left(\pi_\theta\left(\cdot \mid s_t\right) \| \exp \left(Q_w\left(s_t, .\right)-\log Z_w\left(s_t\right)\right)\right) \\
+	& =\mathbb{E}_{a_t \sim \pi}\left[-\log \left(\frac{\exp \left(Q_w\left(s_t, a_t\right)-\log Z_w\left(s_t\right)\right)}{\pi_\theta\left(a_t \mid s_t\right)}\right)\right] \\
+	& =\mathbb{E}_{a_t \sim \pi}\left[\log \pi_\theta\left(a_t \mid s_t\right)-Q_w\left(s_t, a_t\right)+\log Z_w\left(s_t\right)\right],
+	\end{aligned}	
 
 where :math:`Z^{\pi_{\text {old }}}` is the partition function to normalize the distribution and :math:`\Pi` denotes a set of policies that can be readily tractable.
 
