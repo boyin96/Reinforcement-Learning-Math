@@ -64,8 +64,8 @@ with gradient,
 
    \begin{aligned}
 	\nabla _wJ_Q(w)=&\nabla _wQ_w\left( s_t,a_t \right)\\
-	\left( Q_w\left( s_t,a_t \right) -\left( \mathcal{R} \left( s_t,a_t \right) +\gamma \left( Q_{\bar{w}}\left( s_{t+1},a_{t+1} \right) -\alpha \log \left( \pi _{\theta}\left( a_{t+1}\mid s_{t+1} \right) \right) \right) \right) \right) ,\\
-\end{aligned}
+	\left( Q_w\left( s_t,a_t \right) -\left( \mathcal{R} \left( s_t,a_t \right) +\gamma \left( Q_{\bar{w}}\left( s_{t+1},a_{t+1} \right) -\alpha \log \left( \pi _{\theta}\left( a_{t+1}\mid s_{t+1} \right) \right) \right) \right) \right) ,
+	\end{aligned}
 
 where :math:`\bar{\psi}` and :math:`\bar{w}` are the target state-value function and action-value function which are the exponential moving average.
 
@@ -77,7 +77,7 @@ where :math:`\bar{\psi}` and :math:`\bar{w}` are the target state-value function
 
          \begin{aligned}
       	\pi _{\mathrm{new}}&=\mathrm{arg}\min_{\pi ^{\prime}\in \Pi} D_{\mathrm{KL}}\left( \pi ^{\prime}\left( \cdot \mid s_t \right) \parallel \frac{\exp \left( Q^{\pi _{\mathrm{old}}}\left( s_t,\cdot \right) \right)}{Z^{\pi _{\mathrm{old}}}\left( s_t \right)} \right)\\
-      	&=\mathrm{arg}\min_{\pi ^{\prime}\in \Pi} D_{\mathrm{KL}}\left( \pi ^{\prime}\left( \cdot \mid s_t \right) \parallel \exp \left( Q^{\pi _{\mathrm{old}}}\left( s_t,. \right) -\log Z^{\pi _{\mathrm{old}}}\left( s_t \right) \right) \right)\\
+      	&=\mathrm{arg}\min_{\pi ^{\prime}\in \Pi} D_{\mathrm{KL}}\left( \pi ^{\prime}\left( \cdot \mid s_t \right) \parallel \exp \left( Q^{\pi _{\mathrm{old}}}\left( s_t,. \right) -\log Z^{\pi _{\mathrm{old}}}\left( s_t \right) \right) \right)
       \end{aligned}
          
 
