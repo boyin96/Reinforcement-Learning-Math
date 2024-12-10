@@ -4,7 +4,7 @@ Notations
 This section provides the notations and definitions commonly used in reinforcement learning. The following table outlines the symbols and their meanings.
 
 .. list-table::
-   :widths: 15 60
+   :widths: 15 80
    :header-rows: 1
 
    * - Symbol
@@ -23,7 +23,7 @@ This section provides the notations and definitions commonly used in reinforceme
      - Discount factor (:math:`0 < \gamma \leq 1`).
    * - :math:`G_t`
      - Return (:math:`G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}`).
-   * - :math:`P(s^{\prime} | s, a)`
+   * - :math:`P(s' | s, a)`
      - Transition probability of getting to the next state :math:`s'` from the current state :math:`s` with action :math:`a`.
    * - :math:`\pi(a|s)`
      - Stochastic policy (agent behavior strategy), :math:`\pi_\theta(.)` is a policy parameterized by :math:`\theta`.
