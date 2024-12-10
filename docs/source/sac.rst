@@ -62,9 +62,12 @@ with gradient,
 
 .. math::
 
-   \nabla_w J_Q(w)=\nabla_w Q_w\left(s_t, a_t\right)\left(Q_w\left(s_t, a_t\right)-\left(\mathcal{R}\left(s_t, a_t\right)+\gamma \left( Q_{\bar{w}}\left(s_{t+1}, a_{t+1}\right)-\alpha \log \left(\pi_\theta\left(a_{t+1} \mid s_{t+1}\right) \right)\right)\right)\right),
+   \begin{aligned}
+	\nabla _wJ_Q(w)=&\nabla _wQ_w\left( s_t,a_t \right)\\
+	\left( Q_w\left( s_t,a_t \right) -\left( \mathcal{R} \left( s_t,a_t \right) +\gamma \left( Q_{\bar{w}}\left( s_{t+1},a_{t+1} \right) -\alpha \log \left( \pi _{\theta}\left( a_{t+1}\mid s_{t+1} \right) \right) \right) \right) \right) ,\\
+\end{aligned}
 
-where :math:`\bar{w}` is the target value function which is the exponential moving average.
+where :math:`\bar{\psi}` and :math:`\bar{w}` are the target state-value function and action-value function which are the exponential moving average.
 
 3. **Policy Objective**: The policy is updated to minimize the KL-divergence between the policy distribution and the exponentiated soft Q-function:
 
@@ -73,9 +76,9 @@ where :math:`\bar{w}` is the target value function which is the exponential movi
       .. math::
 
          \begin{aligned}
-\pi_{\text {new }} & =\arg \min _{\pi^{\prime} \in \Pi} D_{\mathrm{KL}}\left(\pi^{\prime}\left(\cdot \mid s_t\right) \| \frac{\exp \left(Q^{\pi_{\text {old }}}\left(s_t, \cdot\right)\right)}{Z^{\pi_{\text {old }}}\left(s_t\right)}\right) \\
-& =\arg \min _{\pi^{\prime} \in \Pi} D_{\mathrm{KL}}\left(\pi^{\prime}\left(\cdot \mid s_t\right) \| \exp \left(Q^{\pi_{\text {old }}}\left(s_t, .\right)-\log Z^{\pi_{\text {old }}}\left(s_t\right)\right)\right)
-\end{aligned}
+      	\pi _{\mathrm{new}}&=\mathrm{arg}\min_{\pi ^{\prime}\in \Pi} D_{\mathrm{KL}}\left( \pi ^{\prime}\left( \cdot \mid s_t \right) \parallel \frac{\exp \left( Q^{\pi _{\mathrm{old}}}\left( s_t,\cdot \right) \right)}{Z^{\pi _{\mathrm{old}}}\left( s_t \right)} \right)\\
+      	&=\mathrm{arg}\min_{\pi ^{\prime}\in \Pi} D_{\mathrm{KL}}\left( \pi ^{\prime}\left( \cdot \mid s_t \right) \parallel \exp \left( Q^{\pi _{\mathrm{old}}}\left( s_t,. \right) -\log Z^{\pi _{\mathrm{old}}}\left( s_t \right) \right) \right)\\
+      \end{aligned}
          
 
 
