@@ -17,6 +17,8 @@ This section provides the notations and definitions commonly used in reinforceme
      - Reward space, being equal to the space of values of the reward function.
    * - :math:`\mathcal{R}^a_s`
      - Reward funciton, :math:`\mathcal{R}_s^a=\mathbb{E}\left[R_{t+1} \mid S_t=s, A_t=a\right]`.
+   * - :math:`\mathcal{H}(\cdot)`
+     - Entropy of the source, :math:`\mathcal{H}(X):=-\sum_{x \in \mathcal{X}} p(x) \log p(x)`.
    * - :math:`S_t`, :math:`A_t`, :math:`R_t`
      - State, action, and reward at time step :math:`t` of one trajectory.
    * - :math:`\gamma`
