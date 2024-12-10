@@ -20,6 +20,10 @@ extensions = [
     'sphinx.ext.imgmath',
 ]
 
+# imgmath settings
+imgmath_image_format = 'svg'
+imgmath_font_size = 14
+
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3/', None),
     'sphinx': ('https://www.sphinx-doc.org/en/master/', None),
@@ -93,13 +97,23 @@ latex_elements = {
     # 'figure_align': 'htbp',
 }
 
-# # Grouping the document tree into LaTeX files. List of tuples
-# # (source start file, target name, title,
-# #  author, documentclass [howto, manual, or own class]).
-# latex_documents = [
-#     (master_doc, 'SpinningUp.tex', 'Spinning Up Documentation',
-#      'Joshua Achiam', 'manual'),
-# ]
+# Grouping the document tree into LaTeX files. List of tuples
+# (source start file, target name, title,
+#  author, documentclass [howto, manual, or own class]).
+latex_documents = [
+    (master_doc, 'SpinningUp.tex', 'Spinning Up Documentation',
+     'Joshua Achiam', 'manual'),
+]
+
+
+# -- Options for manual page output ---------------------------------------
+
+# One entry per manual page. List of tuples
+# (source start file, name, description, authors, manual section).
+man_pages = [
+    (master_doc, 'spinningup', 'Spinning Up Documentation',
+     [author], 1)
+]
 
 # -- Options for EPUB output
 epub_show_urls = 'footnote'
