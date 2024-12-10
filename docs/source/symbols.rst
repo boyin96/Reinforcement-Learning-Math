@@ -20,7 +20,7 @@ This section provides the notations and definitions commonly used in reinforceme
    * - :math:`\mathcal{H}(\cdot)`
      - Entropy of the source, :math:`\mathcal{H}(X):=-\sum_{x \in \mathcal{X}} p(x) \log p(x)`.
    * - :math:`S_t, A_t, R_t`
-     - State, action, and reward at time step :math:`t` of one trajectory. Note that these are random variables.
+     - State, action, and reward at time step :math:`t` of one trajectory.
    * - :math:`\gamma`
      - Discount factor (:math:`0 < \gamma \leq 1`).
    * - :math:`G_t`
@@ -36,9 +36,9 @@ This section provides the notations and definitions commonly used in reinforceme
    * - :math:`V^\pi(s)`
      - The value of state :math:`s` when we follow a policy :math:`\pi`, :math:`V^\pi(s) = \mathbb{E}_{\pi}[G_t | S_t = s]`.
    * - :math:`Q(s, a)`
-     - Action-value function of a given a pair of state and action :math:`(s, a)`, :math:`Q_w(.)` is parameterized by :math:`w`.
+     - Action-value function of the given state and action :math:`(s, a)`, :math:`Q_w(.)` is parameterized by :math:`w`.
    * - :math:`Q^\pi(s, a)`
-     - The value of (state, action) pair when we follow a policy :math:`\pi`, :math:`Q^\pi(s, a) = \mathbb{E}_{\pi}[G_t | S_t = s, A_t = a]`.
+     - Action-value function when we follow a policy :math:`\pi`, :math:`Q^\pi(s, a) = \mathbb{E}_{\pi}[G_t | S_t = s, A_t = a]`.
    * - :math:`A(s, a)`
      - Advantage function, :math:`A(s, a) = Q(s, a) - V(s)`.
 
