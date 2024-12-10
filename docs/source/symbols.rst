@@ -4,7 +4,7 @@ Notations
 This section provides the notations and definitions commonly used in reinforcement learning. The following table outlines the symbols and their meanings.
 
 .. list-table::
-   :widths: 15 80
+   :widths: 20 80
    :header-rows: 1
 
    * - Symbol
