@@ -119,10 +119,19 @@ Based on the above equation, we can solve for the optimal dual variable :math:`\
 .. math::
 	\arg \min_{\alpha_T} \mathbb{E}_{\pi_t^*}\left[-\alpha_T \log \pi_T^*\left(a_T \mid s_T\right)-\alpha_T \mathcal{H}_0\right].
 
-Go back to the soft Q value function,
+Go back to the soft Q value function with optimal :math:`\pi^*_T`,
 
 .. math::
-	Q_{T-1}^*\left(s_{T-1}, a_{T-1}\right)=r\left(s_{T-1}, a_{T-1}\right)+\max_{\pi_T} \mathbb{E}\left[r\left(s_T, a_T\right)\right]+\alpha_T \mathcal{H}\left(\pi_T^*\right)
+	Q_{T-1}^*\left(s_{T-1}, a_{T-1}\right)=\mathcal{R}\left(s_{T-1}, a_{T-1}\right)+\max_{\pi_T} \mathbb{E}\left[r\left(s_T, a_T\right)\right]+\alpha_T \mathcal{H}\left(\pi_T^*\right),
+
+then, we can get,
+
+.. math::
+	\begin{aligned}
+\max_{\pi_{T-1}} & \left(\mathbb{E}\left[r\left(\mathbf{s}_{T-1}, \mathbf{a}_{T-1}\right)\right]+\max_{\pi_T} \mathbb{E}\left[r\left(\mathbf{s}_T, \mathbf{a}_T\right)\right]\right) \\
+& =\max_{\pi_{T-1}}\left(Q_{T-1}^*\left(\mathbf{s}_{T-1}, \mathbf{a}_{T-1}\right)-\alpha_T \mathcal{H}\right) \\
+& =\min_{\alpha_{T-1} \geq 0} \max_{\pi_{T-1}}\left(\mathbb{E}\left[Q_{T-1}^*\left(\mathbf{s}_{T-1}, \mathbf{a}_{T-1}\right)\right]-\mathbb{E}\left[\alpha_{T-1} \log \pi\left(\mathbf{a}_{T-1} \mid \mathbf{s}_{T-1}\right)\right]-\alpha_{T-1} \mathcal{H}\right)+\alpha_T^* \mathcal{H}
+\end{aligned}
 
 By repeating this process, we can learn the optimal temperature parameter in every step by minimizing the same objective function,
 
