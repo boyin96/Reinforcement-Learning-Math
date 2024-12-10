@@ -116,8 +116,10 @@ Starting from the last time step, we want to maximize rewards and encourage expl
 
 Based on the above equation, we can solve for the optimal dual variable :math:`\alpha_T^*` as 
 
-.. math::
-	\arg \min_{\alpha_T} \mathbb{E}_{\pi_t^*}\left[-\alpha_T \log \pi_T^*\left(a_T \mid s_T\right)-\alpha_T \mathcal{H}_0\right].
+.. attention::
+
+	.. math::
+		\alpha_T^*=\arg \min_{\alpha_T} \mathbb{E}_{\pi_t^*}\left[-\alpha_T \log \pi_T^*\left(a_T \mid s_T\right)-\alpha_T \mathcal{H}_0\right].
 
 Go back to the soft Q value function with optimal :math:`\pi^*_T`,
 
@@ -133,6 +135,13 @@ then we can get,
 	& =\min_{\alpha_{T-1} \geq 0} \max_{\pi_{T-1}}\left(Q_{T-1}^*\left(s_{T-1}, a_{T-1}\right)-\alpha_T^* \mathcal{H}\left(\pi_T^*\right)+\alpha_{T-1}\left(\mathcal{H}\left(\pi_{T-1}\right)-\mathcal{H}_0\right)\right) \\
 	& =\min_{\alpha_{T-1} \geq 0} \max_{\pi_{T-1}}\left(Q_{T-1}^*\left(s_{T-1}, a_{T-1}\right)+\alpha_{T-1} \mathcal{H}\left(\pi_{T-1}\right)-\alpha_{T-1} \mathcal{H}_0\right)-\alpha_T^* \mathcal{H}\left(\pi_T^*\right)
 	\end{aligned}
+
+ Similarly, we can solve for the optimal dual variable :math:`\alpha_{T-1}^*` as 
+
+.. attention::
+
+	.. math::
+		\alpha_{T-1}^*=\arg \min _{\alpha_{T-1} \geq 0} \mathbb{E}_{\left(s_{T-1}, a_{T-1}\right) \sim \rho_{\pi^*}}\left[\alpha_{T-1} \mathcal{H}\left(\pi_{T-1}^*\right)-\alpha_{T-1} \mathcal{H}_0\right]
 
 By repeating this process, we can learn the optimal temperature parameter in every step by minimizing the same objective function,
 
