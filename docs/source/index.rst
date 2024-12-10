@@ -11,11 +11,9 @@ Reinforcement learning is a powerful paradigm for decision-making and control ta
 - A formal definition of commonly used mathematical symbols in reinforcement learning.
 - Detailed derivations of key algorithms, starting with policy gradient methods in deep reinforcement learning.
 
-Contents
-----------
-
 .. toctree::
    :maxdepth: 2
+   :caption: Contents
 
    symbols
    policy_gradient
