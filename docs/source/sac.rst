@@ -117,7 +117,7 @@ Starting from the last time step, we want to maximize rewards and encourage expl
 Based on the above equation, we can solve for the optimal dual variable :math:`\alpha_T^*` as 
 
 .. math::
-	\arg \min_{\alpha_T} \mathbb{E}_{\mathbf{s}_t, \mathbf{a}_t \sim \pi_t^*}\left[-\alpha_T \log \pi_T^*\left(\mathbf{a}_T \mid \mathbf{s}_T ; \alpha_T\right)-\alpha_T \mathcal{H}\right].
+	\arg \min_{\alpha_T} \mathbb{E}_{\pi_t^*}\left[-\alpha_T \log \pi_T^*\left(a_T \mid s_T\right)-\alpha_T \mathcal{H}\right].
 
 By repeating this process, we can learn the optimal temperature parameter in every step by minimizing the same objective function,
 
@@ -125,7 +125,7 @@ By repeating this process, we can learn the optimal temperature parameter in eve
 	
 	.. math::
 
-	J(\alpha)=\mathbb{E}_{\pi_t}\left[-\alpha \log \pi_t\left(a_t \mid s_t\right)-\alpha \mathcal{H}_0\right]
+		J(\alpha)=\mathbb{E}_{\pi_t}\left[-\alpha \log \pi_t\left(a_t \mid s_t\right)-\alpha \mathcal{H}_0\right]
 
 
 Algorithmic flow
