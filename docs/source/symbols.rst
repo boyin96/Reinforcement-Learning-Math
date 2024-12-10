@@ -55,10 +55,8 @@ Bellman Expectation Equation
    .. math::
       \begin{aligned}
       	&V^{\pi}(s)=\sum_{a\in \mathcal{A}}{\pi}(a\mid s)Q^{\pi}(s,a)\\[5pt]
-      	&Q^{\pi}(s,a)=\mathcal{R} _{s}^{a}+\gamma \sum_{s^{\prime}\in \mathcal{S}}{P}\left( s^{\prime}\mid s,a \right) V^{\pi}\left( s^{\prime} \right)\\
-      	\\
-      	&V^{\pi}(s)=\sum_{a\in \mathcal{A}}{\pi}(a\mid s)\left( \mathcal{R} _{s}^{a}+\gamma \sum_{s^{\prime}\in \mathcal{S}}{P}\left( s^{\prime}\mid s,a \right) V^{\pi}\left( s^{\prime} \right) \right)\\
-      	\\
+      	&Q^{\pi}(s,a)=\mathcal{R} _{s}^{a}+\gamma \sum_{s^{\prime}\in \mathcal{S}}{P}\left( s^{\prime}\mid s,a \right) V^{\pi}\left( s^{\prime} \right)\\[5pt]
+      	&V^{\pi}(s)=\sum_{a\in \mathcal{A}}{\pi}(a\mid s)\left( \mathcal{R} _{s}^{a}+\gamma \sum_{s^{\prime}\in \mathcal{S}}{P}\left( s^{\prime}\mid s,a \right) V^{\pi}\left( s^{\prime} \right) \right)\\[5pt]
       	&Q^{\pi}(s,a)=\mathcal{R} _{s}^{a}+\gamma \sum_{s^{\prime}\in \mathcal{S}}{P}\left( s^{\prime}\mid s,a \right) \sum_{a^{\prime}\in \mathcal{A}}{\pi}\left( a^{\prime}\mid s^{\prime} \right) Q^{\pi}\left( s^{\prime},a^{\prime} \right)\\
       \end{aligned}
 
