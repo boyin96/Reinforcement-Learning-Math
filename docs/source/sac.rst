@@ -132,8 +132,8 @@ then we can get,
 	\begin{aligned}
 	& \max_{\pi_{T-1}}\left(\mathbb{E}\left[\mathcal{R}\left(s_{T-1}, a_{T-1}\right)\right]+\max_{\pi_T} \mathbb{E}\left[\mathcal{R}\left(s_T, a_T\right]\right)\right) \\
 	& =\max_{\pi_{T-1}}\left(Q_{T-1}^*\left(s_{T-1}, a_{T-1}\right)-\alpha_T^* \mathcal{H}\left(\pi_T^*\right)\right) \\
-	& =\min_{\alpha_{T-1} \geq 0} \max_{\pi_{T-1}}\left(Q_{T-1}^*\left(s_{T-1}, a_{T-1}\right)-\alpha_T^* \mathcal{H}\left(\pi_T^*\right)+\alpha_{T-1}\left(\mathcal{H}\left(\pi_{T-1}\right)-\mathcal{H}_0\right)\right) \\
-	& =\min_{\alpha_{T-1} \geq 0} \max_{\pi_{T-1}}\left(Q_{T-1}^*\left(s_{T-1}, a_{T-1}\right)+\alpha_{T-1} \mathcal{H}\left(\pi_{T-1}\right)-\alpha_{T-1} \mathcal{H}_0\right)-\alpha_T^* \mathcal{H}\left(\pi_T^*\right)
+	& =\min_{\alpha_{T-1}} \max_{\pi_{T-1}}\left(\mathbb{E}\left[Q_{T-1}^*\left(s_{T-1}, a_{T-1}\right)\right]-\alpha_T^* \mathcal{H}\left(\pi_T^*\right)+\mathbb{E}\left[\alpha_{T-1}\left(\mathcal{H}\left(\pi_{T-1}\right)-\mathcal{H}_0\right)\right]\right) \\
+	& =\min_{\alpha_{T-1}} \max_{\pi_{T-1}}\left(\mathbb{E}\left[Q_{T-1}^*\left(s_{T-1}, a_{T-1}\right)\right]-\alpha_{T-1} \log\pi_{T-1}^*\left(a_{T-1} \mid s_{T-1}\right)-\alpha_{T-1} \mathcal{H}_0\right)-\alpha_T^* \mathcal{H}\left(\pi_T^*\right)
 	\end{aligned}
 
 Similarly, we can solve for the optimal dual variable :math:`\alpha_{T-1}^*` as 
@@ -141,7 +141,7 @@ Similarly, we can solve for the optimal dual variable :math:`\alpha_{T-1}^*` as
 .. attention::
 
 	.. math::
-		\alpha_{T-1}^*=\arg \min _{\alpha_{T-1}} \mathbb{E}_{\pi_{t-1}^*}\left[-\alpha_{T-1}\pi_{T-1}^*\left(a_{T-1} \mid s_{T-1}\right)-\alpha_{T-1} \mathcal{H}_0\right]
+		\alpha_{T-1}^*=\arg \min _{\alpha_{T-1}} \mathbb{E}_{\pi_{t-1}^*}\left[-\alpha_{T-1}\log\pi_{T-1}^*\left(a_{T-1} \mid s_{T-1}\right)-\alpha_{T-1} \mathcal{H}_0\right]
 
 By repeating this process, we can learn the optimal temperature parameter in every step by minimizing the same objective function,
 
