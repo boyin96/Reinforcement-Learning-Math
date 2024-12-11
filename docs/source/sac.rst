@@ -12,7 +12,7 @@ Key features of SAC include:
 - **Stochastic policies**: Enables better exploration compared to deterministic approaches.
 - **Off-policy learning**: Utilizes a replay buffer for data efficiency.
 - **Twin soft Q-network**: Uses two separate Q-networks to mitigate overestimation bias.
-- **Automatic temperature adjustment**: Adaptively tunes the temperature parameter
+- **Automatic temperature adjustment**: Adaptively tunes the temperature parameter.
 - **Continuous action space via reparameterization**: Employs the reparameterization trick to optimize stochastic policies in continuous action spaces.
 
 
