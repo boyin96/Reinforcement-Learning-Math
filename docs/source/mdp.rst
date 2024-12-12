@@ -23,23 +23,27 @@ Definition
    - :math:`\mathcal{S}` is a (finite) set of states.
    - :math:`P` is a state transition probability matrix, :math:`P=P\left[S_{t+1}=s^{\prime} \mid S_t=s\right]`
 
-**Bellman Equation**
+Bellman Equation
+^^^^^^^^^^^^^^^^^^
 
-For a Markov Process, the Bellman equation describes the recursive relationship of state transition probabilities:
+.. tip::
+   For a Markov Process, the Bellman equation describes the recursive relationship of state transition probabilities,
 
 .. math::
-   P(s_{t+1}) = \sum_{s_t} P(s_{t+1} \mid s_t) P(s_t)
+   P(s) = \sum_{s} P(s^{\prime} \mid s) P(s)
 
 Markov Reward Processes
 --------------------------------
-**Definition**
+A Markov Reward Process (MRP) extends an MP by associating rewards with state transitions.
 
-A Markov Reward Process (MRP) extends an MP by associating rewards with state transitions. An MRP is defined by the tuple :math:`(\mathcal{S}, P, R, \gamma)` where:
+Definition
+^^^^^^^^^^^^^
 
-- :math:`\mathcal{S}` is a finite set of states.
-- :math:`P` is the state transition probability matrix.
-- :math:`R(s)` is the expected reward for state :math:`s`.
-- :math:`\gamma \in [0, 1]` is the discount factor.
+.. note::
+   A Markov Reward Process (or Markov Chain) is a tuple :math:`\langle\mathcal{S}, P\rangle`
+  
+   - :math:`\mathcal{S}` is a (finite) set of states.
+   - :math:`P` is a state transition probability matrix, :math:`P=P\left[S_{t+1}=s^{\prime} \mid S_t=s\right]`
 
 **Bellman Equation**
 
