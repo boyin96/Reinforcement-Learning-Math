@@ -9,7 +9,7 @@ This document explores key concepts of MDPs, starting with Markov Processes (MP)
 
 Markov Processes
 ------------------
-A Markov Process (MP) is a stochastic process characterized by the Markov property, which states that the future state depends only on the current state and not on the sequence of states that preceded it. A state St is Markov (or with Markov property) if and only if
+A Markov Process (MP) is a stochastic process characterized by the Markov property, which states that the future state depends only on the current state and not on the sequence of states that preceded it. A state :math:`S_t` is Markov (or with Markov property) if and only if
 
 .. math::
    P\left[S_{t+1} \mid S_t\right]=P\left[S_{t+1} \mid S_1, \ldots, S_t\right]
@@ -17,8 +17,11 @@ A Markov Process (MP) is a stochastic process characterized by the Markov proper
 Definition
 ^^^^^^^^^^^^^
 
-.. note:: tiyti
-   1
+.. note::
+   A Markov Process (or Markov Chain) is a tuple :math:`\langle\mathcal{S}, P\rangle`
+  
+   - :math:`\mathcal{S}` is a (finite) set of states.
+   - :math:`P` is a state transition probability matrix, :math:`P=P\left[S_{t+1}=s^{\prime} \mid S_t=s\right]`
 
 **Bellman Equation**
 
