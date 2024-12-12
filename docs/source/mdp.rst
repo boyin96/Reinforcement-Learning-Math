@@ -5,21 +5,20 @@ Introduction
 ------------------
 Markov Decision Processes (MDPs) provide a mathematical framework for modeling decision-making in environments where outcomes are partly random and partly under the control of a decision maker. This framework is fundamental in fields such as reinforcement learning, operations research, and economics. 
 
-This document explores key concepts of MDPs, starting with Markov Processes (MP), then Markov Reward Processes (MRP), and finally MDPs. Each section provides definitions and the corresponding Bellman equations. References are listed at the end for further reading.
+This document explores key concepts of MDPs, starting with Markov Processes (MP), then Markov Reward Processes (MRP), and finally MDPs. Each section provides definitions and the corresponding Bellman equations.
 
 Markov Processes
 ------------------
-**Definition**
-
-A Markov Process (MP) is a stochastic process characterized by the Markov property, which states that the future state depends only on the current state and not on the sequence of states that preceded it. Formally:
+A Markov Process (MP) is a stochastic process characterized by the Markov property, which states that the future state depends only on the current state and not on the sequence of states that preceded it. A state St is Markov (or with Markov property) if and only if
 
 .. math::
-   P(s_{t+1} \mid s_t, s_{t-1}, \ldots, s_0) = P(s_{t+1} \mid s_t)
+   P\left[S_{t+1} \mid S_t\right]=P\left[S_{t+1} \mid S_1, \ldots, S_t\right]
 
-Where:
+Definition
+^^^^^^^^^^^^^
 
-- :math:`s_t` is the state at time :math:`t`.
-- :math:`P` is the transition probability.
+.. note::
+   title: dd
 
 **Bellman Equation**
 
