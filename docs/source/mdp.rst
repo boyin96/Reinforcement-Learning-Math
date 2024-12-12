@@ -93,8 +93,8 @@ The Bellman expectation equation for the state value function :math:`V^{\pi}(s)`
    .. math::
       \begin{aligned}
       V^\pi(s) & =\mathbb{E}_\pi\left[R_{t+1}+\gamma V^\pi\left(S_{t+1}\right) \mid S_t=s\right] \\
-      & =\sum_{a \in A} \pi(a \mid s)\left(\mathcal{R}^a_s+\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s, a\right) V^\pi\left(s^{\prime}\right)\right) \\[5pt]
-      Q^\pi(s, a) & =\mathbb{E}_\pi\left[R_{t+1}+\gamma Q^\pi\left(S_{t+1}, A_{t+1}\right) \mid S_t=s, A_t=a\right], \\
+      & =\sum_{a \in A} \pi(a \mid s)\left(\mathcal{R}^a_s+\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s, a\right) V^\pi\left(s^{\prime}\right)\right), \\[5pt]
+      Q^\pi(s, a) & =\mathbb{E}_\pi\left[R_{t+1}+\gamma Q^\pi\left(S_{t+1}, A_{t+1}\right) \mid S_t=s, A_t=a\right] \\
       & =\mathcal{R}^a_s+\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s, a\right) \sum_{a^{\prime} \in A} \pi\left(a^{\prime} \mid s^{\prime}\right) Q^\pi\left(s^{\prime}, a^{\prime}\right).
       \end{aligned}
 
@@ -112,13 +112,18 @@ and we have,
 
    .. math::
       \begin{aligned}
-      V^*(s) & =\max_{a \in \mathcal{A}}\left\{\mathcal{R}^a_s+\gamma \sum_{s^{\prime} \in \mathcal{S}} P\left(s^{\prime} \mid s, a\right) V^*\left(s^{\prime}\right)\right\} \\
+      V^*(s) & =\max_{a \in \mathcal{A}}\left\{\mathcal{R}^a_s+\gamma \sum_{s^{\prime} \in \mathcal{S}} P\left(s^{\prime} \mid s, a\right) V^*\left(s^{\prime}\right)\right\}, \\[5pt]
       Q^*(s, a) & =\mathcal{R}^a_s+\gamma \sum_{s^{\prime} \in \mathcal{S}} P\left(s^{\prime} \mid s, a\right) \max _{a^{\prime} \in \mathcal{A}} Q^*\left(s^{\prime}, a^{\prime}\right).
       \end{aligned}
+
+.. important::
+
+   In sum, the Bellman equation recursively defines a value function as the sum of the immediate reward and the discounted expected value of future states.
 
 References
 ----------------
 
 - https://spinningup.openai.com/en/latest/spinningup/rl_intro.html
 - https://www.davidsilver.uk/teaching/
+- https://hrl.boyuai.com/chapter/1/%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B#37-%E6%9C%80%E4%BC%98%E7%AD%96%E7%95%A5
 
