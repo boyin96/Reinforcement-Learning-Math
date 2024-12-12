@@ -30,20 +30,22 @@ Bellman Equation
    For a Markov Process, the Bellman equation describes the recursive relationship of state transition probabilities,
 
 .. math::
-   P(s) = \sum_{s} P(s^{\prime} \mid s) P(s)
+   P(s^{\prime}) = \sum_{s} P(s^{\prime} \mid s) P(s)
 
 Markov Reward Processes
 --------------------------------
-A Markov Reward Process (MRP) extends an MP by associating rewards with state transitions.
+A Markov Reward Process (MRP) extends an MP by associating rewards (values) with state transitions.
 
 Definition
 ^^^^^^^^^^^^^
 
 .. note::
-   A Markov Reward Process (or Markov Chain) is a tuple :math:`\langle\mathcal{S}, P\rangle`
+   A MRP is a tuple :math:`\langle\mathcal{S}, P,\mathcal{R},\gamma\rangle`
   
    - :math:`\mathcal{S}` is a (finite) set of states.
    - :math:`P` is a state transition probability matrix, :math:`P=P\left[S_{t+1}=s^{\prime} \mid S_t=s\right]`
+   - :math:`\mathcal{R}` is a reward function.
+   - :math:`\gamma` is a discount factor.
 
 **Bellman Equation**
 
