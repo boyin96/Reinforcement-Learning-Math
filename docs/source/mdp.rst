@@ -86,15 +86,17 @@ A Markov Decision Process (MDP) introduces decision-making into an MRP. It is de
 Bellman Expectation Equation
 ^^^^^^^^^^^^^^^^^^
 
-The Bellman expectation equation for the state value function :math:`V^{\pi}_{(s)}` and action value function :math:`Q^{\pi}_{(s,a)}` are,
+The Bellman expectation equation for the state value function :math:`V^{\pi}(s)` and action value function :math:`Q^{\pi}(s,a)` are,
 
-.. math::
-   \begin{aligned}
-   V^\pi(s) & =\mathbb{E}_\pi\left[R_t+\gamma V^\pi\left(S_{t+1}\right) \mid S_t=s\right] \\
-   & =\sum_{a \in A} \pi(a \mid s)\left(r(s, a)+\gamma \sum_{s^{\prime} \in S} p\left(s^{\prime} \mid s, a\right) V^\pi\left(s^{\prime}\right)\right) \\
-   Q^\pi(s, a) & =\mathbb{E}_\pi\left[R_t+\gamma Q^\pi\left(S_{t+1}, A_{t+1}\right) \mid S_t=s, A_t=a\right] \\
-   & =r(s, a)+\gamma \sum_{s^{\prime} \in S} p\left(s^{\prime} \mid s, a\right) \sum_{a^{\prime} \in A} \pi\left(a^{\prime} \mid s^{\prime}\right) Q^\pi\left(s^{\prime}, a^{\prime}\right)
-   \end{aligned}
+.. tip::
+
+   .. math::
+      \begin{aligned}
+      V^\pi(s) & =\mathbb{E}_\pi\left[R_{t+1}+\gamma V^\pi\left(S_{t+1}\right) \mid S_t=s\right] \\
+      & =\sum_{a \in A} \pi(a \mid s)\left(\mathcal{R}^a_s+\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s, a\right) V^\pi\left(s^{\prime}\right)\right) \\[5pt]
+      Q^\pi(s, a) & =\mathbb{E}_\pi\left[R_{t+1}+\gamma Q^\pi\left(S_{t+1}, A_{t+1}\right) \mid S_t=s, A_t=a\right] \\
+      & =\mathcal{R}^a_s+\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s, a\right) \sum_{a^{\prime} \in A} \pi\left(a^{\prime} \mid s^{\prime}\right) Q^\pi\left(s^{\prime}, a^{\prime}\right)
+      \end{aligned}
 
 Bellman Optimality Equation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
