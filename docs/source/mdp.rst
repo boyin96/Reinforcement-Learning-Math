@@ -72,24 +72,27 @@ The Bellman equation for the value function :math:`V(s)` is,
 
 Markov Decision Processes
 -------------------------------
-**Definition**
+Definition
+^^^^^^^^^^^^^
 
-A Markov Decision Process (MDP) introduces decision-making into an MRP. It is defined by the tuple :math:`(\mathcal{S}, \mathcal{A}, P, R, \gamma)` where:
+A Markov Decision Process (MDP) introduces decision-making into an MRP. It is defined by the tuple :math:`\langle\mathcal{S}, \mathcal{A}, P, \mathcal{R}, \gamma\rangle` where,
 
 - :math:`\mathcal{S}` is a finite set of states.
 - :math:`\mathcal{A}` is a finite set of actions.
-- :math:`P(s' \mid s, a)` is the transition probability given action :math:`a`.
-- :math:`R(s, a)` is the expected reward for taking action :math:`a` in state :math:`s`.
+- :math:`P(s' \mid s, a)` is the transition probability given action :math:`a`, :math:`P=P\left[S_{t+1}=s^{\prime} \mid S_t=s, A_t=a\right]`
+- :math:`\mathcal{R}^a_s` is the expected reward for taking action :math:`a` in state :math:`s`.
 - :math:`\gamma \in [0, 1]` is the discount factor.
 
-**Bellman Equation**
+Bellman Equation
+^^^^^^^^^^^^^^^^^^
 
-The Bellman equation for the optimal value function :math:`V^*(s)` is:
+The Bellman equation for the optimal value function :math:`V^*(s)` is,
 
 .. math::
    V^*(s) = \max_a \left[ R(s, a) + \gamma \sum_{s'} P(s' \mid s, a) V^*(s') \right]
 
-**Bellman Optimality Equation**
+Bellman Optimality Equation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For the optimal action-value function :math:`Q^*(s, a)`:
 
