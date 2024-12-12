@@ -12,7 +12,7 @@ Markov Processes
 A Markov Process (MP) is a stochastic process characterized by the Markov property, which states that the future state depends only on the current state and not on the sequence of states that preceded it. A state :math:`S_t` is Markov (or with Markov property) if and only if
 
 .. math::
-   P\left[S_{t+1} \mid S_t\right]=P\left[S_{t+1} \mid S_1, \ldots, S_t\right]
+   P\left[S_{t+1} \mid S_t\right]=P\left[S_{t+1} \mid S_1, \ldots, S_t\right].
 
 Definition
 ^^^^^^^^^^^^^
@@ -30,7 +30,7 @@ Bellman Equation
    For a Markov Process, the Bellman equation describes the recursive relationship of state transition probabilities,
 
    .. math::
-      P(s^{\prime}) = \sum_{s} P(s^{\prime} \mid s) P(s)
+      P(s^{\prime}) = \sum_{s} P(s^{\prime} \mid s) P(s).
 
 Markov Reward Processes
 --------------------------------
@@ -52,7 +52,7 @@ Bellman Equation
 The state value function :math:`V(s)` of an MRP is the expected return starting from state :math:`s`,
 
 .. math::
-   V(s)=\mathbb{E}\left[G_t \mid S_t=s\right]
+   V(s)=\mathbb{E}\left[G_t \mid S_t=s\right].
 
 The Bellman equation for the value function :math:`V(s)` is,
 
@@ -62,13 +62,13 @@ The Bellman equation for the value function :math:`V(s)` is,
    & =\mathbb{E}\left[R_{t+1}+\gamma R_{t+2}+\gamma^2 R_{t+3}+\ldots \mid S_t=s\right] \\
    & =\mathbb{E}\left[R_{t+1}+\gamma\left(R_{t+2}+\gamma R_{t+3}+\ldots\right) \mid S_t=s\right] \\
    & =\mathbb{E}\left[R_{t+1}+\gamma G_{t+1} \mid S_t=s\right] \\
-   & =\mathbb{E}\left[R_{t+1}+\gamma V\left(S_{t+1}\right) \mid S_t=s\right]
+   & =\mathbb{E}\left[R_{t+1}+\gamma V\left(S_{t+1}\right) \mid S_t=s\right].
    \end{aligned}
 
 .. tip::
 
    .. math::
-      V(s)=\mathcal{R}_s+\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s\right) V\left(s^{\prime}\right)   
+      V(s)=\mathcal{R}_s+\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s\right) V\left(s^{\prime}\right).   
 
 Markov Decision Processes
 -------------------------------
@@ -94,17 +94,27 @@ The Bellman expectation equation for the state value function :math:`V^{\pi}(s)`
       \begin{aligned}
       V^\pi(s) & =\mathbb{E}_\pi\left[R_{t+1}+\gamma V^\pi\left(S_{t+1}\right) \mid S_t=s\right] \\
       & =\sum_{a \in A} \pi(a \mid s)\left(\mathcal{R}^a_s+\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s, a\right) V^\pi\left(s^{\prime}\right)\right) \\[5pt]
-      Q^\pi(s, a) & =\mathbb{E}_\pi\left[R_{t+1}+\gamma Q^\pi\left(S_{t+1}, A_{t+1}\right) \mid S_t=s, A_t=a\right] \\
-      & =\mathcal{R}^a_s+\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s, a\right) \sum_{a^{\prime} \in A} \pi\left(a^{\prime} \mid s^{\prime}\right) Q^\pi\left(s^{\prime}, a^{\prime}\right)
+      Q^\pi(s, a) & =\mathbb{E}_\pi\left[R_{t+1}+\gamma Q^\pi\left(S_{t+1}, A_{t+1}\right) \mid S_t=s, A_t=a\right], \\
+      & =\mathcal{R}^a_s+\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s, a\right) \sum_{a^{\prime} \in A} \pi\left(a^{\prime} \mid s^{\prime}\right) Q^\pi\left(s^{\prime}, a^{\prime}\right).
       \end{aligned}
 
 Bellman Optimality Equation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-For the optimal action-value function :math:`Q^*(s, a)`:
+For the optimal state value function :math:`V^*(s)` and action value function :math:`Q^*(s,a)` are,
 
 .. math::
-   Q^*(s, a) = R(s, a) + \gamma \sum_{s'} P(s' \mid s, a) \max_{a'} Q^*(s', a')
+   V^*(s)=\max_\pi V^\pi(s), \text{ and }Q^*(s, a)=\max_\pi Q^\pi(s, a),
+
+and we have,
+
+.. tip::
+
+   .. math::
+      \begin{aligned}
+   V^*(s) & =\max _{a \in \mathcal{A}}\left\{r(s, a)+\gamma \sum_{s^{\prime} \in \mathcal{S}} p\left(s^{\prime} \mid s, a\right) V^*\left(s^{\prime}\right)\right\} \\
+   Q^*(s, a) & =r(s, a)+\gamma \sum_{s^{\prime} \in \mathcal{S}} p\left(s^{\prime} \mid s, a\right) \max _{a^{\prime} \in \mathcal{A}} Q^*\left(s^{\prime}, a^{\prime}\right).
+   \end{aligned}
 
 References
 ----------------
