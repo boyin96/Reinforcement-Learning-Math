@@ -74,6 +74,7 @@ For the optimal action-value function :math:`Q^*(s, a)`:
 
 References
 ----------------
-1. Sutton, R. S., & Barto, A. G. (2018). *Reinforcement Learning: An Introduction*. MIT Press.
-2. Puterman, M. L. (1994). *Markov Decision Processes: Discrete Stochastic Dynamic Programming*. Wiley.
+
+- https://spinningup.openai.com/en/latest/spinningup/rl_intro.html
+- https://www.davidsilver.uk/teaching/
 
