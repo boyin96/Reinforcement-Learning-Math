@@ -56,19 +56,19 @@ The state value function :math:`V(s)` of an MRP is the expected return starting 
 
 The Bellman equation for the value function :math:`V(s)` is,
 
+.. math::
+   \begin{aligned}
+   V(s) & =\mathbb{E}\left[G_t \mid S_t=s\right] \\
+   & =\mathbb{E}\left[R_{t+1}+\gamma R_{t+2}+\gamma^2 R_{t+3}+\ldots \mid S_t=s\right] \\
+   & =\mathbb{E}\left[R_{t+1}+\gamma\left(R_{t+2}+\gamma R_{t+3}+\ldots\right) \mid S_t=s\right] \\
+   & =\mathbb{E}\left[R_{t+1}+\gamma G_{t+1} \mid S_t=s\right] \\
+   & =\mathbb{E}\left[R_{t+1}+\gamma V\left(S_{t+1}\right) \mid S_t=s\right]
+   \end{aligned}
+
 .. tip::
-   
+
    .. math::
-      \begin{aligned}
-      V(s) & =\mathbb{E}\left[G_t \mid S_t=s\right] \\
-      & =\mathbb{E}\left[R_t+\gamma R_{t+1}+\gamma^2 R_{t+2}+\ldots \mid S_t=s\right] \\
-      & =\mathbb{E}\left[R_t+\gamma\left(R_{t+1}+\gamma R_{t+2}+\ldots\right) \mid S_t=s\right] \\
-      & =\mathbb{E}\left[R_t+\gamma G_{t+1} \mid S_t=s\right] \\
-      & =\mathbb{E}\left[R_t+\gamma V\left(S_{t+1}\right) \mid S_t=s\right]
-      \end{aligned}
-   
-   .. math::
-      V(s)=r(s)+\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s\right) V\left(s^{\prime}\right)   
+      V(s)=\mathcal{R}_s+\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s\right) V\left(s^{\prime}\right)   
 
 Markov Decision Processes
 -------------------------------
