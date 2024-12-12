@@ -16,5 +16,6 @@ Reinforcement learning is a powerful paradigm for decision-making and control ta
    :caption: Contents
 
    symbols
+   mdp
    policy_gradient
    sac
