@@ -17,8 +17,8 @@ A Markov Process (MP) is a stochastic process characterized by the Markov proper
 Definition
 ^^^^^^^^^^^^^
 
-.. note::
-   title: dd
+.. note:: tiyti
+   1
 
 **Bellman Equation**
 
