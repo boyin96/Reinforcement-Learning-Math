@@ -112,9 +112,9 @@ and we have,
 
    .. math::
       \begin{aligned}
-   V^*(s) & =\max _{a \in \mathcal{A}}\left\{r(s, a)+\gamma \sum_{s^{\prime} \in \mathcal{S}} p\left(s^{\prime} \mid s, a\right) V^*\left(s^{\prime}\right)\right\} \\
-   Q^*(s, a) & =r(s, a)+\gamma \sum_{s^{\prime} \in \mathcal{S}} p\left(s^{\prime} \mid s, a\right) \max _{a^{\prime} \in \mathcal{A}} Q^*\left(s^{\prime}, a^{\prime}\right).
-   \end{aligned}
+      V^*(s) & =\max_{a \in \mathcal{A}}\left\{\mathcal{R}^a_s+\gamma \sum_{s^{\prime} \in \mathcal{S}} P\left(s^{\prime} \mid s, a\right) V^*\left(s^{\prime}\right)\right\} \\
+      Q^*(s, a) & =\mathcal{R}^a_s+\gamma \sum_{s^{\prime} \in \mathcal{S}} P\left(s^{\prime} \mid s, a\right) \max _{a^{\prime} \in \mathcal{A}} Q^*\left(s^{\prime}, a^{\prime}\right).
+      \end{aligned}
 
 References
 ----------------
