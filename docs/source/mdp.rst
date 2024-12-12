@@ -29,8 +29,8 @@ Bellman Equation
 .. tip::
    For a Markov Process, the Bellman equation describes the recursive relationship of state transition probabilities,
 
-.. math::
-   P(s^{\prime}) = \sum_{s} P(s^{\prime} \mid s) P(s)
+   .. math::
+      P(s^{\prime}) = \sum_{s} P(s^{\prime} \mid s) P(s)
 
 Markov Reward Processes
 --------------------------------
@@ -40,19 +40,35 @@ Definition
 ^^^^^^^^^^^^^
 
 .. note::
-   A MRP is a tuple :math:`\langle\mathcal{S}, P,\mathcal{R},\gamma\rangle`
+   An MRP is a tuple :math:`\langle\mathcal{S}, P,\mathcal{R},\gamma\rangle`
   
    - :math:`\mathcal{S}` is a (finite) set of states.
    - :math:`P` is a state transition probability matrix, :math:`P=P\left[S_{t+1}=s^{\prime} \mid S_t=s\right]`
-   - :math:`\mathcal{R}` is a reward function.
+   - :math:`\mathcal{R}_s` is a reward function.
    - :math:`\gamma` is a discount factor.
 
-**Bellman Equation**
-
-The Bellman equation for the value function :math:`V(s)` is:
+Bellman Equation
+^^^^^^^^^^^^^^^^^^
+The state value function :math:`V(s)` of an MRP is the expected return starting from state :math:`s`,
 
 .. math::
-   V(s) = R(s) + \gamma \sum_{s'} P(s' \mid s) V(s')
+   V(s)=\mathbb{E}\left[G_t \mid S_t=s\right]
+
+The Bellman equation for the value function :math:`V(s)` is,
+
+.. tip::
+   
+   .. math::
+      \begin{aligned}
+      V(s) & =\mathbb{E}\left[G_t \mid S_t=s\right] \\
+      & =\mathbb{E}\left[R_t+\gamma R_{t+1}+\gamma^2 R_{t+2}+\ldots \mid S_t=s\right] \\
+      & =\mathbb{E}\left[R_t+\gamma\left(R_{t+1}+\gamma R_{t+2}+\ldots\right) \mid S_t=s\right] \\
+      & =\mathbb{E}\left[R_t+\gamma G_{t+1} \mid S_t=s\right] \\
+      & =\mathbb{E}\left[R_t+\gamma V\left(S_{t+1}\right) \mid S_t=s\right]
+      \end{aligned}
+   
+   .. math::
+      V(s)=r(s)+\gamma \sum_{s^{\prime} \in S} P\left(s^{\prime} \mid s\right) V\left(s^{\prime}\right)   
 
 Markov Decision Processes
 -------------------------------
