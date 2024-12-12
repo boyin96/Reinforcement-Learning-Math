@@ -45,7 +45,7 @@ Definition
    - :math:`\mathcal{S}` is a (finite) set of states.
    - :math:`P` is a state transition probability matrix, :math:`P=P\left[S_{t+1}=s^{\prime} \mid S_t=s\right]`
    - :math:`\mathcal{R}_s` is a reward function.
-   - :math:`\gamma` is a discount factor.
+   - :math:`\gamma \in [0, 1]` is a discount factor.
 
 Bellman Equation
 ^^^^^^^^^^^^^^^^^^
@@ -78,18 +78,23 @@ Definition
 A Markov Decision Process (MDP) introduces decision-making into an MRP. It is defined by the tuple :math:`\langle\mathcal{S}, \mathcal{A}, P, \mathcal{R}, \gamma\rangle` where,
 
 - :math:`\mathcal{S}` is a finite set of states.
-- :math:`\mathcal{A}` is a finite set of actions.
+- :math:`\mathcal{A}` is a finite set of actions, :math:`\pi(a \mid s)=P\left[A_t=a \mid S_t=s\right]`
 - :math:`P(s' \mid s, a)` is the transition probability given action :math:`a`, :math:`P=P\left[S_{t+1}=s^{\prime} \mid S_t=s, A_t=a\right]`
 - :math:`\mathcal{R}^a_s` is the expected reward for taking action :math:`a` in state :math:`s`.
 - :math:`\gamma \in [0, 1]` is the discount factor.
 
-Bellman Equation
+Bellman Expectation Equation
 ^^^^^^^^^^^^^^^^^^
 
-The Bellman equation for the optimal value function :math:`V^*(s)` is,
+The Bellman expectation equation for the state value function :math:`V^{\pi}_{(s)}` and action value function :math:`Q^{\pi}_{(s,a)}` are,
 
 .. math::
-   V^*(s) = \max_a \left[ R(s, a) + \gamma \sum_{s'} P(s' \mid s, a) V^*(s') \right]
+   \begin{aligned}
+   V^\pi(s) & =\mathbb{E}_\pi\left[R_t+\gamma V^\pi\left(S_{t+1}\right) \mid S_t=s\right] \\
+   & =\sum_{a \in A} \pi(a \mid s)\left(r(s, a)+\gamma \sum_{s^{\prime} \in S} p\left(s^{\prime} \mid s, a\right) V^\pi\left(s^{\prime}\right)\right) \\
+   Q^\pi(s, a) & =\mathbb{E}_\pi\left[R_t+\gamma Q^\pi\left(S_{t+1}, A_{t+1}\right) \mid S_t=s, A_t=a\right] \\
+   & =r(s, a)+\gamma \sum_{s^{\prime} \in S} p\left(s^{\prime} \mid s, a\right) \sum_{a^{\prime} \in A} \pi\left(a^{\prime} \mid s^{\prime}\right) Q^\pi\left(s^{\prime}, a^{\prime}\right)
+   \end{aligned}
 
 Bellman Optimality Equation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
