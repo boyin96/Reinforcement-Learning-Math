@@ -19,3 +19,4 @@ Reinforcement learning is a powerful paradigm for decision-making and control ta
    mdp
    policy_gradient
    sac
+   bayes
