@@ -77,7 +77,7 @@ The following PyTorch code demonstrates the simplified GPT-like layers:
    
            return output, attn_weights
 
-1. ** MultiHead Attention Layer **
+2. **MultiHead Attention Layer**
 
 .. code-block:: python
 
