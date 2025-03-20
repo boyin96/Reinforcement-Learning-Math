@@ -77,45 +77,52 @@ The following PyTorch code demonstrates the simplified GPT-like layers:
    
            return output, attn_weights
 
-1. ** MultiHead Attention Layer**
+1. ** MultiHead Attention Layer **
 
 .. code-block:: python
 
    class MultiHeadAttention(nn.Module):
-       def __init__(self, d_model, n_heads, attn_pdrop):
+       def __init__(self, d_model, n_heads, attn_dropout):
            super().__init__()
-           
+
            self.n_heads = n_heads
-           self.d_k = self.d_v = d_model//n_heads
-           
+           self.d_k = self.d_v = d_model // n_heads
+   
            self.WQ = nn.Linear(d_model, d_model)
            self.WK = nn.Linear(d_model, d_model)
            self.WV = nn.Linear(d_model, d_model)
-           self.scaled_dot_product_attn = ScaledDotProductAttention(self.d_k, attn_pdrop)
-           self.linear = nn.Linear(n_heads * self.d_v, d_model)
    
-       def forward(self, Q, K, V, attn_mask):
-           # |Q| : (batch_size, q_len(=seq_len), d_model)
-           # |K| : (batch_size, k_len(=seq_len), d_model)
-           # |V| : (batch_size, v_len(=seq_len), d_model)
-           # |attn_mask| : (batch_size, q_len, k_len)
-           batch_size = Q.size(0)
+           self.scaled_dot_product_attn = ScaledDotProductAttention(self.d_k, attn_dropout)
    
-           q_heads = self.WQ(Q).view(batch_size, -1, self.n_heads, self.d_k).transpose(1, 2)
-           k_heads = self.WK(K).view(batch_size, -1, self.n_heads, self.d_k).transpose(1, 2)
-           v_heads = self.WV(V).view(batch_size, -1, self.n_heads, self.d_v).transpose(1, 2)
-           # |q_heads| : (batch_size, n_heads, q_len, d_k), |k_heads| : (batch_size, n_heads, k_len, d_k), |v_heads| : (batch_size, n_heads, v_len, d_v)
+           self.fc = nn.Linear(d_model, d_model)
+
+       def forward(self, q, k, v, mask=None):
+
+           # q -> (batch_size, q_len(=seq_len), d_model)
+           # k -> (batch_size, k_len(=seq_len), d_model)
+           # v -> (batch_size, v_len(=seq_len), d_model)
+           # mask -> (batch_size, q_len, k_len)
    
-           attn_mask = attn_mask.unsqueeze(1).repeat(1, self.n_heads, 1, 1)
-           # |attn_mask| : (batch_size, n_heads, q_len, k_len)
-           attn, attn_weights = self.scaled_dot_product_attn(q_heads, k_heads, v_heads, attn_mask)
-           # |attn| : (batch_size, n_heads, q_len, d_v)
-           # |attn_weights| : (batch_size, n_heads, q_len, k_len)
-           
+           batch_size = q.size(0)
+   
+           # q_heads -> (batch_size, n_heads, q_len, d_k)
+           # k_heads -> (batch_size, n_heads, k_len, d_k)
+           # v_heads -> (batch_size, n_heads, v_len, d_v)
+           q_heads = self.WQ(q).view(batch_size, -1, self.n_heads, self.d_k).transpose(1, 2)
+           k_heads = self.WK(k).view(batch_size, -1, self.n_heads, self.d_k).transpose(1, 2)
+           v_heads = self.WV(v).view(batch_size, -1, self.n_heads, self.d_v).transpose(1, 2)
+   
+           # mask -> (batch_size, n_heads, q_len, k_len)
+           # attn -> (batch_size, n_heads, q_len, d_v)
+           # attn_weights -> (batch_size, n_heads, q_len, k_len)
+           if mask is not None:
+               mask = mask.unsqueeze(1).repeat(1, self.n_heads, 1, 1)
+           attn, attn_weights = self.scaled_dot_product_attn(q_heads, k_heads, v_heads, mask=mask)
+   
+           # attn -> (batch_size, q_len, n_heads * d_v)
+           # outputs -> (batch_size, q_len, d_model)
            attn = attn.transpose(1, 2).contiguous().view(batch_size, -1, self.n_heads * self.d_v)
-           # |attn| : (batch_size, q_len, n_heads * d_v)
-           outputs = self.linear(attn)
-           # |outputs| : (batch_size, q_len, d_model)
+           outputs = self.fc(attn)
    
            return outputs, attn_weights
 
