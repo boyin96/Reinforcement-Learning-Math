@@ -32,7 +32,7 @@ The attention scores are then computed using the scaled dot-product attention:
 
 .. math::
    
-   \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T + M}{\sqrt{d_k}}\right)V
+   \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T + M}{\sqrt{d_k}}\right)V,
 
 where :math:`M` is a lower triangular mask matrix with negative infinity in masked positions, ensuring that each token attends only to previous tokens.
 
@@ -123,7 +123,7 @@ The following PyTorch code demonstrates the simplified GPT-like layers:
    
            return outputs, attn_weights
 
-3. **Position-wise Feed-Forward Networks**
+3. **Position-wise Feed-Forward Layer**
 
 .. code-block:: python
 
@@ -146,6 +146,40 @@ The following PyTorch code demonstrates the simplified GPT-like layers:
            outputs = self.linear2(outputs)  # outputs -> (batch_size, seq_len, d_model)
    
            return outputs
+
+4. **Decoder Layer**
+
+.. code-block:: python
+
+   class DecoderLayer(nn.Module):
+       def __init__(self, d_model, n_heads, d_ff, attn_dropout, resid_dropout):
+           super().__init__()
+   
+           self.mha = MultiHeadAttention(d_model, n_heads, attn_dropout)
+           self.dropout1 = nn.Dropout(resid_dropout)
+           self.layer_norm1 = nn.LayerNorm(d_model, eps=1e-5)
+   
+           self.ffn = PositionWiseFeedForwardNetwork(d_model, d_ff)
+           self.dropout2 = nn.Dropout(resid_dropout)
+           self.layer_norm2 = nn.LayerNorm(d_model, eps=1e-5)
+   
+       def forward(self, inputs, mask=None):
+   
+           # inputs -> (batch_size, seq_len, d_model)
+           # mask -> (batch_size, seq_len, seq_len)
+   
+           attn_outputs, attn_weights = self.mha(inputs, inputs, inputs, mask)
+   
+           # attn_outputs -> (batch_size, seq_len, d_model)
+           # attn_weights -> (batch_size, n_heads, q_len(=seq_len), k_len(=seq_len))
+           attn_outputs = self.dropout1(attn_outputs)
+           attn_outputs = self.layernorm1(inputs + attn_outputs)
+   
+           ffn_outputs = self.ffn(attn_outputs)
+           ffn_outputs = self.dropout2(ffn_outputs)
+           ffn_outputs = self.layernorm2(attn_outputs + ffn_outputs)  # ffn_outputs -> (batch_size, seq_len, d_model)
+   
+           return ffn_outputs, attn_weights
 
 .. code-block:: python
 
@@ -176,3 +210,4 @@ References
 --------------------
 - `Attention Is All You Need <https://arxiv.org/pdf/1706.03762>`_
 - `Improving Language Understanding by Generative Pre-Training <https://www.mikecaptain.com/resources/pdf/GPT-1.pdf>`_
+- https://github.com/lyeoni/gpt-pytorch
