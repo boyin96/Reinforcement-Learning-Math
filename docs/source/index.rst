@@ -20,3 +20,4 @@ Reinforcement learning is a powerful paradigm for decision-making and control ta
    policy_gradient
    sac
    bayes
+   gpt
