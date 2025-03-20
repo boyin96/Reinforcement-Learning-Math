@@ -24,12 +24,9 @@ The core of GPT’s text generation relies on the masked self-attention mechanis
 
 .. math::
    
-   Q = XW_Q, \quad K = XW_K, \quad V = XW_V
+   Q = XW_Q, \quad K = XW_K, \quad V = XW_V,
 
-where:
-
-- :math:`X \in \mathbb{R}^{T \times d_{model}}` is the input token representation.
-- :math:`W_Q, W_K, W_V \in \mathbb{R}^{d_{model} \times d_k}` are learned weight matrices for queries, keys, and values.
+where :math:`X \in \mathbb{R}^{T \times d_{model}}` is the input token representation and :math:`W_Q, W_K, W_V \in \mathbb{R}^{d_{model} \times d_k}` are learned weight matrices for queries, keys, and values.
 
 The attention scores are then computed using the scaled dot-product attention:
 
@@ -125,6 +122,30 @@ The following PyTorch code demonstrates the simplified GPT-like layers:
            outputs = self.fc(attn)
    
            return outputs, attn_weights
+
+3. **Position-wise Feed-Forward Networks**
+
+.. code-block:: python
+
+   class PositionWiseFeedForwardNetwork(nn.Module):
+       def __init__(self, d_model, d_ff):
+           super().__init__()
+   
+           self.linear1 = nn.Linear(d_model, d_ff)
+           self.linear2 = nn.Linear(d_ff, d_model)
+           self.gelu = nn.GELU()
+   
+           nn.init.normal_(self.linear1.weight, std=0.02)
+           nn.init.normal_(self.linear2.weight, std=0.02)
+   
+       def forward(self, inputs):
+   
+           # inputs -> (batch_size, seq_len, d_model)
+   
+           outputs = self.gelu(self.linear1(inputs))  # outputs -> (batch_size, seq_len, d_ff)
+           outputs = self.linear2(outputs)  # outputs -> (batch_size, seq_len, d_model)
+   
+           return outputs
 
 .. code-block:: python
 
