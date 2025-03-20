@@ -1,5 +1,5 @@
-GPT: Attention-Based Decoder Model
-==================================
+Understanding GPT as an Attention-Driven Decoder
+================================================
 
 Introduction
 ------------
@@ -69,3 +69,8 @@ Conclusion
 GPT’s decoder-only architecture, powered by masked self-attention, enables it to generate high-quality text by leveraging contextual information effectively. Its autoregressive nature ensures that text is generated in a coherent and grammatically accurate manner. The use of multi-head self-attention allows for capturing complex dependencies, making GPT a powerful model for various NLP tasks.
 
 Understanding its inner workings provides valuable insights for both research and practical applications in AI-driven text generation.
+
+References
+--------------------
+- `Attention Is All You Need <https://arxiv.org/pdf/1706.03762>`_
+- `Improving Language Understanding by Generative Pre-Training <https://www.mikecaptain.com/resources/pdf/GPT-1.pdf>`_
