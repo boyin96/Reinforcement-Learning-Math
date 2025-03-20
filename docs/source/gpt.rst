@@ -41,7 +41,43 @@ where :math:`M` is a lower triangular mask matrix with negative infinity in mask
 
 Code Implementation
 -------------------
-The following PyTorch code demonstrates a simplified GPT-like masked self-attention layer:
+The following PyTorch code demonstrates the simplified GPT-like layers:
+
+1. **Scaled DotProduct Attention Layer**
+
+.. code-block:: python
+
+   import torch
+   import torch.nn as nn
+   import torch.nn.functional as F
+
+
+   class ScaledDotProductAttention(nn.Module):
+       def __init__(self, d_k, attn_pdrop):
+           super(ScaledDotProductAttention, self).__init__()
+           self.d_k = d_k
+   
+           self.dropout = nn.Dropout(attn_pdrop)
+           self.softmax = nn.Softmax(dim=-1)
+       
+       def forward(self, q, k, v, mask=None):
+           # q -> (batch_size, n_heads, q_len, d_k)
+           # k -> (batch_size, n_heads, k_len, d_k)
+           # v -> (batch_size, n_heads, v_len, d_v)
+           # mask -> (batch_size, n_heads, q_len, k_len)
+           
+           attn_score = torch.matmul(q, k.transpose(-2, -1)) / (self.d_k ** 0.5)
+
+           if mask is not None:
+               attn_score.masked_fill_(mask, -1e9)  # attn_scroe -> (batch_size, n_heads, q_len, k_len)
+           
+           attn_weights = self.dropout(self.softmax(attn_score))  # attn_weights -> (batch_size, n_heads, q_len, k_len)
+           
+           output = torch.matmul(attn_weights, v)  # output -> (batch_size, n_heads, q_len, d_v)
+   
+           return output, attn_weights
+
+1. **Scaled DotProduct Attention Layer**
 
 .. code-block:: python
 
@@ -67,8 +103,6 @@ This module ensures that each token can only attend to previous tokens, enforcin
 Conclusion
 ----------
 GPT’s decoder-only architecture, powered by masked self-attention, enables it to generate high-quality text by leveraging contextual information effectively. Its autoregressive nature ensures that text is generated in a coherent and grammatically accurate manner. The use of multi-head self-attention allows for capturing complex dependencies, making GPT a powerful model for various NLP tasks.
-
-Understanding its inner workings provides valuable insights for both research and practical applications in AI-driven text generation.
 
 References
 --------------------
