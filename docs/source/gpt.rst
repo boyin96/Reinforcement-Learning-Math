@@ -168,18 +168,84 @@ The following PyTorch code demonstrates the simplified GPT-like layers:
            # inputs -> (batch_size, seq_len, d_model)
            # mask -> (batch_size, seq_len, seq_len)
    
-           attn_outputs, attn_weights = self.mha(inputs, inputs, inputs, mask)
+           attn_outputs, attn_weights = self.mha(inputs, inputs, inputs, mask=mask)
    
            # attn_outputs -> (batch_size, seq_len, d_model)
            # attn_weights -> (batch_size, n_heads, q_len(=seq_len), k_len(=seq_len))
            attn_outputs = self.dropout1(attn_outputs)
-           attn_outputs = self.layernorm1(inputs + attn_outputs)
+           attn_outputs = self.layer_norm1(inputs + attn_outputs)
    
            ffn_outputs = self.ffn(attn_outputs)
            ffn_outputs = self.dropout2(ffn_outputs)
-           ffn_outputs = self.layernorm2(attn_outputs + ffn_outputs)  # ffn_outputs -> (batch_size, seq_len, d_model)
+           ffn_outputs = self.layer_norm2(attn_outputs + ffn_outputs)  # ffn_outputs -> (batch_size, seq_len, d_model)
    
            return ffn_outputs, attn_weights
+
+5. **Transformer Decoder**
+
+.. code-block:: python
+
+   class TransformerDecoder(nn.Module):
+       def __init__(self, vocab_size, seq_len, d_model, n_layers, n_heads, d_ff,
+                    embd_dropout, attn_dropout, resid_dropout, pad_id):
+           super().__init__()
+   
+           self.pad_id = pad_id
+   
+           # layers
+           self.embedding = nn.Embedding(vocab_size, d_model)
+           self.dropout = nn.Dropout(embd_dropout)
+           self.pos_embedding = nn.Embedding(seq_len + 1, d_model)
+           self.layers = nn.ModuleList(
+               [DecoderLayer(d_model, n_heads, d_ff, attn_dropout, resid_dropout) for _ in range(n_layers)]
+           )
+   
+           nn.init.normal_(self.embedding.weight, std=0.02)
+   
+       def forward(self, inputs):
+   
+           # inputs -> (batch_size, seq_len)
+           positions = torch.arange(inputs.size(1), device=inputs.device, dtype=inputs.dtype).repeat(inputs.size(0), 1) + 1
+           position_pad_mask = inputs.eq(self.pad_id)
+           positions.masked_fill_(position_pad_mask, 0)  # positions -> (batch_size, seq_len)
+   
+           # outputs -> (batch_size, seq_len, d_model)
+           outputs = self.dropout(self.embedding(inputs)) + self.pos_embedding(positions)
+   
+           # attn_pad_mask -> (batch_size, seq_len, seq_len)
+           attn_pad_mask = self.get_attention_padding_mask(inputs, inputs, self.pad_id)
+   
+           # subsequent_mask -> (batch_size, seq_len, seq_len)
+           subsequent_mask = self.get_attention_subsequent_mask(inputs).to(device=attn_pad_mask.device)
+   
+           # attn_mask -> (batch_size, seq_len, seq_len)
+           attn_mask = torch.gt((attn_pad_mask.to(dtype=subsequent_mask.dtype) + subsequent_mask), 0)
+   
+           attention_weights = []
+           for layer in self.layers:
+   
+               # outputs -> (batch_size, seq_len, d_model)
+               # attn_weights -> (batch_size, n_heads, seq_len, seq_len)
+               outputs, attn_weights = layer(outputs, attn_mask)
+               attention_weights.append(attn_weights)
+   
+           return outputs, attention_weights
+   
+       @staticmethod
+       def get_attention_padding_mask(q, k, pad_id):
+   
+           # attn_pad_mask -> (batch_size, q_len, k_len)
+           attn_pad_mask = k.eq(pad_id).unsqueeze(1).repeat(1, q.size(1), 1)
+   
+           return attn_pad_mask
+   
+       @staticmethod
+       def get_attention_subsequent_mask(q):
+   
+           bs, q_len = q.size()
+           subsequent_mask = torch.ones(bs, q_len, q_len).triu(diagonal=1)  # subsequent_mask -> (batch_size, q_len, q_len)
+   
+           return subsequent_mask
 
 .. code-block:: python
 
