@@ -44,7 +44,7 @@ The attention scores are then computed using the scaled dot-product attention:
 
 .. math::
    
-   \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T + M}{\sqrt{d_k}}\right)V,
+   \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}} + M\right)V,
 
 where :math:`M` is a lower triangular mask matrix with negative infinity in masked positions, ensuring that each token attends only to previous tokens.
 
