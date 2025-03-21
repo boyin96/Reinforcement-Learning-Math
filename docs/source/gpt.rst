@@ -7,6 +7,18 @@ The Generative Pre-trained Transformer (GPT) is a state-of-the-art autoregressiv
 
 GPT is widely applied in natural language processing (NLP) tasks such as text generation, summarization, and dialogue systems. It builds on the fundamental principles of the "Attention is All You Need" paper by using self-attention mechanisms to capture long-range dependencies in text.
 
+Decoder-Only Architecture
+------------------------------------------
+
+GPT adopts a decoder-only structure primarily because it is designed for autoregressive text generation. Unlike models with both an encoder and a decoder, GPT does not require an input sequence to be fully processed before generating output. Instead, it predicts each token sequentially, conditioning on the previously generated tokens.
+
+Key reasons for using a decoder-only architecture include:
+
+1. **Autoregressive Nature**: GPT generates text one token at a time, making it suitable for tasks like text completion, dialogue generation, and creative writing.
+2. **Masked Self-Attention**: By applying a causal mask, GPT ensures that each token attends only to previous tokens, preventing information leakage from future tokens.
+3. **Simplified Training Process**: The absence of an encoder simplifies training, as the model learns to predict the next token given a sequence of preceding tokens.
+4. **Unidirectional Context**: Unlike bidirectional models (e.g., BERT), which consider both past and future context, GPT relies solely on past tokens, making it effective for generative tasks.
+
 Principles
 ----------
 GPT operates as an autoregressive model, meaning it generates text token by token, conditioning each token’s prediction on the previous tokens. The key components of GPT’s architecture are:
