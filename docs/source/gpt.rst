@@ -247,26 +247,102 @@ The following PyTorch code demonstrates the simplified GPT-like layers:
    
            return subsequent_mask
 
+5. **GPT**
+
 .. code-block:: python
 
-   import torch
-   import torch.nn as nn
-   import torch.nn.functional as F
-
-   class MaskedSelfAttention(nn.Module):
-       def __init__(self, embed_dim, num_heads):
+   class GPT(nn.Module):
+       def __init__(
+           self,
+           vocab_size,
+           seq_len=512,
+           d_model=768,
+           n_layers=12,
+           n_heads=12,
+           d_ff=3072,
+           embd_dropout=0.1,
+           attn_dropout=0.1,
+           resid_dropout=0.1,
+           pad_id=0,
+       ):
            super().__init__()
-           self.attention = nn.MultiheadAttention(embed_dim, num_heads, batch_first=True)
-       
-       def forward(self, x):
-           seq_length = x.size(1)
-           mask = torch.tril(torch.ones(seq_length, seq_length)).to(x.device)  # Lower triangular mask
-           mask = mask.masked_fill(mask == 0, float('-inf')).masked_fill(mask == 1, 0)
-           
-           attn_output, _ = self.attention(x, x, x, attn_mask=mask)
-           return attn_output
+   
+           self.decoder = TransformerDecoder(vocab_size, seq_len, d_model, n_layers, n_heads, d_ff,
+                                             embd_dropout, attn_dropout, resid_dropout, pad_id)
+   
+       def forward(self, inputs):
+   
+           # inputs -> (batch_size, seq_len)
+   
+           # outputs -> (batch_size, seq_len, d_model)
+           # attention_weights -> [(batch_size, n_heads, seq_len, seq_len)] * n_layers
+           outputs, attention_weights = self.decoder(inputs)
+   
+           return outputs, attention_weights
+   
+   
+   class GPTLMHead(nn.Module):
+       def __init__(self, gpt):
+           super().__init__()
+   
+           vocab_size, d_model = gpt.decoder.embedding.weight.size()
+   
+           self.gpt = gpt
+           self.linear = nn.Linear(d_model, vocab_size, bias=False)
+           self.linear.weight = gpt.decoder.embedding.weight
+   
+       def forward(self, inputs):
+   
+           # inputs -> (batch_size, seq_len)
+   
+           # outputs -> (batch_size, seq_len, d_model)
+           # attention_weights -> [(batch_size, n_heads, seq_len, seq_len)] * n_layers
+           outputs, attention_weights = self.gpt(inputs)
+   
+           # lm_logits -> (batch_size, seq_len, vocab_size)
+           lm_logits = self.linear(outputs)
+   
+           return lm_logits
+   
+   
+   class GPTClsHead(nn.Module):
+       def __init__(self, gpt, n_class, cls_token_id, cls_dropout=0.1):
+           super().__init__()
+   
+           vocab_size, d_model = gpt.decoder.embedding.weight.size()
+           self.cls_token_id = cls_token_id
+   
+           self.gpt = gpt
+   
+           # LM
+           self.linear1 = nn.Linear(d_model, vocab_size, bias=False)
+           self.linear1.weight = gpt.decoder.embedding.weight
+   
+           # Classification
+           self.linear2 = nn.Linear(d_model, n_class)
+           self.dropout = nn.Dropout(cls_dropout)
+   
+           nn.init.normal_(self.linear2.weight, std=0.02)
+           nn.init.normal_(self.linear2.bias, 0)
+   
+       def forward(self, inputs):
+   
+           # inputs -> (batch_size, seq_len)
+   
+           # outputs -> (batch_size, seq_len, d_model)
+           # attention_weights -> [(batch_size, n_heads, seq_len, seq_len)] * n_layers
+           outputs, attention_weights = self.gpt(inputs)
+   
+           # lm_logits -> (batch_size, seq_len, vocab_size)
+           lm_logits = self.linear1(outputs)
+   
+           # outputs -> (batch_size, d_model)
+           # cls_logits -> (batch_size, n_class)
+           outputs = outputs[inputs.eq(self.cls_token_id)]
+           cls_logits = self.linear2(self.dropout(outputs))
+   
+           return lm_logits, cls_logits
 
-This module ensures that each token can only attend to previous tokens, enforcing the autoregressive property of GPT.
 
 Conclusion
 ----------
