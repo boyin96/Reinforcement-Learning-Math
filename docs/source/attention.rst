@@ -1,4 +1,4 @@
-Transformer: Attention Is All You Need
+Attention Is All You Need
 ======================================
 
 Introduction
@@ -75,4 +75,8 @@ Conclusion
 The Transformer model has become the foundation of modern NLP due to its efficient self-attention mechanism and parallel computation capabilities. By eliminating recurrence, it enables faster training and better captures long-range dependencies. Understanding its architecture is crucial for leveraging state-of-the-art language models like BERT and GPT.
 
 References
-
+------------
+- `Attention Is All You Need <https://arxiv.org/pdf/1706.03762>`_
+- https://nlp.seas.harvard.edu/2018/04/03/attention.html
+- https://jalammar.github.io/illustrated-transformer/
+- https://github.com/jadore801120/attention-is-all-you-need-pytorch
