@@ -365,3 +365,5 @@ References
 - `Attention Is All You Need <https://arxiv.org/pdf/1706.03762>`_
 - `Improving Language Understanding by Generative Pre-Training <https://www.mikecaptain.com/resources/pdf/GPT-1.pdf>`_
 - https://github.com/lyeoni/gpt-pytorch
+- https://poloclub.github.io/transformer-explainer/
+
