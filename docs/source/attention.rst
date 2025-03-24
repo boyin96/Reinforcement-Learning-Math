@@ -56,6 +56,7 @@ Below is a PyTorch implementation:
 .. code-block:: python
 
    import copy
+   import math
    
    import torch
    import torch.nn as nn
@@ -132,6 +133,121 @@ Below is a PyTorch implementation:
            del value
            return self.linears[-1](x)
 
+
+2. **PositionWiseFeedForward**
+
+.. code-block:: python
+   
+   class PositionWiseFeedForward(nn.Module):
+   
+       def __init__(self, d_model, d_ff, dropout=0.1):
+           super().__init__()
+           self.w_1 = nn.Linear(d_model, d_ff)
+           self.w_2 = nn.Linear(d_ff, d_model)
+           self.dropout = nn.Dropout(dropout)
+   
+       def forward(self, x):
+           return self.w_2(self.dropout(self.w_1(x).relu()))
+
+3. **Positional Encoding**
+
+Transformers do not have built-in sequential order awareness, unlike RNNs. Therefore, we need to inject position information explicitly. The positional encoding (PE) helps the model distinguish between different positions in a sequence by assigning unique vectors to each position.
+
+The common approach is to use sinusoidal functions:
+
+.. math::
+   PE_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{\frac{2i}{d_{\text{model}}}}}\right)
+
+.. math::
+   PE_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{\frac{2i}{d_{\text{model}}}}}\right)
+
+where:
+
+- :math:`pos` is the position index in the sequence.
+- :math:`i` is the dimension index.
+- :math:`d_{\text{model}}` is the embedding size.
+
+We analyze how `PE(pos + k)` relates to `PE(pos)`. Substituting `pos + k` into the PE formula:
+
+.. math::
+   PE_{(pos+k, 2i)} = \sin\left(\frac{pos+k}{10000^{\frac{2i}{d_{\text{model}}}}}\right)
+
+.. math::
+   PE_{(pos+k, 2i+1)} = \cos\left(\frac{pos+k}{10000^{\frac{2i}{d_{\text{model}}}}}\right)
+
+Using trigonometric sum identities:
+
+.. math::
+   \sin(A + B) = \sin A \cos B + \cos A \sin B
+
+.. math::
+   \cos(A + B) = \cos A \cos B - \sin A \sin B
+
+Let :math:`\theta_i = \frac{1}{10000^{\frac{2i}{d_{\text{model}}}}}`, then:
+
+.. math::
+   PE_{(pos+k, 2i)} = \sin(pos\theta_i) \cos(k\theta_i) + \cos(pos\theta_i) \sin(k\theta_i)
+
+.. math::
+   PE_{(pos+k, 2i+1)} = \cos(pos\theta_i) \cos(k\theta_i) - \sin(pos\theta_i) \sin(k\theta_i)
+
+This transformation can be rewritten as a **2D rotation matrix**:
+
+.. math::
+   \begin{bmatrix}
+   PE_{(pos+k, 2i)} \\
+   PE_{(pos+k, 2i+1)}
+   \end{bmatrix} =
+   \begin{bmatrix}
+   \cos(k\theta_i) & \sin(k\theta_i) \\
+   -\sin(k\theta_i) & \cos(k\theta_i)
+   \end{bmatrix}
+   \begin{bmatrix}
+   PE_{(pos, 2i)} \\
+   PE_{(pos, 2i+1)}
+   \end{bmatrix}
+
+This means that moving from `pos` to `pos + k` is equivalent to rotating the positional encoding vector by an angle `kθ_i`, where `θ_i` depends on `i`.
+
+Key Insights:
+
+1. **Relative Position Encoding**
+   - The difference `k` controls the rotation angle, preserving relative position information.
+   - Transformer models can infer relationships based on relative positions.
+
+2. **Different Frequency Components**
+   - Lower indices `i` correspond to high-frequency signals (capture short-range dependencies).
+   - Higher indices `i` correspond to low-frequency signals (capture long-range dependencies).
+
+3. **Cosine Similarity and Distance**
+   - The similarity between `PE(pos + k)` and `PE(pos)` follows a cosine decay:
+
+   .. math::
+      PE(pos+k) \cdot PE(pos) \approx \cos(k\theta_i)
+
+   - This enables the model to measure position distances naturally.
+
+.. code-block:: python
+
+   class PositionalEncoding(nn.Module):
+   
+       def __init__(self, d_model, dropout, max_len=5000):
+           super().__init__()
+           self.dropout = nn.Dropout(p=dropout)
+   
+           pe = torch.zeros(max_len, d_model)
+           position = torch.arange(0, max_len).unsqueeze(1)
+           div_term = torch.exp(
+               torch.arange(0, d_model, 2) * -(math.log(10000.0) / d_model)
+           )
+           pe[:, 0::2] = torch.sin(position * div_term)
+           pe[:, 1::2] = torch.cos(position * div_term)
+           pe = pe.unsqueeze(0)
+           self.register_buffer("pe", pe)
+   
+       def forward(self, x):
+           x = x + self.pe[:, : x.size(1)].requires_grad_(False)
+           return self.dropout(x)
 
 2. **Encoder-Decoder Structure**
 
