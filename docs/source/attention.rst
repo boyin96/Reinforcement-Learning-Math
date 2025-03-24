@@ -55,9 +55,85 @@ Below is a PyTorch implementation:
 
 .. code-block:: python
 
+   import copy
+   
+   import torch
+   import torch.nn as nn
+   import torch.nn.functional as F
 
 
-1. **Encoder-decoder Structure**
+   class LayerNorm(nn.Module):
+   
+       def __init__(self, features, eps=1e-6):
+           super().__init__()
+   
+           self.a_2 = nn.Parameter(torch.ones(features))
+           self.b_2 = nn.Parameter(torch.zeros(features))
+           self.eps = eps
+   
+       def forward(self, x):
+           mean = x.mean(-1, keepdim=True)
+           std = x.std(-1, keepdim=True)
+           return self.a_2 * (x - mean) / (std + self.eps) + self.b_2
+   
+   
+   def clones(module, n):
+       return nn.ModuleList([copy.deepcopy(module) for _ in range(n)])
+
+
+   def attention(query, key, value, mask=None, dropout=None):
+       """Scaled Dot Product Attention."""
+   
+       d_k = query.size(-1)
+       scores = torch.matmul(query, key.transpose(-2, -1)) / (d_k ** 0.5)
+       if mask is not None:
+           scores = scores.masked_fill(mask == 0, -1e9)
+       p_attn = scores.softmax(dim=-1)
+       if dropout is not None:
+           p_attn = dropout(p_attn)
+       return torch.matmul(p_attn, value), p_attn
+
+
+   class MultiHeadedAttention(nn.Module):
+       def __init__(self, h, d_model, dropout=0.1):
+   
+           super().__init__()
+   
+           assert d_model % h == 0
+   
+           self.d_k = d_model // h
+           self.h = h
+           self.linears = clones(nn.Linear(d_model, d_model), 4)
+           self.attn = None
+           self.dropout = nn.Dropout(p=dropout)
+   
+       def forward(self, query, key, value, mask=None):
+   
+           if mask is not None:
+               mask = mask.unsqueeze(1)
+           b = query.size(0)
+   
+           query, key, value = [
+               lin(x).view(b, -1, self.h, self.d_k).transpose(1, 2)
+               for lin, x in zip(self.linears, (query, key, value))
+           ]
+   
+           x, self.attn = attention(
+               query, key, value, mask=mask, dropout=self.dropout
+           )
+   
+           x = (
+               x.transpose(1, 2)
+               .contiguous()
+               .view(b, -1, self.h * self.d_k)
+           )
+           del query
+           del key
+           del value
+           return self.linears[-1](x)
+
+
+2. **Encoder-Decoder Structure**
 
 .. code-block:: python
 
