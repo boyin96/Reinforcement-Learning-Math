@@ -209,7 +209,7 @@ This transformation can be rewritten as a **2D rotation matrix**:
    PE_{(pos, 2i+1)}
    \end{bmatrix}.
 
-This means that moving from :math:`pos` to :math:`pos + k` is equivalent to rotating the positional encoding vector by an angle :math:`kθ_i`, where :math:`θ_i` depends on :math:`i`.
+This means that moving from :math:`pos` to :math:`pos + k` is equivalent to rotating the positional encoding vector by an angle :math:`k\theta_i`, where :math:`\theta_i` depends on :math:`i`.
 
 .. code-block:: python
 
