@@ -156,10 +156,10 @@ Transformers do not have built-in sequential order awareness, unlike RNNs. There
 The common approach is to use sinusoidal functions:
 
 .. math::
-   PE_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{\frac{2i}{d_{\text{model}}}}}\right)
+   PE_{(pos, 2i)} = \sin\left(\frac{pos}{10000^{\frac{2i}{d_{\text{model}}}}}\right),
 
 .. math::
-   PE_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{\frac{2i}{d_{\text{model}}}}}\right)
+   PE_{(pos, 2i+1)} = \cos\left(\frac{pos}{10000^{\frac{2i}{d_{\text{model}}}}}\right),
 
 where:
 
@@ -167,29 +167,29 @@ where:
 - :math:`i` is the dimension index.
 - :math:`d_{\text{model}}` is the embedding size.
 
-We analyze how `PE(pos + k)` relates to `PE(pos)`. Substituting `pos + k` into the PE formula:
+We analyze how :math:`PE(pos + k)` relates to :math:`PE(pos)`. Substituting :math:`pos + k` into the PE formula:
 
 .. math::
-   PE_{(pos+k, 2i)} = \sin\left(\frac{pos+k}{10000^{\frac{2i}{d_{\text{model}}}}}\right)
+   PE_{(pos+k, 2i)} = \sin\left(\frac{pos+k}{10000^{\frac{2i}{d_{\text{model}}}}}\right),
 
 .. math::
-   PE_{(pos+k, 2i+1)} = \cos\left(\frac{pos+k}{10000^{\frac{2i}{d_{\text{model}}}}}\right)
+   PE_{(pos+k, 2i+1)} = \cos\left(\frac{pos+k}{10000^{\frac{2i}{d_{\text{model}}}}}\right).
 
 Using trigonometric sum identities:
 
 .. math::
-   \sin(A + B) = \sin A \cos B + \cos A \sin B
+   \sin(A + B) = \sin A \cos B + \cos A \sin B,
 
 .. math::
-   \cos(A + B) = \cos A \cos B - \sin A \sin B
+   \cos(A + B) = \cos A \cos B - \sin A \sin B.
 
 Let :math:`\theta_i = \frac{1}{10000^{\frac{2i}{d_{\text{model}}}}}`, then:
 
 .. math::
-   PE_{(pos+k, 2i)} = \sin(pos\theta_i) \cos(k\theta_i) + \cos(pos\theta_i) \sin(k\theta_i)
+   PE_{(pos+k, 2i)} = \sin(pos\theta_i) \cos(k\theta_i) + \cos(pos\theta_i) \sin(k\theta_i),
 
 .. math::
-   PE_{(pos+k, 2i+1)} = \cos(pos\theta_i) \cos(k\theta_i) - \sin(pos\theta_i) \sin(k\theta_i)
+   PE_{(pos+k, 2i+1)} = \cos(pos\theta_i) \cos(k\theta_i) - \sin(pos\theta_i) \sin(k\theta_i).
 
 This transformation can be rewritten as a **2D rotation matrix**:
 
@@ -205,27 +205,9 @@ This transformation can be rewritten as a **2D rotation matrix**:
    \begin{bmatrix}
    PE_{(pos, 2i)} \\
    PE_{(pos, 2i+1)}
-   \end{bmatrix}
+   \end{bmatrix}.
 
-This means that moving from `pos` to `pos + k` is equivalent to rotating the positional encoding vector by an angle `kθ_i`, where `θ_i` depends on `i`.
-
-Key Insights:
-
-1. **Relative Position Encoding**
-   - The difference `k` controls the rotation angle, preserving relative position information.
-   - Transformer models can infer relationships based on relative positions.
-
-2. **Different Frequency Components**
-   - Lower indices `i` correspond to high-frequency signals (capture short-range dependencies).
-   - Higher indices `i` correspond to low-frequency signals (capture long-range dependencies).
-
-3. **Cosine Similarity and Distance**
-   - The similarity between `PE(pos + k)` and `PE(pos)` follows a cosine decay:
-
-   .. math::
-      PE(pos+k) \cdot PE(pos) \approx \cos(k\theta_i)
-
-   - This enables the model to measure position distances naturally.
+This means that moving from :math:`pos` to :math:`pos + k` is equivalent to rotating the positional encoding vector by an angle :math:`kθ_i`, where :math:`θ_i` depends on :math:`i`.
 
 .. code-block:: python
 
