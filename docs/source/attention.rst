@@ -51,19 +51,83 @@ Code Implementation
 --------------------
 Below is a PyTorch implementation:
 
+1. **Attention**
+
 .. code-block:: python
 
+
+
+1. **Encoder-decoder Structure**
+
+.. code-block:: python
+
+   import copy
+   
    import torch
    import torch.nn as nn
-
-   class SelfAttention(nn.Module):
-       def __init__(self, embed_dim, num_heads):
+   import torch.nn.functional as F
+   
+   
+   class EncoderDecoder(nn.Module):
+       """A standard Encoder-Decoder architecture. """
+   
+       def __init__(self, encoder, decoder, src_embed, tgt_embed, generator):
            super().__init__()
-           self.attention = nn.MultiheadAttention(embed_dim, num_heads, batch_first=True)
-       
+   
+           self.encoder = encoder
+           self.decoder = decoder
+           self.src_embed = src_embed
+           self.tgt_embed = tgt_embed
+           self.generator = generator
+   
+       def forward(self, src, tgt, src_mask, tgt_mask):
+           return self.decode(self.encode(src, src_mask), src_mask, tgt, tgt_mask)
+   
+       def encode(self, src, src_mask):
+           return self.encoder(self.src_embed(src), src_mask)
+   
+       def decode(self, memory, src_mask, tgt, tgt_mask):
+           return self.decoder(self.tgt_embed(tgt), memory, src_mask, tgt_mask)
+   
+   
+   class Generator(nn.Module):
+   
+       def __init__(self, d_model, vocab):
+           super().__init__()
+   
+           self.proj = nn.Linear(d_model, vocab)
+   
        def forward(self, x):
-           attn_output, _ = self.attention(x, x, x)
-           return attn_output
+           return F.log_softmax(self.proj(x), dim=-1)
+
+2. **Encoder**
+
+.. code-block:: python
+
+
+
+3. **Transformer**
+
+.. code-block:: python
+
+   def make_model(src_vocab, tgt_vocab, n=6, d_model=512, d_ff=2048, h=8, dropout=0.1):
+   
+       c = copy.deepcopy
+       attn = MultiHeadedAttention(h, d_model)
+       ff = PositionwiseFeedForward(d_model, d_ff, dropout)
+       position = PositionalEncoding(d_model, dropout)
+       model = EncoderDecoder(
+           Encoder(EncoderLayer(d_model, c(attn), c(ff), dropout), n),
+           Decoder(DecoderLayer(d_model, c(attn), c(attn), c(ff), dropout), n),
+           nn.Sequential(Embeddings(d_model, src_vocab), c(position)),
+           nn.Sequential(Embeddings(d_model, tgt_vocab), c(position)),
+           Generator(d_model, tgt_vocab),
+       )
+   
+       for p in model.parameters():
+           if p.dim() > 1:
+               nn.init.xavier_uniform_(p)
+       return model
 
 Conclusion
 -----------
@@ -72,6 +136,6 @@ The Transformer model has become the foundation of modern NLP due to its efficie
 References
 ------------
 - `Attention Is All You Need <https://arxiv.org/pdf/1706.03762>`_
-- https://nlp.seas.harvard.edu/2018/04/03/attention.html
+- https://nlp.seas.harvard.edu/annotated-transformer/
 - https://jalammar.github.io/illustrated-transformer/
 - https://github.com/jadore801120/attention-is-all-you-need-pytorch
