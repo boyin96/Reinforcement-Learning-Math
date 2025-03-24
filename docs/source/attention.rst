@@ -47,6 +47,7 @@ Instead of a single attention function, Transformers use multiple attention head
 
 where each head independently performs self-attention. This enhances the model’s ability to capture different aspects of dependencies in the data.
 
+
 Code Implementation
 --------------------
 Below is a PyTorch implementation:
@@ -149,6 +150,7 @@ Below is a PyTorch implementation:
        def forward(self, x):
            return self.w_2(self.dropout(self.w_1(x).relu()))
 
+
 3. **Positional Encoding**
 
 Transformers do not have built-in sequential order awareness, unlike RNNs. Therefore, we need to inject position information explicitly. The positional encoding (PE) helps the model distinguish between different positions in a sequence by assigning unique vectors to each position.
@@ -231,7 +233,18 @@ This means that moving from :math:`pos` to :math:`pos + k` is equivalent to rota
            x = x + self.pe[:, : x.size(1)].requires_grad_(False)
            return self.dropout(x)
 
-2. **Encoder-Decoder Structure**
+
+4. **Encoder Structure**
+
+.. code-block:: python
+
+
+5. **Decoder Structure**
+
+.. code-block:: python
+
+
+6. **Encoder-Decoder Structure**
 
 .. code-block:: python
 
@@ -274,13 +287,8 @@ This means that moving from :math:`pos` to :math:`pos + k` is equivalent to rota
        def forward(self, x):
            return F.log_softmax(self.proj(x), dim=-1)
 
-2. **Encoder**
 
-.. code-block:: python
-
-
-
-3. **Transformer**
+7. **Transformer**
 
 .. code-block:: python
 
@@ -303,9 +311,11 @@ This means that moving from :math:`pos` to :math:`pos + k` is equivalent to rota
                nn.init.xavier_uniform_(p)
        return model
 
+
 Conclusion
 -----------
 The Transformer model has become the foundation of modern NLP due to its efficient self-attention mechanism and parallel computation capabilities. By eliminating recurrence, it enables faster training and better captures long-range dependencies. Understanding its architecture is crucial for leveraging state-of-the-art language models like BERT and GPT.
+
 
 References
 ------------
