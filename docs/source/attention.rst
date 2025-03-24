@@ -193,7 +193,7 @@ Let :math:`\theta_i = \frac{1}{10000^{\frac{2i}{d_{\text{model}}}}}`, then:
 .. math::
    PE_{(pos+k, 2i+1)} = \cos(pos\theta_i) \cos(k\theta_i) - \sin(pos\theta_i) \sin(k\theta_i).
 
-This transformation can be rewritten as a **2D rotation matrix**:
+This transformation can be rewritten as a 2D rotation matrix:
 
 .. math::
    \begin{bmatrix}
@@ -238,11 +238,86 @@ This means that moving from :math:`pos` to :math:`pos + k` is equivalent to rota
 
 .. code-block:: python
 
+   class Encoder(nn.Module):
+   
+       def __init__(self, layer, n):
+           super().__init__()
+   
+           self.layers = clones(layer, n)
+           self.norm = LayerNorm(layer.size)
+   
+       def forward(self, x, mask=None):
+   
+           for layer in self.layers:
+               x = layer(x, mask=mask)
+           return self.norm(x)
+
+
+   class SublayerConnection(nn.Module):
+   
+       def __init__(self, size, dropout):
+           super().__init__()
+   
+           self.norm = LayerNorm(size)
+           self.dropout = nn.Dropout(dropout)
+   
+       def forward(self, x, sublayer):
+   
+           return x + self.dropout(sublayer(self.norm(x)))
+   
+   
+   class EncoderLayer(nn.Module):
+   
+       def __init__(self, size, self_attn, feed_forward, dropout):
+           super().__init__()
+   
+           self.self_attn = self_attn
+           self.feed_forward = feed_forward
+           self.sublayer = clones(SublayerConnection(size, dropout), 2)
+           self.size = size
+   
+       def forward(self, x, mask):
+   
+           x = self.sublayer[0](x, lambda x: self.self_attn(x, x, x, mask))
+           return self.sublayer[1](x, self.feed_forward)
+
 
 5. **Decoder Structure**
 
 .. code-block:: python
 
+   class Decoder(nn.Module):
+   
+       def __init__(self, layer, n):
+           super().__init__()
+   
+           self.layers = clones(layer, n)
+           self.norm = LayerNorm(layer.size)
+   
+       def forward(self, x, memory, src_mask, tgt_mask):
+           for layer in self.layers:
+               x = layer(x, memory, src_mask, tgt_mask)
+           return self.norm(x)
+   
+   
+   class DecoderLayer(nn.Module):
+   
+       def __init__(self, size, self_attn, src_attn, feed_forward, dropout):
+           super().__init__()
+   
+           self.size = size
+           self.self_attn = self_attn
+           self.src_attn = src_attn
+           self.feed_forward = feed_forward
+           self.sublayer = clones(SublayerConnection(size, dropout), 3)
+   
+       def forward(self, x, memory, src_mask, tgt_mask):
+   
+           m = memory
+           x = self.sublayer[0](x, lambda x: self.self_attn(x, x, x, tgt_mask))
+           x = self.sublayer[1](x, lambda x: self.src_attn(x, m, m, src_mask))
+           return self.sublayer[2](x, self.feed_forward)
+       
 
 6. **Encoder-Decoder Structure**
 
@@ -296,7 +371,7 @@ This means that moving from :math:`pos` to :math:`pos + k` is equivalent to rota
    
        c = copy.deepcopy
        attn = MultiHeadedAttention(h, d_model)
-       ff = PositionwiseFeedForward(d_model, d_ff, dropout)
+       ff = PositionWiseFeedForward(d_model, d_ff, dropout)
        position = PositionalEncoding(d_model, dropout)
        model = EncoderDecoder(
            Encoder(EncoderLayer(d_model, c(attn), c(ff), dropout), n),
