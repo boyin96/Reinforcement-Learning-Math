@@ -33,15 +33,23 @@ TD Control
 ----------
 TD control aims to find the optimal policy by iteratively improving the policy based on the estimated action values. Two main TD control algorithms are:
 
-1.  **SARSA (State-Action-Reward-State-Action)**: An on-policy TD control algorithm that updates the action-value function :math:`Q(S_t, A_t)` based on the next state and action :math:`(S_{t+1}, A_{t+1})`.
+1.  **SARSA (State-Action-Reward-State-Action)**: An on-policy TD control algorithm.
 
-    .. math::
-        Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha [R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t)]
+    -   **On-policy**: SARSA updates the action-value function :math:`Q(S_t, A_t)` using the action :math:`A_{t+1}` that is actually taken in the next state :math:`S_{t+1}` according to the current policy.
+    -   **Update rule**:
 
-2.  **Q-learning**: An off-policy TD control algorithm that updates the action-value function :math:`Q(S_t, A_t)` based on the maximum action-value in the next state.
+        .. math::
+            Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha [R_{t+1} + \gamma Q(S_{t+1}, A_{t+1}) - Q(S_t, A_t)]
 
-    .. math::
-        Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha [R_{t+1} + \gamma \max_a Q(S_{t+1}, a) - Q(S_t, A_t)]
+    Where :math:`A_{t+1} \sim \pi(·|S_{t+1})`.
+
+2.  **Q-learning**: An off-policy TD control algorithm.
+
+    -   **Off-policy**: Q-learning updates the action-value function :math:`Q(S_t, A_t)` using the maximum possible action-value in the next state :math:`S_{t+1}`, regardless of the action that is actually taken.
+    -   **Update rule**:
+
+        .. math::
+            Q(S_t, A_t) \leftarrow Q(S_t, A_t) + \alpha [R_{t+1} + \gamma \max_a Q(S_{t+1}, a) - Q(S_t, A_t)]
 
 Eligibility Traces
 ------------------
