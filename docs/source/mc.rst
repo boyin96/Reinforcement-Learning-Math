@@ -22,7 +22,7 @@ Monte Carlo prediction involves estimating the value function for a given policy
 Where:
 
 -   :math:`R_{t+1}` is the reward received at time step :math:`t+1`.
--   :math:`\gamma` is the discount factor (0 ≤ γ ≤ 1).
+-   :math:`\gamma` is the discount factor (0 ≤ :math:`\gamma` ≤ 1).
 -   :math:`T` is the terminal time step.
 
 The value function :math:`V(s)` is estimated as the average return starting from state :math:`s`:
@@ -45,9 +45,10 @@ Monte Carlo control aims to find the optimal policy by iteratively improving the
 .. math::
     \pi(s) = \arg\max_a Q(s, a)
 
-To ensure exploration, we can use ε-greedy exploration, where with probability ε, a random action is selected, and with probability 1-ε, the greedy action is selected.
+To ensure exploration, we can use :math:`\epsilon`-greedy exploration, where with probability :math:`\epsilon`, a random action is selected, and with probability 1-ε, the greedy action is selected.
 
 .. code-block:: python
+    
     import random
 
     def epsilon_greedy(state, Q, epsilon, possible_actions):
@@ -61,7 +62,7 @@ To ensure exploration, we can use ε-greedy exploration, where with probability 
 
 On-Policy Monte Carlo Control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-On-policy methods improve the policy that is used to collect the data. An example of on-policy Monte Carlo control is policy iteration with ε-greedy exploration.
+On-policy methods improve the policy that is used to collect the data. An example of on-policy Monte Carlo control is policy iteration with :math:`\epsilon`-greedy exploration.
 
 Off-Policy Monte Carlo Control
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -104,5 +105,4 @@ Monte Carlo methods provide a powerful approach for learning optimal policies in
 
 References
 ----------
--   `Reinforcement Learning: An Introduction, Sutton and Barto <http://incompleteideas.net/book/the-book-2nd.html>`_
--   https://www.youtube.com/watch?v=0g4j2k_xPmQ&list=PLiWQBSwln0j_4JHwKtD-f8xvPq5f5tOVH&index=4
+-   `Reinforcement Learning: An Introduction <http://incompleteideas.net/book/the-book-2nd.html>`_
