@@ -1,0 +1,108 @@
+Monte Carlo Methods
+===================
+
+Introduction
+------------
+Monte Carlo (MC) methods are a class of computational algorithms that rely on repeated random sampling to obtain numerical results. In the context of reinforcement learning, Monte Carlo methods are used for learning optimal policies by experiencing complete episodes of interaction with the environment. These methods do not require a complete model of the environment, making them suitable for problems where the transition probabilities and reward functions are unknown.
+
+Key characteristics of Monte Carlo methods in RL:
+
+-   **Model-free**: They learn directly from experience without requiring a model of the environment.
+-   **Episodic**: They require complete episodes to update value functions and policies.
+-   **High variance**: Due to the reliance on random sampling, they can have high variance compared to dynamic programming methods.
+-   **Simple to understand and implement**: They are relatively straightforward to implement compared to other RL algorithms.
+
+Monte Carlo Prediction
+----------------------
+Monte Carlo prediction involves estimating the value function for a given policy by averaging the returns observed after visiting a state. The return :math:`G_t` is the total discounted reward from time step :math:`t`:
+
+.. math::
+    G_t = R_{t+1} + \gamma R_{t+2} + \gamma^2 R_{t+3} + \dots + \gamma^{T-t-1} R_T
+
+Where:
+
+-   :math:`R_{t+1}` is the reward received at time step :math:`t+1`.
+-   :math:`\gamma` is the discount factor (0 ≤ γ ≤ 1).
+-   :math:`T` is the terminal time step.
+
+The value function :math:`V(s)` is estimated as the average return starting from state :math:`s`:
+
+.. math::
+    V(s) = \mathbb{E}[G_t | S_t = s]
+
+There are two main approaches for estimating the value function:
+
+1.  **First-visit MC**: Averages the returns only for the first time each state is visited in an episode.
+2.  **Every-visit MC**: Averages the returns for every time the state is visited in an episode.
+
+Monte Carlo Control
+-------------------
+Monte Carlo control aims to find the optimal policy by iteratively improving the policy based on the estimated action values. The main steps are:
+
+1.  **Policy evaluation**: Estimate :math:`Q(s, a)` for the current policy using Monte Carlo prediction.
+2.  **Policy improvement**: Improve the policy by acting greedily with respect to the estimated action values.
+
+.. math::
+    \pi(s) = \arg\max_a Q(s, a)
+
+To ensure exploration, we can use ε-greedy exploration, where with probability ε, a random action is selected, and with probability 1-ε, the greedy action is selected.
+
+.. code-block:: python
+    import random
+
+    def epsilon_greedy(state, Q, epsilon, possible_actions):
+        if random.random() < epsilon:
+            return random.choice(possible_actions)
+        else:
+            return max(possible_actions, key=lambda a: Q[(state, a)])
+
+.. note::
+    Monte Carlo control can be implemented using either on-policy or off-policy methods.
+
+On-Policy Monte Carlo Control
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+On-policy methods improve the policy that is used to collect the data. An example of on-policy Monte Carlo control is policy iteration with ε-greedy exploration.
+
+Off-Policy Monte Carlo Control
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Off-policy methods improve a policy that is different from the policy used to collect the data. This allows for learning from demonstration or using a more exploratory policy for data collection. An example of off-policy Monte Carlo control is importance sampling.
+
+Importance Sampling
+-------------------
+Importance sampling is a technique used to estimate the expected value of a function under one distribution using samples from another distribution. In off-policy Monte Carlo, importance sampling is used to correct for the difference between the behavior policy (used to generate the data) and the target policy (being evaluated and improved).
+
+The importance sampling ratio is given by:
+
+.. math::
+    \rho_t = \frac{\prod_{k=t}^{T-1} \pi(A_k | S_k)}{\prod_{k=t}^{T-1} b(A_k | S_k)}
+
+Where:
+
+-   :math:`\pi` is the target policy.
+-   :math:`b` is the behavior policy.
+
+The return is then weighted by the importance sampling ratio to obtain an unbiased estimate of the value function.
+
+.. math::
+    V(s) = \mathbb{E}[\rho_t G_t | S_t = s]
+
+Incremental Implementation
+--------------------------
+
+To efficiently compute the average return, an incremental update can be used:
+
+.. math::
+    V(s) \leftarrow V(s) + \frac{1}{N(s)}(G_t - V(s))
+
+Where:
+
+-   :math:`N(s)` is the number of times state :math:`s` has been visited.
+
+Conclusion
+----------
+Monte Carlo methods provide a powerful approach for learning optimal policies in reinforcement learning, especially when a model of the environment is not available. By experiencing complete episodes and using techniques like importance sampling and incremental updates, Monte Carlo methods can effectively estimate value functions and improve policies.
+
+References
+----------
+-   `Reinforcement Learning: An Introduction, Sutton and Barto <http://incompleteideas.net/book/the-book-2nd.html>`_
+-   https://www.youtube.com/watch?v=0g4j2k_xPmQ&list=PLiWQBSwln0j_4JHwKtD-f8xvPq5f5tOVH&index=4
