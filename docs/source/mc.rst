@@ -45,7 +45,7 @@ Monte Carlo control aims to find the optimal policy by iteratively improving the
 .. math::
     \pi(s) = \arg\max_a Q(s, a)
 
-To ensure exploration, we can use :math:`\epsilon`-greedy exploration, where with probability :math:`\epsilon`, a random action is selected, and with probability 1-ε, the greedy action is selected.
+To ensure exploration, we can use :math:`\epsilon` -greedy exploration, where with probability :math:`\epsilon`, a random action is selected, and with probability 1-ε, the greedy action is selected.
 
 .. code-block:: python
     
