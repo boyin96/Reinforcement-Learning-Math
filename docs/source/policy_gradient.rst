@@ -81,18 +81,6 @@ Finally,
 
 The policy gradient method is a powerful approach for reinforcement learning, as it directly optimizes the policy by following the gradient of expected return. The derived proof provides the foundation for many policy-based methods in the field of reinforcement learning.
 
-Proof of Policy Gradient Theorem 2
---------------------------------------
-
-Start with another type of objective function,
-
-.. math::
-    J(\theta)=E_{\tau \sim \pi}[R(\tau)] = \sum_{\tau} P(\tau ; \theta) R(\tau),
-
-where :math:`R(\tau)` is a return from an arbitrary trajectory :math:`\tau`, and :math:`P(\tau ; \theta)` is the probability of each possible trajectory which depends on the :math:`\theta`.
-
-
-
 References
 --------------------------------------
 
