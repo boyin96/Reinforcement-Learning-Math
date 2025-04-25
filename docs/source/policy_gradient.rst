@@ -17,7 +17,7 @@ Policy Gradient Theorem
     :math:`\nabla_\theta J(\theta)=\sum_{s } \rho^\pi(s) \sum_{a } \nabla_\theta \pi_\theta(a \mid s) Q^\pi(s, a)=\mathbb{E}_{\pi_\theta}\left[\nabla_\theta \log \pi_\theta(s, a) Q^{\pi_\theta}(s, a)\right]`.
 
 
-Proof of Policy Gradient Theorem
+Proof of Policy Gradient Theorem 1
 --------------------------------------
 
 Start with state-value function,
@@ -81,8 +81,50 @@ Finally,
 
 The policy gradient method is a powerful approach for reinforcement learning, as it directly optimizes the policy by following the gradient of expected return. The derived proof provides the foundation for many policy-based methods in the field of reinforcement learning.
 
+Proof of Policy Gradient Theorem 2
+--------------------------------------
+
+Start with another type of objective function,
+
+.. math::
+    J(\theta)=E_{\tau \sim \pi}[R(\tau)] = \sum_{\tau} P(\tau ; \theta) R(\tau),
+
+where :math:`R(\tau)` is a return from an arbitrary trajectory :math:`\tau`, and :math:`P(\tau ; \theta)` is the probability of each possible trajectory which depends on the :math:`\theta`.
+
+Then, we have,
+
+..math::
+    \nabla_\theta J(\theta)=\nabla_\theta \sum_\tau P(\tau ; \theta) R(\tau) =\sum_\tau \nabla_\theta(P(\tau ; \theta) R(\tau))=\sum_\tau \nabla_\theta P(\tau ; \theta) R(\tau)，
+
+since :math:`R(\tau)` is not dependent on :math:`\theta`. By using the derivative log trick, we can get
+
+..math::
+    \nabla_\theta J(\theta)=\sum_\tau P(\tau ; \theta) \nabla_\theta \log P(\tau ; \theta) R(\tau).
+
+Thanks for this new formula, we can estimate the gradient using trajectory samples to remove the probability term :math:`P(\tau ; \theta)`, i.e.,
+
+..math::
+    \nabla_\theta J(\theta)= m^1 \sum_{i=1}^m \nabla_\theta \log P\left(\tau^{(i)} ; \theta\right) R\left(\tau^{(i)}\right).
+
+Now we need to simplify the term :math:`P\left(\tau^{(i)} ; \theta\right)`. According to the MDP, the trajectory can be represented as 
+
+..math:: 
+    P(\tau ; \theta)=\rho^\pi(s_0)\prod_{t=0} P\left(s_{t+1} \mid s_t, a_t\right) \pi_\theta\left(a_t \mid s_t\right).
+
+Then, we have 
+
+..math::
+\begin{aligned}
+    \nabla_\theta \log P\left(\tau^{(i)} ; \theta\right)=&
+    \nabla_\theta \log \left[\mu\left(s_0\right) \prod_{t=0}^H P\left(s_{t+1}^{(i)} \mid s_t^{(i)}, a_t^{(i)}\right) \pi_\theta\left(a_t^{(i)} \mid  s_t^{(i)}\right)\right] = &
+\nabla_\theta\left[\log \mu\left(s_0\right)+\sum_{t=0}^H \log P\left(s_{t+1}^{(i)} \mid s_t^{(i)} a_t^{(i)}\right)+\sum_{t=0}^H \log \pi_\theta\left(a_t^{(i)} \mid s_t^{(i)}\right)\right]
+\end{aligned}
+
+
+
 References
 --------------------------------------
 
 - https://lilianweng.github.io/posts/2018-04-08-policy-gradient/
 - https://web.stanford.edu/class/cme241/lecture_slides/PolicyGradient.pdf
+- https://huggingface.co/learn/deep-rl-course/unit4/pg-theorem
