@@ -17,7 +17,7 @@ Policy Gradient Theorem
     :math:`\nabla_\theta J(\theta)=\sum_{s } \rho^\pi(s) \sum_{a } \nabla_\theta \pi_\theta(a \mid s) Q^\pi(s, a)=\mathbb{E}_{\pi_\theta}\left[\nabla_\theta \log \pi_\theta(s, a) Q^{\pi_\theta}(s, a)\right]`.
 
 
-Proof of Policy Gradient Theorem 1
+Proof of Policy Gradient Theorem
 --------------------------------------
 
 Start with state-value function,
@@ -86,4 +86,3 @@ References
 
 - https://lilianweng.github.io/posts/2018-04-08-policy-gradient/
 - https://web.stanford.edu/class/cme241/lecture_slides/PolicyGradient.pdf
-- https://huggingface.co/learn/deep-rl-course/unit4/pg-theorem
