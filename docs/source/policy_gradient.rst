@@ -93,27 +93,27 @@ where :math:`R(\tau)` is a return from an arbitrary trajectory :math:`\tau`, and
 
 Then, we have,
 
-..math::
+.. math::
     \nabla_\theta J(\theta)=\nabla_\theta \sum_\tau P(\tau ; \theta) R(\tau) =\sum_\tau \nabla_\theta(P(\tau ; \theta) R(\tau))=\sum_\tau \nabla_\theta P(\tau ; \theta) R(\tau)，
 
 since :math:`R(\tau)` is not dependent on :math:`\theta`. By using the derivative log trick, we can get
 
-..math::
+.. math::
     \nabla_\theta J(\theta)=\sum_\tau P(\tau ; \theta) \nabla_\theta \log P(\tau ; \theta) R(\tau).
 
 Thanks for this new formula, we can estimate the gradient using trajectory samples to remove the probability term :math:`P(\tau ; \theta)`, i.e.,
 
-..math::
+.. math::
     \nabla_\theta J(\theta)= m^1 \sum_{i=1}^m \nabla_\theta \log P\left(\tau^{(i)} ; \theta\right) R\left(\tau^{(i)}\right).
 
 Now we need to simplify the term :math:`P\left(\tau^{(i)} ; \theta\right)`. According to the MDP, the trajectory can be represented as 
 
-..math:: 
+.. math:: 
     P(\tau ; \theta)=\rho^\pi(s_0)\prod_{t=0} P\left(s_{t+1} \mid s_t, a_t\right) \pi_\theta\left(a_t \mid s_t\right).
 
 Then, we have 
 
-..math::
+.. math::
     \begin{aligned}
         \nabla_\theta \log P\left(\tau^{(i)} ; \theta\right)=&
         \nabla_\theta \log \left[\mu\left(s_0\right) \prod_{t=0}^H P\left(s_{t+1}^{(i)} \mid s_t^{(i)}, a_t^{(i)}\right) \pi_\theta\left(a_t^{(i)} \mid  s_t^{(i)}\right)\right] = &
