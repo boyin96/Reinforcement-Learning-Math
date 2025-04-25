@@ -114,11 +114,11 @@ Now we need to simplify the term :math:`P\left(\tau^{(i)} ; \theta\right)`. Acco
 Then, we have 
 
 ..math::
-\begin{aligned}
-    \nabla_\theta \log P\left(\tau^{(i)} ; \theta\right)=&
-    \nabla_\theta \log \left[\mu\left(s_0\right) \prod_{t=0}^H P\left(s_{t+1}^{(i)} \mid s_t^{(i)}, a_t^{(i)}\right) \pi_\theta\left(a_t^{(i)} \mid  s_t^{(i)}\right)\right] = &
-\nabla_\theta\left[\log \mu\left(s_0\right)+\sum_{t=0}^H \log P\left(s_{t+1}^{(i)} \mid s_t^{(i)} a_t^{(i)}\right)+\sum_{t=0}^H \log \pi_\theta\left(a_t^{(i)} \mid s_t^{(i)}\right)\right]
-\end{aligned}
+    \begin{aligned}
+        \nabla_\theta \log P\left(\tau^{(i)} ; \theta\right)=&
+        \nabla_\theta \log \left[\mu\left(s_0\right) \prod_{t=0}^H P\left(s_{t+1}^{(i)} \mid s_t^{(i)}, a_t^{(i)}\right) \pi_\theta\left(a_t^{(i)} \mid  s_t^{(i)}\right)\right] = &
+    \nabla_\theta\left[\log \mu\left(s_0\right)+\sum_{t=0}^H \log P\left(s_{t+1}^{(i)} \mid s_t^{(i)} a_t^{(i)}\right)+\sum_{t=0}^H \log \pi_\theta\left(a_t^{(i)} \mid s_t^{(i)}\right)\right]
+    \end{aligned}
 
 
 
